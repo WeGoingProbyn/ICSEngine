@@ -1,7 +1,7 @@
-#include "Platform/Platform.h"
+#include "Core/Memory/Memory.h"
 #include "Core/Debugger/Logger.h"
 #include "Core/Debugger/Assertion.h"
-#include "Core/Memory/Memory.h"
+#include "Core/Debugger/DebuggerPlatform.h"
 
 ICS_API Logger::Logger()
 {
@@ -24,8 +24,8 @@ ICS_API void Logger::LogToOutput(Logger::LogLevel level, String& string)
 	// NOTE: This caused me a massive fucking headache... and im not even sure if it is entirely fixed... Need to add 2 to the size because....
 	string.~String();
 	Memory::FreeMemory(&string, sizeof(String), MemoryType::ICS_APPLICATION);
-	if (important) { Platform::PlatformErrorOut(str.AsCstr(), static_cast<unsigned int>(level)); }
-	else { Platform::PlatformConsoleOut(str.AsCstr(), static_cast<unsigned int>(level)); }
+	if (important) { DebuggerPlatform::PlatformErrorOut(str.AsCstr(), static_cast<unsigned int>(level)); }
+	else { DebuggerPlatform::PlatformConsoleOut(str.AsCstr(), static_cast<unsigned int>(level)); }
 }
 
 void Logger::LogHRESULTOutput(Logger::LogLevel level, HRESULT result) {

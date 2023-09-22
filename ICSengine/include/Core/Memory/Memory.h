@@ -2,9 +2,10 @@
 
 #include "Defines.h"
 
-#include "Platform/Platform.h"
 #include "Core/Memory/MemoryTypes.h"
 #include "Core/Memory/MemoryStats.h"
+#include "Core/Memory/MemoryPlatform.h"
+
 
 class Memory
 {
@@ -40,7 +41,7 @@ T* Memory::AllocateMemory(unsigned int size, MemoryType type)
 		ICS_WARN("Memory: Allocating unkown memory type is ill-advised");
 	}
 	MemoryStats::OnMemoryAssign(size, type);
-	T* tmp = Platform::PlatformMemoryAllocate<T>(size, false);
+	T* tmp = MemoryPlatform::PlatformMemoryAllocate<T>(size, false);
 	//Memory::ZeroMemoryBlock<T>(tmp, size);
 	return tmp;
 }
@@ -58,7 +59,7 @@ bool Memory::FreeMemory(T* ptr, unsigned int size, MemoryType type)
 		ICS_WARN("Memory: De-allocated unkown memory type");
 	}
 	MemoryStats::OnMemoryFree(size, type);
-	Platform::PlatformMemoryFree<T>(ptr);
+	MemoryPlatform::PlatformMemoryFree<T>(ptr);
 	ptr = nullptr;
 	return true;
 }
@@ -73,7 +74,7 @@ bool Memory::ZeroMemoryBlock(T* ptr, unsigned int size)
 	}
 	else
 	{
-		Platform::PlatformMemoryZero<T>(ptr, size);
+		MemoryPlatform::PlatformMemoryZero<T>(ptr, size);
 		return true;
 	}
 }
@@ -88,7 +89,7 @@ bool Memory::SetMemory(T* dest, int val, unsigned int size)
 	}
 	else
 	{
-		Platform::PlatformMemorySet<T>(dest, val, size);
+		MemoryPlatform::PlatformMemorySet<T>(dest, val, size);
 		return true;
 	}
 }
@@ -103,7 +104,7 @@ bool Memory::CopyMemoryBlock(T* dest, const T* src, unsigned int size)
 	}
 	else
 	{
-		Platform::PlatformMemoryCopy<T>(dest, src, size);
+		MemoryPlatform::PlatformMemoryCopy<T>(dest, src, size);
 		return true;
 	}
 }
@@ -118,7 +119,7 @@ bool Memory::DeepCopyMemoryBlock(T* dest, const T* src, unsigned int size)
 	}
 	else
 	{
-		Platform::PlatformMemoryDeepCopy<T>(dest, src, size);
+		MemoryPlatform::PlatformMemoryDeepCopy<T>(dest, src, size);
 		return true;
 	}
 }

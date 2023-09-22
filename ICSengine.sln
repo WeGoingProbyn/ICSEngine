@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{C922DE6B-C5B3-4F77-B443-D44993016BCB}"
 	ProjectSection(ProjectDependencies) = postProject
-		{676482F9-8262-4FD6-8F46-40E5F44BB6BE} = {676482F9-8262-4FD6-8F46-40E5F44BB6BE}
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192} = {C7BECDC1-DA2D-4193-88A9-0E469B37C192}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ICSengine", "ICSengine\ICSengine.vcxproj", "{676482F9-8262-4FD6-8F46-40E5F44BB6BE}"
@@ -13,6 +13,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ICSeditor", "ICSeditor\ICSeditor.vcxproj", "{CDE190F4-6231-4198-86D5-CC24DE447738}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imGUI", "imGUI\imGUI.vcxproj", "{0D87DAA8-528C-47AA-BDEF-7261A7ABA095}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ICSapplication", "ICSapplication\ICSapplication.vcxproj", "{C7BECDC1-DA2D-4193-88A9-0E469B37C192}"
+	ProjectSection(ProjectDependencies) = postProject
+		{676482F9-8262-4FD6-8F46-40E5F44BB6BE} = {676482F9-8262-4FD6-8F46-40E5F44BB6BE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +59,14 @@ Global
 		{0D87DAA8-528C-47AA-BDEF-7261A7ABA095}.Release|x64.Build.0 = Release|x64
 		{0D87DAA8-528C-47AA-BDEF-7261A7ABA095}.Release|x86.ActiveCfg = Release|Win32
 		{0D87DAA8-528C-47AA-BDEF-7261A7ABA095}.Release|x86.Build.0 = Release|Win32
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Debug|x64.ActiveCfg = Debug|x64
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Debug|x64.Build.0 = Debug|x64
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Debug|x86.ActiveCfg = Debug|Win32
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Debug|x86.Build.0 = Debug|Win32
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Release|x64.ActiveCfg = Release|x64
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Release|x64.Build.0 = Release|x64
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Release|x86.ActiveCfg = Release|Win32
+		{C7BECDC1-DA2D-4193-88A9-0E469B37C192}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

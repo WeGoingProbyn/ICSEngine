@@ -35,7 +35,7 @@ public:
 
 	void TrimBuffer();
 	Event GetStateEvent();
-	void AddStateEventToQueue(Event input);
+	ICS_API void AddStateEventToQueue(Event input);
 	inline void Flush() { m_StateEventBuffer = darray<Event>(); }
 private:
 	darray<Event> m_StateEventBuffer;

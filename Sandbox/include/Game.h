@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Core/Application/Application.h>
-#include <Core/Application/UserInterface.h>
+#include <Application/Application.h>
+#include <Application/UserInterface.h>
 
 class Game : public UserInterface
 {

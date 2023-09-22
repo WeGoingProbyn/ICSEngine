@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/RenderFront/Structure/Scene/Mesh.h"
+#include "Core/Structures/Scene/Mesh.h"
 
 class Geometry : public Mesh
 {

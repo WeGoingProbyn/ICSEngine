@@ -31,13 +31,13 @@ public:
 public:
 	KeyEvents();
 
-	bool KeyIsPressed(unsigned char keycode);
-	bool KeyQueueIsEmpty();
-	Event GetKeyEvent();
-	void FlushKeyQueue();
-	void PushEventToQueue(Event input);
-	void OnKeyUp(unsigned char keycode);
-	void OnKeyDown(unsigned char keycode);
+	ICS_API bool KeyIsPressed(unsigned char keycode);
+	ICS_API bool KeyQueueIsEmpty();
+	ICS_API Event GetKeyEvent();
+	ICS_API void FlushKeyQueue();
+	ICS_API void PushEventToQueue(Event input);
+	ICS_API void OnKeyUp(unsigned char keycode);
+	ICS_API void OnKeyDown(unsigned char keycode);
 
 	inline darray<Event>& GetKeyEventBuffer() { return m_KeyEventBuffer; }
 private:

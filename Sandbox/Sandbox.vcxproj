@@ -109,7 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)ICSengine/include;$(ProjectDir)include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ICSengine/include;$(SolutionDir)ICSapplication/include;$(ProjectDir)include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +143,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ICSapplication\ICSapplication.vcxproj">
+      <Project>{c7becdc1-da2d-4193-88a9-0e469b37c192}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

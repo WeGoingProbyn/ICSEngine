@@ -62,18 +62,18 @@ public:
 	inline bool MouseQueueIsEmpty() { return m_MouseEventBuffer.Size() == 0; }
 	inline void FlushMouseQueue() { m_MouseEventBuffer = darray<Event>(); }
 
-	void OnScrollUp();
-	void OnScrollDown();
-	void OnLeftButtonUp();
-	void TrimMoveBuffer();
-	void TrimEventBuffer();
-	void OnRightButtonUp();
-	void OnMouseMoveEvent();
-	void OnMiddleButtonUp();
-	void OnLeftButtonDown();
-	void OnRightButtonDown();
-	void OnMiddleButtonDown();
-	void OnScrollDeltaChange(int delta);
+	ICS_API void OnScrollUp();
+	ICS_API void OnScrollDown();
+	ICS_API void OnLeftButtonUp();
+	ICS_API void TrimMoveBuffer();
+	ICS_API void TrimEventBuffer();
+	ICS_API void OnRightButtonUp();
+	ICS_API void OnMouseMoveEvent();
+	ICS_API void OnMiddleButtonUp();
+	ICS_API void OnLeftButtonDown();
+	ICS_API void OnRightButtonDown();
+	ICS_API void OnMiddleButtonDown();
+	ICS_API void OnScrollDeltaChange(int delta);
 
 private:
 	int x = 0;

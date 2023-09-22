@@ -8,18 +8,18 @@
 class EventHandler
 {
 public:
-	EventHandler();
-	~EventHandler();
+	ICS_API EventHandler();
+	ICS_API ~EventHandler();
 	
-	inline KeyEvents& GetKeyEvents() { return m_KeyEvents; }
-	inline MouseEvents& GetMouseEvents() { return m_MouseEvents; }
-	inline StateEvents& GetStateEvents() { return m_StateEvents; }
+	ICS_API inline KeyEvents& GetKeyEvents() { return m_KeyEvents; }
+	ICS_API inline MouseEvents& GetMouseEvents() { return m_MouseEvents; }
+	ICS_API inline StateEvents& GetStateEvents() { return m_StateEvents; }
 
-	bool DistributeKeyEventsToListeners();
+	ICS_API bool DistributeKeyEventsToListeners();
 	//bool DistributeMouseEventsToListeners();
 	//bool DistributeStateEventsToListeners();
-	bool RegisterListener(EventListener& listener);
-	bool UnRegisterListener(EventListener& listener);
+	ICS_API bool RegisterListener(EventListener& listener);
+	ICS_API bool UnRegisterListener(EventListener& listener);
 private:
 	KeyEvents m_KeyEvents;
 	StateEvents m_StateEvents;
