@@ -40,6 +40,10 @@ public:
 				m_PrimitiveType(type)
 			{}
 
+			~Element()
+			{
+			}
+
 			static constexpr unsigned int SizeOfPrimitive(Type type);
 
 			inline unsigned int GetID() { return m_ID; }
@@ -48,7 +52,8 @@ public:
 			inline Indices::Type GetType() { return m_PrimitiveType; }
 			inline darray<unsigned int>& GetNodeIDs() { return m_Nodes; }
 			inline unsigned int GetEndOfElement() { return m_Offset + GetSize(); }
-			inline unsigned int GetSize() { return SizeOfPrimitive(m_PrimitiveType) * m_BlockSize; }
+			inline unsigned int GetElementStride() { return SizeOfPrimitive(m_PrimitiveType); }
+			inline unsigned int GetSize() { return GetElementStride() * m_BlockSize; }
 		private:
 			unsigned int m_Root;
 			darray<unsigned int> m_Nodes;
@@ -65,8 +70,8 @@ public:
 		//template<typename... Types>
 		//Hierachy(Types&&... args);
 
-		ICS_API inline darray<Element>& GetIndexHierachy() { return m_IndexHierachy; }
-
+		ICS_API inline darray<Element>& GetHierachy() { return m_IndexHierachy; }
+		ICS_API inline unsigned int GetTotalDescribedNodes() { return m_IndexHierachy.Size(); }
 		ICS_API inline Element& operator[](unsigned int index) { return m_IndexHierachy[index]; }
 		ICS_API void PushNodeToHierachy(unsigned int size, unsigned int root_id, Indices::Type type);
 	private:
@@ -78,15 +83,20 @@ public:
 	{
 		friend class IndexBuffer;
 	public:
-		ICS_API Node(char* ptr, Indices::Hierachy& hierachy);
-
+		Node(char* ptr, Indices::Hierachy& structure, unsigned int id);
+		
 		template<typename T>
 		void PushNode(unsigned int id, darray<T>&& indices);
+
+		inline unsigned int GetID() { return m_ID; }
+		inline const char* GetNodePointer() const { return m_Ptr; }
+		inline Indices::Hierachy& GetNodeHierachy() { return m_Hierachy; }
 	private:
 		template<typename Dest, typename Src>
 		bool SetNodeValue(char* ptr, darray<Src>&& value);
 	private:
 		char* m_Ptr;
+		unsigned int m_ID;
 		Indices::Hierachy& m_Hierachy;
 	};
 
@@ -95,7 +105,7 @@ public:
 	{
 	public:
 		ICS_API IndexBuffer() : m_TotalBufferedNodes(0u) {}
-		ICS_API IndexBuffer(Hierachy hierachy);
+		ICS_API IndexBuffer(Hierachy& hierachy);
 
 		ICS_API Node End();
 		ICS_API Node Begin();
@@ -129,7 +139,7 @@ private:
 template<typename T>
 void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 {
-	ICS_ASSERT_MSG(id < m_Hierachy.GetIndexHierachy().Size(), "Indices: Trying to push more nodes than layout has described");
+	ICS_ASSERT_MSG(id < m_Hierachy.GetTotalDescribedNodes(), "Indices: Trying to push more nodes than layout has described");
 
 	Indices::Hierachy::Element& element = m_Hierachy[id];
 	char* attribute = m_Ptr + element.GetOffset();
@@ -198,7 +208,7 @@ template<typename T>
 void Indices::IndexBuffer::PushNodeToBuffer(darray<T>&& indices)
 {
 	m_ByteBlob.Resize(m_ByteBlob.Size() + indices.Size() * sizeof(T));
-	End().PushNode(m_Hierachy.GetIndexHierachy()[m_TotalBufferedNodes].GetID(), std::forward<darray<T>>(indices));
+	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::forward<darray<T>>(indices));
 	m_TotalBufferedNodes++;
 
 }
@@ -207,7 +217,7 @@ template<typename T>
 void Indices::IndexBuffer::PushNodeToBuffer(darray<T>& indices)
 {
 	m_ByteBlob.Resize(m_ByteBlob.Size() + indices.Size() * sizeof(T));
-	End().PushNode(m_Hierachy.GetIndexHierachy()[m_TotalBufferedNodes].GetID(), std::forward<darray<T>>(indices));
+	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::forward<darray<T>>(indices));
 	m_TotalBufferedNodes++;
 
 }

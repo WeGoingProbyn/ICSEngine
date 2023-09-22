@@ -1,5 +1,4 @@
 #include "Graphics/RenderBack/DirectX11/IndexBuffer.h"
-#include "Containers/Spatial/Vector.h"
 
 #include "Graphics/RenderBack/DirectX11/RenderDirectX11.h"
 
@@ -7,17 +6,18 @@ IndexBuffer::IndexBuffer()
 	:
 	Buffer() {}
 
-IndexBuffer::IndexBuffer(Vector<unsigned int, 3>* input, unsigned int size)
+IndexBuffer::IndexBuffer(Indices::Node& indices)
 	:
-	Buffer() {
-	m_DataSize = size;
+	Buffer() 
+{
+	m_DataSize = indices.GetNodeHierachy()[indices.GetID()].GetSize();
 	m_BufferDescription.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	m_BufferDescription.Usage = D3D11_USAGE_IMMUTABLE;	  // No changing
 	m_BufferDescription.CPUAccessFlags = 0u;			  // No CPU access
 	m_BufferDescription.MiscFlags = 0u;
-	m_BufferDescription.ByteWidth = m_DataSize * sizeof(Vector<unsigned int, 3>);
-	m_BufferDescription.StructureByteStride = sizeof(unsigned int);
-	m_BufferInputHandle.pSysMem = input;
+	m_BufferDescription.ByteWidth = m_DataSize * indices.GetNodeHierachy()[indices.GetID()].GetElementStride();
+	m_BufferDescription.StructureByteStride = sizeof(unsigned int); // Should always be using unsigned ints
+	m_BufferInputHandle.pSysMem = indices.GetNodePointer();
 	CreateBuffer();
 }
 

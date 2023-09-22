@@ -56,11 +56,6 @@ narray<T>::~narray()
 {
 	if (m_Ptr)
 	{
-		//for (unsigned int index = 0; index < narray<T>::m_Size; index++)
-		//{
-		//	narray<T>::m_Ptr[index].~T();
-		//}
-
 		if (Memory::FreeMemory(m_Ptr, m_Stride * m_AllocatedSize, m_Tag))
 		{
 			m_Size = 0;
@@ -99,7 +94,7 @@ narray<T>::narray(const narray& arr)
 		m_Stride = arr.m_Stride;
 		m_AllocatedSize = arr.m_AllocatedSize;
 		m_Ptr = Memory::AllocateMemory<T>(arr.m_Stride * arr.m_AllocatedSize, m_Tag);
-		if (!Memory::CopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
+		if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
 		{
 			ICS_ERROR("narray: Could not copy memory on narray& copy construction");
 			Memory::FreeMemory(arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize, m_Tag);
@@ -111,14 +106,12 @@ narray<T>::narray(const narray& arr)
 template<typename T>
 narray<T>::narray(narray&& arr) noexcept
 {
-	// Move contructor, should delete the coped
 	m_Tag = arr.m_Tag;
 	m_Ptr = arr.m_Ptr;
 	m_Size = arr.m_Size;
 	m_Stride = arr.m_Stride;
 	m_AllocatedSize = arr.m_AllocatedSize;
 
-	arr.m_Tag = 0;
 	arr.m_Size = 0;
 	arr.m_Stride = 0;
 	arr.m_Ptr = nullptr;
@@ -187,6 +180,7 @@ narray<T>& narray<T>::operator=(const narray& arr)
 template<typename T>
 narray<T>& narray<T>::operator=(narray&& arr) noexcept
 {
+	m_Tag = arr.m_Tag;
 	m_Ptr = arr.m_Ptr;
 	m_Size = arr.m_Size;
 	m_Stride = arr.m_Stride;
@@ -243,15 +237,8 @@ bool narray<T>::operator!= (const narray<T>& rhs)
 template<typename T>
 T& narray<T>::operator[] (unsigned int index)
 {
-	if (index < m_Size && m_Ptr != nullptr) 
-	{
-		return m_Ptr[index];
-	}
-	else 
-	{ 
-		ICS_ERROR("narray: Trying to access non-existant element: [Size: %i, Index: %i]", m_Size, index); 
-		return m_Ptr[0];
-	}
+	ICS_ASSERT_MSG(index < m_Size&& m_Ptr != nullptr, "narray: Trying to access non-existant element");
+	return m_Ptr[index];
 }
 
 template<typename T>

@@ -6,6 +6,12 @@ Square::Square()
 	FindIndices();
 	FindNormals();
 
+	Indices::Hierachy hierachy;
+	hierachy.PushNodeToHierachy(2u, 0u, Indices::Type::TriangleList);
+
+	m_Indexing = Indices(hierachy);
+	m_Indexing.GetBuffer().PushNodeToBuffer(m_Indices[0]);
+
 	m_Interleaved.GetBuffer().PushVertexToBuffer(m_Vertices[0], m_Normals[0]);
 	m_Interleaved.GetBuffer().PushVertexToBuffer(m_Vertices[1], m_Normals[0]);
 	m_Interleaved.GetBuffer().PushVertexToBuffer(m_Vertices[2], m_Normals[0]);

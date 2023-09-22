@@ -86,7 +86,7 @@ void darray<T>::PopAtStart()
 {
 	if (narray<T>::m_Ptr == nullptr) { ICS_ERROR("darray: Trying to pop at start of nullptr") }
 	// Should move everything down, can shuffle freed memory to the end
-	else if (Memory::CopyMemoryBlock(narray<T>::m_Ptr, narray<T>::m_Ptr + 1, narray<T>::m_Stride * (narray<T>::m_Size - 1)))
+	else if (Memory::DeepCopyMemoryBlock(narray<T>::m_Ptr, narray<T>::m_Ptr + 1, narray<T>::m_Stride * (narray<T>::m_Size - 1)))
 	{
 		narray<T>::m_Size--;
 	}
@@ -109,9 +109,7 @@ void darray<T>::PushToEnd(T in)
 		// Need to increase the size of the allocated memory
 		narray<T>::m_AllocatedSize += (unsigned int)std::ceil(narray<T>::m_Size * m_AllocatedFactor);
 		T* ptr = Memory::AllocateMemory<T>(narray<T>::m_Stride * narray<T>::m_AllocatedSize, narray<T>::m_Tag);
-		*ptr = *narray<T>::m_Ptr;
-		//if (Memory::CopyMemoryBlock(ptr, narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size))
-		//{
+		if (Memory::DeepCopyMemoryBlock(ptr, narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size))
 			if (Memory::FreeMemory(narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size, narray<T>::m_Tag))
 			{
 				narray<T>::m_Ptr = ptr;
@@ -122,12 +120,12 @@ void darray<T>::PushToEnd(T in)
 				return;
 			}
 		
-		//}
-		//else 
-		//{ 
-		//	ICS_ERROR("darray: Could not copy original memory on size reallocation during push to emd"); 
-		//	return; 
-		//}
+		
+		else 
+		{ 
+			ICS_ERROR("darray: Could not copy original memory on size reallocation during push to emd"); 
+			return; 
+		}
 	}
 
 	narray<T>::m_Ptr[narray<T>::m_Size] = in;
@@ -148,7 +146,7 @@ void darray<T>::PushToStart(T in)
 		narray<T>::m_AllocatedSize += (unsigned int)std::ceil(narray<T>::m_Size * m_AllocatedFactor);
 		T* ptr = Memory::AllocateMemory<T>(narray<T>::m_Stride * narray<T>::m_AllocatedSize, narray<T>::m_Tag);
 
-		if (Memory::CopyMemoryBlock(ptr + 1, narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size))
+		if (Memory::DeepCopyMemoryBlock(ptr + 1, narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size))
 		{
 			Memory::FreeMemory(narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size, narray<T>::m_Tag);
 			narray<T>::m_Ptr = ptr;
@@ -185,7 +183,7 @@ void darray<T>::PopAt(unsigned int index)
 		return; 
 	}
 
-	if (Memory::CopyMemoryBlock(narray<T>::m_Ptr + index, narray<T>::m_Ptr + index + 1, narray<T>::m_Stride * (narray<T>::m_Size - index)))
+	if (Memory::DeepCopyMemoryBlock(narray<T>::m_Ptr + index, narray<T>::m_Ptr + index + 1, narray<T>::m_Stride * (narray<T>::m_Size - index)))
 	{
 		narray<T>::m_Size--;
 	}
@@ -226,9 +224,9 @@ void darray<T>::PushAt(T in, unsigned int index)
 		narray<T>::m_AllocatedSize += (unsigned int)std::ceil(narray<T>::m_Size * m_AllocatedFactor);
 		T* ptr = Memory::AllocateMemory<T>(narray<T>::m_Stride * narray<T>::m_AllocatedSize, narray<T>::m_Tag);
 
-		if (Memory::CopyMemoryBlock(ptr, narray<T>::m_Ptr, narray<T>::m_Stride * (narray<T>::m_Size - index)))
+		if (Memory::DeepCopyMemoryBlock(ptr, narray<T>::m_Ptr, narray<T>::m_Stride * (narray<T>::m_Size - index)))
 		{
-			if (Memory::CopyMemoryBlock(ptr + index + 1, narray<T>::m_Ptr + index, narray<T>::m_Stride * (narray<T>::m_Size - index)))
+			if (Memory::DeepCopyMemoryBlock(ptr + index + 1, narray<T>::m_Ptr + index, narray<T>::m_Stride * (narray<T>::m_Size - index)))
 			{
 				if (Memory::FreeMemory(narray<T>::m_Ptr, narray<T>::m_Stride * narray<T>::m_Size, narray<T>::m_Tag))
 				{
@@ -254,9 +252,9 @@ void darray<T>::PushAt(T in, unsigned int index)
 	}
 	else
 	{
-		if (Memory::CopyMemoryBlock(narray<T>::m_Ptr, narray<T>::m_Ptr, narray<T>::m_Stride * (narray<T>::m_Size - index)))
+		if (Memory::DeepCopyMemoryBlock(narray<T>::m_Ptr, narray<T>::m_Ptr, narray<T>::m_Stride * (narray<T>::m_Size - index)))
 		{
-			if (Memory::CopyMemoryBlock(narray<T>::m_Ptr + index + 1, narray<T>::m_Ptr + index, narray<T>::m_Stride * (narray<T>::m_Size - index)))
+			if (Memory::DeepCopyMemoryBlock(narray<T>::m_Ptr + index + 1, narray<T>::m_Ptr + index, narray<T>::m_Stride * (narray<T>::m_Size - index)))
 			{
 				narray<T>::m_Ptr[index] = in;
 				narray<T>::m_Size++;

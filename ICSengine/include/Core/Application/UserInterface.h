@@ -2,7 +2,7 @@
 
 #include "Containers/array/darray.h"
 #include "Core/Application/Application.h"
-#include "Graphics/RenderFront/Scene/Scene.h"
+#include "Graphics/RenderFront/Structure/Scene/Scene.h"
 
 class UserInterface
 {

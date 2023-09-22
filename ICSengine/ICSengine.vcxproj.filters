@@ -212,10 +212,10 @@
     <ClInclude Include="include\Graphics\RenderFront\Spatial\Transformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Graphics\RenderFront\Scene\Scene.h">
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Scene\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Graphics\RenderFront\Scene\Node.h">
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Scene\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Graphics\RenderFront\Shader\Vertex.h">
@@ -239,13 +239,13 @@
     <ClInclude Include="include\Core\Geometry\Square.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Graphics\RenderFront\Scene\Mesh.h">
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Scene\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Graphics\RenderFront\Buffers\Vertices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Graphics\RenderFront\Scene\Root.h">
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Scene\Root.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Graphics\RenderBack\DirectX11\Buffer.h">
@@ -267,6 +267,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Platform\EventOwner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Layers\Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Layers\WorldSpace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\RenderFront\Structure\Layers\SkyBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

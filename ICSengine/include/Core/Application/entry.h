@@ -14,13 +14,6 @@ int main(void)
 {
 	Square sqr;
 	
-	Indices::Hierachy hierachy;
-	hierachy.PushNodeToHierachy(2u, 0u, Indices::Type::TriangleList);
-	hierachy.PushNodeToHierachy(5u, 0u, Indices::Type::TriangleList);
-	
-	Indices indices(hierachy);
-	indices.GetBuffer().PushNodeToBuffer(sqr.GetIndices()[0]);
-	
 	Application app;
 	app.RunApplication(GetUserInstance());
 

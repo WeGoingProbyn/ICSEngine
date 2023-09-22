@@ -25,6 +25,8 @@ public:
 	static bool FreeMemory(T* ptr, unsigned int size, MemoryType type);
 	template<typename T>
 	static bool CopyMemoryBlock(T* dest, const T* src, unsigned int size);
+	template<typename T>
+	static bool DeepCopyMemoryBlock(T* dest, const T* src, unsigned int size);
 public:
 	bool m_Initialised;
 };
@@ -102,6 +104,21 @@ bool Memory::CopyMemoryBlock(T* dest, const T* src, unsigned int size)
 	else
 	{
 		Platform::PlatformMemoryCopy<T>(dest, src, size);
+		return true;
+	}
+}
+
+template<typename T>
+bool Memory::DeepCopyMemoryBlock(T* dest, const T* src, unsigned int size)
+{
+	if (dest == nullptr || src == nullptr || size < 1)
+	{
+		ICS_ERROR("Memory: Trying to deep copy memory of size %i using nullptr as the %s", size, dest == nullptr ? "dest" : "src");
+		return false;
+	}
+	else
+	{
+		Platform::PlatformMemoryDeepCopy<T>(dest, src, size);
 		return true;
 	}
 }

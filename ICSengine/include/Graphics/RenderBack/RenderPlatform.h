@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Defines.h"
-#include "Graphics/RenderFront/Scene/Scene.h"
+#include "Graphics/RenderFront/Structure/Scene/Scene.h"
 
 class RenderPlatform
 {
