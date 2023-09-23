@@ -11,7 +11,7 @@ public:
 
 	darray();
 	~darray();
-	//darray(T in);
+	darray(MemoryType type);
 	
 	void Resize(unsigned int size);
 	void PopAtEnd() ;

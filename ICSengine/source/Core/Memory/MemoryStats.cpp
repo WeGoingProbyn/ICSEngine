@@ -22,13 +22,10 @@ const char* MemoryStats::Strings[static_cast<unsigned int>(MemoryType::MAX_TERMS
 		"ICS_ARRAY		",
 		"ICS_DARRAY		",
 		"ICS_STRING		",
-		"ICS_VECTOR		",
-		"ICS_SCENE		",
-		"ICS_MODEL		",
 		"ICS_TEXTURE		",
 		"ICS_RENDERER		",
-		"ICS_TRANSFORM		",
-		"ICS_MODEL_NODE		",
+		"ICS_MODEL		",
+		"ICS_SCENE		",
 		"ICS_APPLICATION	",
 };
 

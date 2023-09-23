@@ -65,6 +65,13 @@ const Indices& Indices::operator=(const Indices& rhs)
 Indices::IndexBuffer::IndexBuffer(Hierachy& hierachy)
 	:
 	m_Hierachy(hierachy),
-	m_TotalBufferedNodes(0u)
+	m_TotalBufferedNodes(0u),
+	m_ByteBlob(MemoryType::ICS_MODEL)
+{
+}
+
+Indices::Hierachy::Hierachy()
+	:
+	m_IndexHierachy(MemoryType::ICS_MODEL)
 {
 }

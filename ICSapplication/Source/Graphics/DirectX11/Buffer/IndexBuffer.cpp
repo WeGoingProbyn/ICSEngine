@@ -1,4 +1,4 @@
-#include "Graphics/DirectX11/IndexBuffer.h"
+#include "Graphics/DirectX11/Buffer/IndexBuffer.h"
 
 #include "Graphics/DirectX11/RenderDirectX11.h"
 

@@ -6,8 +6,8 @@
 
 MouseEvents::MouseEvents()
 	:
-	m_MouseMoveBuffer(darray<Event>()),
-	m_MouseEventBuffer(darray<Event>())
+	m_MouseMoveBuffer(MemoryType::ICS_APPLICATION),
+	m_MouseEventBuffer(MemoryType::ICS_APPLICATION)
 {
 	m_MouseButtons[0] = false;
 	m_MouseButtons[1] = false;

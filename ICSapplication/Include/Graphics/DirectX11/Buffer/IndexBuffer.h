@@ -3,7 +3,7 @@
 #include <Containers/Spatial/Vector.h>
 #include <Core/Structures/Buffers/Indices.h>
 
-#include "Graphics/DirectX11/Buffer.h"
+#include "Graphics/DirectX11/Buffer/Buffer.h"
 
 
 class IndexBuffer : public Buffer 

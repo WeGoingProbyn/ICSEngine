@@ -1,18 +1,21 @@
 #pragma once
 
 #include "Application/Application.h"
-#include "Application/UserInterface.h"
 
-extern UserInterface& GetUserInstance();
+namespace ICS
+{
+	extern Application* CreateApplication();
+	extern void DestroyApplication(Application* app);
+}
 
 // Main entry point for application
 int main(void)
 {
-	Application app;
-	app.RunApplication(GetUserInstance());
+	Application* app = ICS::CreateApplication();
+	app->RunApplication();
+	ICS::DestroyApplication(app);
 
 #ifdef _DEBUG
-	app.~Application();
 	MemoryStats::CheckMemoryForShutdown();
 #endif
 

@@ -1,4 +1,4 @@
-#include "Graphics/DirectX11/Buffer.h"
+#include "Graphics/DirectX11/Buffer/Buffer.h"
 
 #include "Graphics/DirectX11/RenderDirectX11.h"
 

@@ -137,6 +137,8 @@ constexpr unsigned int Vertices::Layout::Element::SizeOfElement(Vertices::Type t
 
 template<typename... Types>
 Vertices::Layout::Layout(Types... args)
+	:
+	m_VertexStructure(MemoryType::ICS_MODEL)
 {
 	//ICS_ASSERT_MSG(std::is_convertible<Types, Vertices::Layout::Element::Type>::value, "Vertices: Type mismatch on layout construction");
 	(PushTypeToEnd(static_cast<Vertices::Type>(args)), ...);

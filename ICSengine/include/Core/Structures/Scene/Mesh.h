@@ -9,8 +9,8 @@ class Mesh
 {
 public:
 	ICS_API Mesh();
+	inline Indices& GetIndices() { return m_Indexing; }
 	inline Vertices& GetInterleaved() { return m_Interleaved; }
-	inline darray< darray<Vector<unsigned int, 3>>>& GetIndices() { return m_Indices; }
 protected:
 	Indices m_Indexing;
 	Vertices m_Interleaved;

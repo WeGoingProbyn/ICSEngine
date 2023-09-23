@@ -2,8 +2,8 @@
 
 EventListener::EventListener()
 	:
-	m_ActiveKeys(),
-	m_ActiveEvents()
+	m_ActiveKeys(MemoryType::ICS_APPLICATION),
+	m_ActiveEvents(MemoryType::ICS_APPLICATION)
 {
 }
 

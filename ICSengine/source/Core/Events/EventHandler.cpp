@@ -5,7 +5,7 @@ EventHandler::EventHandler()
 	m_KeyEvents(),
 	m_MouseEvents(),
 	m_StateEvents(),
-	m_Listeners()
+	m_Listeners(MemoryType::ICS_APPLICATION)
 {
 
 }

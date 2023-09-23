@@ -1,7 +1,7 @@
 #include "Graphics/DirectX11/RenderDirectX11.h"
 
 
-RenderDirectX11::RenderDirectX11(int width, int height, HWND& window) {
+RenderDirectX11::RenderDirectX11(int width, int height, void* window) {
 	m_WindowSize(0) = width;
 	m_WindowSize(1) = height;
 	StateAccess::GetInstance().m_SwapChainDesc.BufferDesc.Width = 0;
@@ -17,7 +17,7 @@ RenderDirectX11::RenderDirectX11(int width, int height, HWND& window) {
 	StateAccess::GetInstance().m_SwapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	StateAccess::GetInstance().m_SwapChainDesc.BufferCount = 2u;
 	StateAccess::GetInstance().m_SwapChainDesc.Windowed = TRUE;
-	StateAccess::GetInstance().m_SwapChainDesc.OutputWindow = window;
+	StateAccess::GetInstance().m_SwapChainDesc.OutputWindow = (HWND&)window;
 	StateAccess::GetInstance().m_SwapChainDesc.Flags = 0;
 
 	UINT CheckDebugCreateFlags = 0u;
@@ -135,15 +135,16 @@ bool RenderDirectX11::IndexDrawCall()
 	//CHECK_INFO_QUEUE(m_DeviceContext->DrawIndexed(count, 0u, 0u), GetDXGIEvents());
 }
 
-bool RenderDirectX11::DrawScene(Scene& scene)
+bool RenderDirectX11::DrawClear()
 {
 	if (!FlipFrameBuffers()) { return false; }
-	
-	//for (Root& root : scene.GetRoots())
-	//{
-	//	m_VertexBuffers.PushToEnd(VertexBuffer(root.GetMesh().GetInterleaved()));
-	//}
 
+	return true;
+}
+
+bool RenderDirectX11::DrawLayer(Layer& layer)
+{
+	if (!FlipFrameBuffers()) { return false; }
 
 	return true;
 }

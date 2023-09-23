@@ -3,8 +3,8 @@
 
 KeyEvents::KeyEvents()
 	:
-	m_KeyEventBuffer(),
-	m_KeyStates(narray<bool>(static_cast<unsigned int>(ICS_KeyCodes::KEYS_MAX_KEYS)))
+	m_KeyEventBuffer(MemoryType::ICS_APPLICATION),
+	m_KeyStates(narray<bool>(static_cast<unsigned int>(ICS_KeyCodes::KEYS_MAX_KEYS), MemoryType::ICS_APPLICATION))
 {
 }
 

@@ -13,6 +13,7 @@ narray<T>::narray()
 	m_Ptr = nullptr;
 	m_Stride = sizeof(T);
 	m_AllocatedSize = m_Size;
+
 	m_Tag = MemoryType::ICS_ARRAY;
 }
 
@@ -23,6 +24,17 @@ narray<T>::narray(unsigned int size)
 	m_Stride = sizeof(T);
 	m_AllocatedSize = m_Size;
 	m_Tag = MemoryType::ICS_ARRAY;
+	m_Ptr = Memory::AllocateMemory<T>(m_Stride * m_AllocatedSize, m_Tag);
+	if (m_Ptr == nullptr) { ICS_ERROR("narray: Allocated pointer returned as nullptr"); }
+}
+
+template<typename T>
+narray<T>::narray(unsigned int size, MemoryType type)
+{
+	m_Tag = type;
+	m_Size = size;
+	m_Stride = sizeof(T);
+	m_AllocatedSize = m_Size;
 	m_Ptr = Memory::AllocateMemory<T>(m_Stride * m_AllocatedSize, m_Tag);
 	if (m_Ptr == nullptr) { ICS_ERROR("narray: Allocated pointer returned as nullptr"); }
 }
@@ -80,12 +92,11 @@ narray<T>::narray(const narray& arr)
 	// Copy constructor, no need to destroy the copied.
 	if (arr.m_Size == 0 || arr.m_Ptr == nullptr) 
 	{ 
-		ICS_WARN("narray: Trying to copy construct narray& using non existant memory"); 
 		m_Size = 0;
 		m_Stride = 0;
 		m_Ptr = nullptr;
 		m_AllocatedSize = 0;
-		m_Tag = MemoryType::UNKNOWN;
+		m_Tag = arr.m_Tag;
 	}
 	else
 	{
@@ -138,7 +149,7 @@ narray<T>& narray<T>::operator=(const narray& arr)
 			// Can only deep copy if sizes are equal
 			if (m_AllocatedSize == arr.m_AllocatedSize)
 			{
-				if (!Memory::CopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
+				if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
 				{
 					ICS_ERROR("narray: Could not copy memory on copy assignment");
 				}
@@ -161,7 +172,7 @@ narray<T>& narray<T>::operator=(const narray& arr)
 			{
 				ICS_WARN("narray: Allocated pointer returned nullptr on copy assignment");
 			}
-			else if (!Memory::CopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
+			else if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
 			{
 				ICS_ERROR("narray: Could not copy memory on copy assignment");
 				Memory::FreeMemory(m_Ptr, m_Stride * m_AllocatedSize, m_Tag);

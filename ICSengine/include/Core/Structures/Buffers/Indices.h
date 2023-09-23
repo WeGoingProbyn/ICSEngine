@@ -30,14 +30,16 @@ public:
 				m_Root(0u),
 				m_Offset(offset), 
 				m_BlockSize(size), 
-				m_PrimitiveType(type) 
+				m_PrimitiveType(type),
+				m_Nodes(MemoryType::ICS_MODEL)
 			{}
 			Element(unsigned int id, unsigned int offset, unsigned int size, unsigned int root, Indices::Type type) :
 				m_ID(id), 
 				m_Root(root), 
 				m_Offset(offset), 
 				m_BlockSize(size), 
-				m_PrimitiveType(type)
+				m_PrimitiveType(type),
+				m_Nodes(MemoryType::ICS_MODEL)
 			{}
 
 			~Element()
@@ -65,7 +67,7 @@ public:
 			Indices::Type m_PrimitiveType;
 		};
 	public:
-		ICS_API Hierachy() {}
+		ICS_API Hierachy();
 
 		//template<typename... Types>
 		//Hierachy(Types&&... args);
@@ -75,6 +77,7 @@ public:
 		ICS_API inline Element& operator[](unsigned int index) { return m_IndexHierachy[index]; }
 		ICS_API void PushNodeToHierachy(unsigned int size, unsigned int root_id, Indices::Type type);
 	private:
+		unsigned int m_UniqueRoots;
 		darray<Element> m_IndexHierachy;
 	};
 
@@ -91,6 +94,7 @@ public:
 		inline unsigned int GetID() { return m_ID; }
 		inline const char* GetNodePointer() const { return m_Ptr; }
 		inline Indices::Hierachy& GetNodeHierachy() { return m_Hierachy; }
+		inline darray<unsigned int>& GetNodes() { return m_Hierachy[m_ID].GetNodeIDs(); }
 	private:
 		template<typename Dest, typename Src>
 		bool SetNodeValue(char* ptr, darray<Src>&& value);
@@ -104,7 +108,7 @@ public:
 	class IndexBuffer
 	{
 	public:
-		ICS_API IndexBuffer() : m_TotalBufferedNodes(0u) {}
+		ICS_API IndexBuffer() : m_ByteBlob(MemoryType::ICS_MODEL), m_TotalBufferedNodes(0u) {}
 		ICS_API IndexBuffer(Hierachy& hierachy);
 
 		ICS_API Node End();

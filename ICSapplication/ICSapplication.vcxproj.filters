@@ -21,9 +21,6 @@
     <ClInclude Include="Include\Application\entry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Application\UserInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Graphics\RenderPlatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,28 +54,37 @@
     <ClInclude Include="Include\Platform\PlatformWin32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\DirectX11\Buffer.h">
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\DirectX11\DepthStencil.h">
+    <ClInclude Include="Include\Graphics\DirectX11\State\DepthStencil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\DirectX11\IndexBuffer.h">
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\DirectX11\Rasterizer.h">
+    <ClInclude Include="Include\Graphics\DirectX11\State\Rasterizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\DirectX11\VertexBuffer.h">
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Include\Graphics\DirectX11\RenderDirectX11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Graphics\DirectX11\ViewPort.h">
+    <ClInclude Include="Include\Graphics\DirectX11\State\ViewPort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\AppDefines.h">
+    <ClInclude Include="Include\Layers\Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Layers\LayerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Layers\SkyBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Layers\WorldSpace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,25 +92,25 @@
     <ClCompile Include="Source\Application\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\Buffer.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\DepthStencil.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\State\DepthStencil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\IndexBuffer.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\Rasterizer.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\State\Rasterizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\RenderDirectX11.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\RenderDirectX11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\VertexBuffer.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\ViewPort.cpp">
+    <ClCompile Include="Source\Graphics\DirectX11\State\ViewPort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\RenderPlatform.cpp">
@@ -117,6 +123,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Platform\PlatformWin32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Layers\LayerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Layers\WorldSpace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

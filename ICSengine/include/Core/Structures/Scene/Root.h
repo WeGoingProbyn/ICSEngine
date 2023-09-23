@@ -6,9 +6,8 @@
 class Root : public Node
 {
 public:
-	Root() {}
-
-	inline Mesh& GetMesh() { return m_Mesh; }
+	ICS_API Root();
+	ICS_API Root(Mesh& mesh);
 private:
 	Mesh m_Mesh;
 };

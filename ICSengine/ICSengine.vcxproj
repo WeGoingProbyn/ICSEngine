@@ -155,9 +155,9 @@
     <ClCompile Include="source\Core\Events\KeyEvents.cpp" />
     <ClCompile Include="source\Core\Events\MouseEvents.cpp" />
     <ClCompile Include="source\Core\Events\StateEvent.cpp" />
-    <ClCompile Include="source\Core\Geometry\Cube.cpp" />
-    <ClCompile Include="source\Core\Geometry\Geometry.cpp" />
-    <ClCompile Include="source\Core\Geometry\Square.cpp" />
+    <ClCompile Include="source\Core\Structures\Geometry\Cube.cpp" />
+    <ClCompile Include="source\Core\Structures\Geometry\Geometry.cpp" />
+    <ClCompile Include="source\Core\Structures\Geometry\Square.cpp" />
     <ClCompile Include="source\Core\Memory\Memory.cpp" />
     <ClCompile Include="source\Core\Memory\MemoryStats.cpp" />
   </ItemGroup>
@@ -180,18 +180,16 @@
     <ClInclude Include="include\Core\Events\KeyEvents.h" />
     <ClInclude Include="include\Core\Events\MouseEvents.h" />
     <ClInclude Include="include\Core\Events\StateEvents.h" />
-    <ClInclude Include="include\Core\Geometry\Cube.h" />
-    <ClInclude Include="include\Core\Geometry\Geometry.h" />
-    <ClInclude Include="include\Core\Geometry\Square.h" />
+    <ClInclude Include="include\Core\Structures\Buffers\Shaders.h" />
+    <ClInclude Include="include\Core\Structures\Geometry\Cube.h" />
+    <ClInclude Include="include\Core\Structures\Geometry\Geometry.h" />
+    <ClInclude Include="include\Core\Structures\Geometry\Square.h" />
     <ClInclude Include="include\Core\Memory\Memory.h" />
     <ClInclude Include="include\Core\Memory\MemoryPlatform.h" />
     <ClInclude Include="include\Core\Memory\MemoryStats.h" />
     <ClInclude Include="include\Core\Memory\MemoryTypes.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Indices.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Vertices.h" />
-    <ClInclude Include="include\Core\Structures\Layers\Layer.h" />
-    <ClInclude Include="include\Core\Structures\Layers\SkyBox.h" />
-    <ClInclude Include="include\Core\Structures\Layers\WorldSpace.h" />
     <ClInclude Include="include\Core\Structures\Scene\Mesh.h" />
     <ClInclude Include="include\Core\Structures\Scene\Node.h" />
     <ClInclude Include="include\Core\Structures\Scene\Root.h" />

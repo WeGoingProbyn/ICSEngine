@@ -1,14 +1,15 @@
 #include "Application/Application.h"
+#include "Layers/WorldSpace.h"
 
 #include <Core/Debugger/Logger.h>
+#include <Core/Structures/Geometry/Square.h>
 
 Application::Application() 
 	:
-	m_Render(RenderDirectX11(m_Platform.GetConfig().width, m_Platform.GetConfig().height, (HWND&)m_Platform.GetPlatformHandle().InternalHandle))
+	m_Render(m_Platform.GetConfig().width, m_Platform.GetConfig().height, m_Platform.GetPlatformHandle().InternalHandle)
 {
 	m_ShouldRun = true;
 	m_ShouldPause = false;
-
 	ICS_INFO("Application created");
 }
 
@@ -19,11 +20,8 @@ Application::~Application()
 	ICS_INFO("Application destroyed");
 }
 
-bool Application::RunApplication(UserInterface& logic)
+bool Application::RunApplication()
 {
-	// TODO: Temporary
-	Scene scene;
-
 	// NOTE: This is the main application loop the user will be able to hook into
 	// NOTE: the loop and define custom logic therein. The start should handle all
 	// NOTE: subsystem management and initialisation.
@@ -31,9 +29,6 @@ bool Application::RunApplication(UserInterface& logic)
 	// NOTE: This is the actual game loop, the message queue is read
 	// NOTE: and events distributed, any actual live logic is held within 
 
-	m_Platform.GetEventHandler().RegisterListener(*this);
-	RegisterEvent(EventListener::EventTypes::ICS_APPLICATION_QUIT, ICS_KeyCodes::KEY_ESCAPE, ICS_KeyCodes::KEY_F9);
-	RegisterEvent(EventListener::EventTypes::ICS_MEMORY_QUERY_ALLOC, ICS_KeyCodes::KEY_F1);
 
 	while (m_ShouldRun)
 	{
@@ -46,16 +41,16 @@ bool Application::RunApplication(UserInterface& logic)
 		{ 
 			continue; 
 		}
-		if (!logic.Update(0.0f)) 
+		if (!Update(0.0f)) 
 		{
 			ICS_ERROR("Application: Could not find user defined update logic")
 		}
 
 		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
-
-		//Scene scene;// = logic.GetSceneFromQueue();
-		m_Render.DrawScene(scene);
+		m_Render.DrawClear();
 	}
+
+	m_Layers.PopLayer<WorldSpace>();
 
 	// NOTE: This is the end of the application life, all deallocations
 	// NOTE: and destructors should be called below. Or can be handled

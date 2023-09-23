@@ -133,18 +133,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Include\AppDefines.h" />
     <ClInclude Include="Include\Application\Application.h" />
     <ClInclude Include="Include\Application\entry.h" />
-    <ClInclude Include="Include\Application\UserInterface.h" />
-    <ClInclude Include="Include\Graphics\DirectX11\Buffer.h" />
-    <ClInclude Include="Include\Graphics\DirectX11\DepthStencil.h" />
-    <ClInclude Include="Include\Graphics\DirectX11\IndexBuffer.h" />
-    <ClInclude Include="Include\Graphics\DirectX11\Rasterizer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\Buffer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\State\DepthStencil.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\IndexBuffer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\State\Rasterizer.h" />
     <ClInclude Include="Include\Graphics\DirectX11\RenderDirectX11.h" />
-    <ClInclude Include="Include\Graphics\DirectX11\VertexBuffer.h" />
-    <ClInclude Include="Include\Graphics\DirectX11\ViewPort.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\VertexBuffer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\State\ViewPort.h" />
     <ClInclude Include="Include\Graphics\RenderPlatform.h" />
+    <ClInclude Include="Include\Layers\Layer.h" />
+    <ClInclude Include="Include\Layers\LayerManager.h" />
+    <ClInclude Include="Include\Layers\SkyBox.h" />
+    <ClInclude Include="Include\Layers\WorldSpace.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\Layer.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\SkyBox.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\WorldSpace.h" />
@@ -158,14 +160,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application\Application.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\Buffer.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\DepthStencil.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\IndexBuffer.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\Rasterizer.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\RenderDirectX11.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\VertexBuffer.cpp" />
-    <ClCompile Include="Source\Graphics\RenderBack\DirectX11\ViewPort.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\Buffer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\State\DepthStencil.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\State\Rasterizer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\RenderDirectX11.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\VertexBuffer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\State\ViewPort.cpp" />
     <ClCompile Include="Source\Graphics\RenderPlatform.cpp" />
+    <ClCompile Include="Source\Layers\LayerManager.cpp" />
+    <ClCompile Include="Source\Layers\WorldSpace.cpp" />
     <ClCompile Include="Source\Platform\EventOwner.cpp" />
     <ClCompile Include="Source\Platform\Platform.cpp" />
     <ClCompile Include="Source\Platform\PlatformWin32.cpp" />

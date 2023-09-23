@@ -29,6 +29,14 @@ darray<T>::darray()
 }
 
 template<typename T>
+darray<T>::darray(MemoryType type)
+	:
+	m_AllocatedFactor(0.5f),
+	narray<T>(type)
+{
+}
+
+template<typename T>
 darray<T>::~darray() 
 {
 	m_AllocatedFactor = 0.0f;

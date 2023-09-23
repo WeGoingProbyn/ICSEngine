@@ -35,8 +35,9 @@ public:
 
 	narray();
 	~narray();
-	narray(unsigned int size);
 	narray(MemoryType type);
+	narray(unsigned int size);
+	narray(unsigned int size, MemoryType type);
 	narray(const narray& arr);
 	narray(narray&& arr) noexcept;
 	narray& operator=(const narray& arr);
@@ -58,6 +59,7 @@ public:
 	char* GetArrayPrintable();
 	inline unsigned int Size() { return m_Size; }
 	inline unsigned int Last() { return m_Size - 1; }
+
 protected:
 	T* m_Ptr;
 	MemoryType m_Tag;

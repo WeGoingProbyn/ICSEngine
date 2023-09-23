@@ -3,7 +3,7 @@
 
 StateEvents::StateEvents()
 	:
-	m_StateEventBuffer(darray<Event>())
+	m_StateEventBuffer(MemoryType::ICS_APPLICATION)
 {
 }
 

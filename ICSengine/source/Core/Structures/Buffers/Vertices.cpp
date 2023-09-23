@@ -44,11 +44,14 @@ Vertices::Vertex::Vertex(char* ptr, Vertices::Layout& layout)
 
 Vertices::VertexBuffer::VertexBuffer(Layout layout)
 	:
-	m_Layout(layout)
+	m_Layout(layout),
+	m_ByteBlob(MemoryType::ICS_MODEL)
 {
 }
 
 Vertices::VertexBuffer::VertexBuffer()
+	:
+	m_ByteBlob(MemoryType::ICS_MODEL)
 {
 }
 

@@ -148,6 +148,9 @@
     <ProjectReference Include="..\ICSapplication\ICSapplication.vcxproj">
       <Project>{c7becdc1-da2d-4193-88a9-0e469b37c192}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\ICSengine\ICSengine.vcxproj">
+      <Project>{676482f9-8262-4fd6-8f46-40e5f44bb6be}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

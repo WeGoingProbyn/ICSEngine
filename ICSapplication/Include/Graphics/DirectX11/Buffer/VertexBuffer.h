@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/DirectX11/Buffer.h"
+#include "Graphics/DirectX11//Buffer/Buffer.h"
 
 #include <Core/Structures/Buffers/Vertices.h>
 

@@ -3,24 +3,24 @@
 #include <Defines.h>
 #include <Containers/array/darray.h>
 #include <Containers/Spatial/Vector.h>
-#include <Core/Structures/Scene/Scene.h>
+#include "Layers/Layer.h"
 
 #include "Platform/Platform.h"
 #include "Graphics/RenderPlatform.h"
-#include "Graphics/DirectX11/ViewPort.h"
-#include "Graphics/DirectX11/Rasterizer.h"
-#include "Graphics/DirectX11/DepthStencil.h"
-
-#include "Graphics/DirectX11/IndexBuffer.h"
-#include "Graphics/DirectX11/VertexBuffer.h"
+#include "Graphics/DirectX11/State/ViewPort.h"
+#include "Graphics/DirectX11/State/Rasterizer.h"
+#include "Graphics/DirectX11/State/DepthStencil.h"
 
 class RenderDirectX11 : public RenderPlatform
 {
 public:
 	RenderDirectX11() {}
 	~RenderDirectX11();
-	RenderDirectX11(int width, int height, HWND& window);
-	bool DrawScene(Scene& scene) override;
+	RenderDirectX11(int width, int height, void* window);
+	
+	bool DrawClear() override;
+	bool DrawLayer(Layer& layer) override;
+
 private:
 	bool CreateDepthStencil();
 	bool CreateRasterizer();
@@ -33,14 +33,13 @@ private:
 	bool FlipFrameBuffers();
 	bool BindBackBufferAndClearDepth();
 	bool IndexDrawCall();
+
 private:
 	ViewPort m_ViewPort;
 	Rasterizer m_Rasterizer;
 	DepthStencil m_DepthStencil;
 	Vector<int, 2> m_WindowSize;
 
-	darray<IndexBuffer> m_IndexBuffers;
-	darray<VertexBuffer> m_VertexBuffers;
 public:
 	class StateAccess
 	{
