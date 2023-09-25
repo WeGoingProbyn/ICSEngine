@@ -47,7 +47,10 @@ bool Application::RunApplication()
 		}
 
 		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
-		m_Render.DrawClear();
+		
+		m_Render.BindBackBuffer();
+		m_Layers.Get<WorldSpace>().OnRenderUpdate(m_Render);
+		m_Render.FlipFrameBuffers();
 	}
 
 	m_Layers.PopLayer<WorldSpace>();

@@ -51,6 +51,7 @@ public:
 			inline unsigned int GetID() { return m_ID; }
 			inline unsigned int GetRootID() { return m_Root; }
 			inline unsigned int GetOffset() { return m_Offset; }
+			inline unsigned int GetBlockSize() { return m_BlockSize; }
 			inline Indices::Type GetType() { return m_PrimitiveType; }
 			inline darray<unsigned int>& GetNodeIDs() { return m_Nodes; }
 			inline unsigned int GetEndOfElement() { return m_Offset + GetSize(); }
@@ -95,6 +96,8 @@ public:
 		inline const char* GetNodePointer() const { return m_Ptr; }
 		inline Indices::Hierachy& GetNodeHierachy() { return m_Hierachy; }
 		inline darray<unsigned int>& GetNodes() { return m_Hierachy[m_ID].GetNodeIDs(); }
+
+		inline unsigned int GetSize() { return m_Hierachy[m_ID].GetSize(); }
 	private:
 		template<typename Dest, typename Src>
 		bool SetNodeValue(char* ptr, darray<Src>&& value);

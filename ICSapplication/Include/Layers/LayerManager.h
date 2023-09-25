@@ -27,6 +27,8 @@ public:
 	void QueryAndDestroy(T* type);
 	template<typename First, typename... Rest>
 	void QueryAndDestroy(First* first, Rest*... rest);
+
+	inline darray<Layer*>& GetLayerStack() { return m_LayerStack; }
 private:
 	darray<Layer*> m_LayerStack;
 };
@@ -49,7 +51,7 @@ template<typename T>
 void LayerManager::PushLayerToStack(T* type)
 {
 	ICS_ASSERT_MSG((std::is_base_of<Layer, T>::value), "LayerManager: Trying to push a layer type not derived from Layer base");
-	Layer* ptr = reinterpret_cast<Layer*>(Memory::AllocateMemory<T>(sizeof(T), MemoryType::ICS_RENDERER));
+	Layer* ptr = reinterpret_cast<Layer*>(Memory::AllocateMemory<T>(1u, MemoryType::ICS_RENDERER));
 	m_LayerStack.PushToEnd(ptr);
 }
 
@@ -74,7 +76,7 @@ void LayerManager::PopLayer()
 		T* ptr = dynamic_cast<T*>(m_LayerStack[index]);
 		if (ptr != nullptr)
 		{
-			Memory::FreeMemory(static_cast<T*>(m_LayerStack[index]), sizeof(T), MemoryType::ICS_RENDERER);
+			Memory::FreeMemory(static_cast<T*>(m_LayerStack[index]), 1u, MemoryType::ICS_RENDERER);
 			m_LayerStack.PopAt(index);
 		}
 		else if (index == m_LayerStack.Last())

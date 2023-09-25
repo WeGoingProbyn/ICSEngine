@@ -137,7 +137,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Core\FileIO\FileAsString.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Indices.cpp" />
+    <ClCompile Include="source\Core\Structures\Buffers\Shaders.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Vertices.cpp" />
     <ClCompile Include="source\Core\Structures\Scene\Mesh.cpp" />
     <ClCompile Include="source\Core\Structures\Scene\Node.cpp" />
@@ -164,7 +166,6 @@
   <ItemGroup>
     <ClInclude Include="include\Containers\array\darray.h" />
     <ClInclude Include="include\Containers\Structures\HashMap.h" />
-    <ClInclude Include="include\Containers\array\varray.h" />
     <ClInclude Include="include\Containers\Spatial\Matrix.h" />
     <ClInclude Include="include\Containers\array\narray.h" />
     <ClInclude Include="include\Containers\Spatial\Quaternion.h" />
@@ -194,18 +195,15 @@
     <ClInclude Include="include\Core\Structures\Scene\Node.h" />
     <ClInclude Include="include\Core\Structures\Scene\Root.h" />
     <ClInclude Include="include\Core\Structures\Scene\Scene.h" />
-    <ClInclude Include="include\Core\Structures\Shader\Pixel.h" />
-    <ClInclude Include="include\Core\Structures\Shader\Vertex.h" />
     <ClInclude Include="include\Core\Structures\Spatial\Camera.h" />
     <ClInclude Include="include\Core\Structures\Spatial\Projection.h" />
     <ClInclude Include="include\Core\Structures\Spatial\Transformation.h" />
-    <ClInclude Include="include\Core\Structures\Texture\Texture.h" />
     <ClInclude Include="include\Defines.h" />
+    <ClInclude Include="include\Core\FileIO\FileAsString.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Containers\array\darray.inl" />
     <None Include="include\Containers\array\narray.inl" />
-    <None Include="include\Containers\array\varray.inl" />
     <None Include="include\Containers\Spatial\Matrix.inl" />
     <None Include="include\Containers\Spatial\Vector.inl" />
   </ItemGroup>

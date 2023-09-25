@@ -1,7 +1,8 @@
 #include "Graphics/DirectX11/RenderDirectX11.h"
 
 
-RenderDirectX11::RenderDirectX11(int width, int height, void* window) {
+RenderDirectX11::RenderDirectX11(int width, int height, void* window)
+{
 	m_WindowSize(0) = width;
 	m_WindowSize(1) = height;
 	StateAccess::GetInstance().m_SwapChainDesc.BufferDesc.Width = 0;
@@ -39,18 +40,25 @@ RenderDirectX11::RenderDirectX11(int width, int height, void* window) {
 	ICS_HRESULT_CHECK(StateAccess::GetInstance().m_SwapChain->GetBuffer(0, _uuidof(ID3D11Resource), &StateAccess::GetInstance().m_BackBuffer));
 	ICS_HRESULT_CHECK(StateAccess::GetInstance().m_Device->CreateRenderTargetView(StateAccess::GetInstance().m_BackBuffer.Get(), nullptr, &StateAccess::GetInstance().m_TargetView));
 
+	CreateDepthStencil();
+	CreateRasterizer();
+	CreateViewPort();
+
+	// TODO: This should be done dynamically
 	StateAccess::GetInstance().m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 RenderDirectX11::~RenderDirectX11() {}
 
-bool RenderDirectX11::BindBackBufferAndClearDepth() {
+bool RenderDirectX11::BindBackBufferAndClearDepth() 
+{
 	StateAccess::GetInstance().m_DeviceContext->ClearDepthStencilView(m_DepthStencil.m_DepthStencilTargetView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 	StateAccess::GetInstance().m_DeviceContext->OMSetRenderTargets(1u, StateAccess::GetInstance().m_TargetView.GetAddressOf(), m_DepthStencil.m_DepthStencilTargetView.Get());
 	return true;
 }
 
-bool RenderDirectX11::FlipFrameBuffers() {
+bool RenderDirectX11::FlipFrameBuffers()
+{
 	// Vsync, No Flags
 	StateAccess::GetInstance().m_SwapChain->Present(1u, 0u);
 	StateAccess::GetInstance().m_DeviceContext->ClearRenderTargetView(StateAccess::GetInstance().m_TargetView.Get(), Vector<float, 4>(0.0f, 0.0f, 0.0f, 0.0f).C_Arr());
@@ -101,6 +109,7 @@ bool RenderDirectX11::CreateTargetView()
 	ICS_HRESULT_CHECK(StateAccess::GetInstance().m_Device->CreateRasterizerState(&m_Rasterizer.m_RasterDesc, &m_Rasterizer.m_Rasterizer));
 	StateAccess::GetInstance().m_DeviceContext->RSSetState(m_Rasterizer.m_Rasterizer.Get());
 	
+	// TODO: This should be done dynamically using the given Indices object defined within engine
 	StateAccess::GetInstance().m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	return true;
 }
@@ -129,10 +138,30 @@ bool RenderDirectX11::BindBackBuffer()
 	return true;
 }
 
-bool RenderDirectX11::IndexDrawCall() 
-{ 
-	return true;
-	//CHECK_INFO_QUEUE(m_DeviceContext->DrawIndexed(count, 0u, 0u), GetDXGIEvents());
+void RenderDirectX11::BindVertices(Vertices& vertices)
+{
+	m_Vertices = VertexBuffer(vertices);
+	m_Vertices.BindBufferToPipeline();
+}
+
+void RenderDirectX11::BindIndicesNodes(Indices::Node indices)
+{
+	m_Indices = IndexBuffer(indices);
+	m_Indices.BindBufferToPipeline();
+
+	StateAccess::GetInstance().m_DeviceContext->DrawIndexed(6u, 0u, 0u);
+}
+
+void RenderDirectX11::BindPixelShader(String& src)
+{
+	m_PixelShader = PixelShader(src);
+	m_PixelShader.BindShaderToPipeline();
+}
+
+void RenderDirectX11::BindVertexShader(String& src)
+{
+	m_VertexShader = VertexShader(src);
+	m_VertexShader.BindShaderToPipeline();
 }
 
 bool RenderDirectX11::DrawClear()
@@ -142,7 +171,7 @@ bool RenderDirectX11::DrawClear()
 	return true;
 }
 
-bool RenderDirectX11::DrawLayer(Layer& layer)
+bool RenderDirectX11::DrawLayer()
 {
 	if (!FlipFrameBuffers()) { return false; }
 

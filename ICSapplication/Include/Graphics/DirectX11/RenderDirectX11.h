@@ -3,23 +3,42 @@
 #include <Defines.h>
 #include <Containers/array/darray.h>
 #include <Containers/Spatial/Vector.h>
-#include "Layers/Layer.h"
+
+#include <Core/Structures/Buffers/Shaders.h>
+#include <Core/Structures/Buffers/Indices.h>
+#include <Core/Structures/Buffers/Vertices.h>
 
 #include "Platform/Platform.h"
+
 #include "Graphics/RenderPlatform.h"
 #include "Graphics/DirectX11/State/ViewPort.h"
 #include "Graphics/DirectX11/State/Rasterizer.h"
 #include "Graphics/DirectX11/State/DepthStencil.h"
 
+#include "Graphics/DirectX11/Buffer/IndexBuffer.h"
+#include "Graphics/DirectX11/Buffer/VertexBuffer.h"
+
+#include "Graphics/DirectX11/Shader/PixelShader.h"
+#include "Graphics/DirectX11/Shader/VertexShader.h"
+
 class RenderDirectX11 : public RenderPlatform
 {
+	friend class Application;
 public:
 	RenderDirectX11() {}
 	~RenderDirectX11();
 	RenderDirectX11(int width, int height, void* window);
 	
 	bool DrawClear() override;
-	bool DrawLayer(Layer& layer) override;
+	bool DrawLayer() override;
+
+	void BindVertices(Vertices& vertices);
+	void BindIndicesNodes(Indices::Node indices);
+
+	// TODO: This should be done dynamically, all the info is contained
+	//		within the shaders object associated with the mesh being drawn
+	void BindPixelShader(String& src);
+	void BindVertexShader(String& src);
 
 private:
 	bool CreateDepthStencil();
@@ -32,13 +51,19 @@ private:
 	bool RebuildSwapChain();
 	bool FlipFrameBuffers();
 	bool BindBackBufferAndClearDepth();
-	bool IndexDrawCall();
 
 private:
 	ViewPort m_ViewPort;
 	Rasterizer m_Rasterizer;
 	DepthStencil m_DepthStencil;
 	Vector<int, 2> m_WindowSize;
+
+	// TODO: This should maybe be contained within its own class...
+	//		these might also benefit from being darray's..........
+	IndexBuffer m_Indices;
+	VertexBuffer m_Vertices;
+	PixelShader m_PixelShader;
+	VertexShader m_VertexShader;
 
 public:
 	class StateAccess

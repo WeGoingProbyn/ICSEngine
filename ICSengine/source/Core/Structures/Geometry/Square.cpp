@@ -32,9 +32,9 @@ bool Square::FindIndices()
 
 bool Square::FindVertices()
 {
+	m_Vertices.PushToEnd({ 0.0f, 1.0f, 0.0f });
 	m_Vertices.PushToEnd({ 0.0f, 0.0f, 0.0f });
 	m_Vertices.PushToEnd({ 1.0f, 0.0f, 0.0f });
 	m_Vertices.PushToEnd({ 1.0f, 1.0f, 0.0f });
-	m_Vertices.PushToEnd({ 0.0f, 1.0f, 0.0f });
 	return true;
 }

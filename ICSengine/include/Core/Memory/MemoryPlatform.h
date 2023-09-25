@@ -39,7 +39,7 @@ T* MemoryPlatform::PlatformMemoryAllocate(unsigned int size, bool aligned)
 {
 	if (size > 0)
 	{
-		return new T[size / sizeof(T)];
+		return new T[size];
 	}
 	else
 	{

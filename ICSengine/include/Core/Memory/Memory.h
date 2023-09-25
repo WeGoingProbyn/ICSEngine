@@ -35,12 +35,16 @@ public:
 template<typename T>
 T* Memory::AllocateMemory(unsigned int size, MemoryType type)
 {
+	if (type == MemoryType::ICS_APPLICATION)
+	{
+		int x = 0;
+	}
 	if (size == 0) { ICS_WARN("Memory: Trying to allocate memory of size 0"); return nullptr; }
 	if (type == MemoryType::UNKNOWN)
 	{
 		ICS_WARN("Memory: Allocating unkown memory type is ill-advised");
 	}
-	MemoryStats::OnMemoryAssign(size, type);
+	MemoryStats::OnMemoryAssign(size * sizeof(T), type);
 	T* tmp = MemoryPlatform::PlatformMemoryAllocate<T>(size, false);
 	//Memory::ZeroMemoryBlock<T>(tmp, size);
 	return tmp;
@@ -58,7 +62,7 @@ bool Memory::FreeMemory(T* ptr, unsigned int size, MemoryType type)
 	{
 		ICS_WARN("Memory: De-allocated unkown memory type");
 	}
-	MemoryStats::OnMemoryFree(size, type);
+	MemoryStats::OnMemoryFree(size * sizeof(T), type);
 	MemoryPlatform::PlatformMemoryFree<T>(ptr);
 	ptr = nullptr;
 	return true;
@@ -74,7 +78,7 @@ bool Memory::ZeroMemoryBlock(T* ptr, unsigned int size)
 	}
 	else
 	{
-		MemoryPlatform::PlatformMemoryZero<T>(ptr, size);
+		MemoryPlatform::PlatformMemoryZero<T>(ptr, size * sizeof(T));
 		return true;
 	}
 }
@@ -89,7 +93,7 @@ bool Memory::SetMemory(T* dest, int val, unsigned int size)
 	}
 	else
 	{
-		MemoryPlatform::PlatformMemorySet<T>(dest, val, size);
+		MemoryPlatform::PlatformMemorySet<T>(dest, val, size * sizeof(T));
 		return true;
 	}
 }
@@ -104,7 +108,7 @@ bool Memory::CopyMemoryBlock(T* dest, const T* src, unsigned int size)
 	}
 	else
 	{
-		MemoryPlatform::PlatformMemoryCopy<T>(dest, src, size);
+		MemoryPlatform::PlatformMemoryCopy<T>(dest, src, size * sizeof(T));
 		return true;
 	}
 }
@@ -119,7 +123,7 @@ bool Memory::DeepCopyMemoryBlock(T* dest, const T* src, unsigned int size)
 	}
 	else
 	{
-		MemoryPlatform::PlatformMemoryDeepCopy<T>(dest, src, size);
+		MemoryPlatform::PlatformMemoryDeepCopy<T>(dest, src, size * sizeof(T));
 		return true;
 	}
 }

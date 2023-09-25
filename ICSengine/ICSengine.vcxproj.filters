@@ -87,6 +87,12 @@
     <ClCompile Include="source\Core\Structures\Scene\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Core\Structures\Buffers\Shaders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\FileIO\FileAsString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Debugger\Logger.h">
@@ -126,9 +132,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Memory\Memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Containers\array\varray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Events\EventHandler.h">
@@ -179,12 +182,6 @@
     <ClInclude Include="include\Core\Structures\Scene\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Structures\Shader\Pixel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Structures\Shader\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Core\Structures\Buffers\Indices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -200,10 +197,10 @@
     <ClInclude Include="include\Core\Structures\Spatial\Transformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Structures\Texture\Texture.h">
+    <ClInclude Include="include\Core\Structures\Buffers\Shaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Structures\Buffers\Shaders.h">
+    <ClInclude Include="include\Core\FileIO\FileAsString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -212,9 +209,6 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="include\Containers\array\darray.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="include\Containers\array\varray.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="include\Containers\Spatial\Matrix.inl">

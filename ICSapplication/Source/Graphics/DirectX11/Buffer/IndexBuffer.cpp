@@ -10,7 +10,7 @@ IndexBuffer::IndexBuffer(Indices::Node& indices)
 	:
 	Buffer() 
 {
-	m_DataSize = indices.GetNodeHierachy()[indices.GetID()].GetSize();
+	m_DataSize = indices.GetNodeHierachy()[indices.GetID()].GetBlockSize();
 	m_BufferDescription.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	m_BufferDescription.Usage = D3D11_USAGE_IMMUTABLE;	  // No changing
 	m_BufferDescription.CPUAccessFlags = 0u;			  // No CPU access

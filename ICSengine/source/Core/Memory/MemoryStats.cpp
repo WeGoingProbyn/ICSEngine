@@ -18,15 +18,16 @@ unsigned int MemoryStats::allocatedtags[static_cast<unsigned int>(MemoryType::MA
 
 const char* MemoryStats::Strings[static_cast<unsigned int>(MemoryType::MAX_TERMS)] = {
 		"UNKNOWN		",
-		"USER_OWNED		",
+		"ICS_SCENE		",
+		"ICS_MODEL		",
+		"ICS_SHADER		",
+		"ICS_TEXTURE		",
+		"ICS_RENDERER		",
 		"ICS_ARRAY		",
 		"ICS_DARRAY		",
 		"ICS_STRING		",
-		"ICS_TEXTURE		",
-		"ICS_RENDERER		",
-		"ICS_MODEL		",
-		"ICS_SCENE		",
 		"ICS_APPLICATION	",
+		"USER_OWNED		",
 };
 
 bool MemoryStats::CheckMemoryForShutdown()

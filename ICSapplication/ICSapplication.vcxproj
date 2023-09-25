@@ -136,6 +136,9 @@
     <ClInclude Include="Include\Application\Application.h" />
     <ClInclude Include="Include\Application\entry.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\Buffer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Shader\PixelShader.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Shader\Shader.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Shader\VertexShader.h" />
     <ClInclude Include="Include\Graphics\DirectX11\State\DepthStencil.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\IndexBuffer.h" />
     <ClInclude Include="Include\Graphics\DirectX11\State\Rasterizer.h" />
@@ -161,6 +164,9 @@
   <ItemGroup>
     <ClCompile Include="Source\Application\Application.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\Buffer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Shader\PixelShader.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Shader\Shader.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Shader\VertexShader.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\State\DepthStencil.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\State\Rasterizer.cpp" />

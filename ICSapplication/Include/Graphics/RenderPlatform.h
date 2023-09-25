@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Defines.h>
-#include "Layers/Layer.h"
 
 class RenderPlatform
 {
@@ -10,5 +9,5 @@ public:
 	virtual ~RenderPlatform() = 0;
 
 	virtual bool DrawClear() = 0;
-	virtual bool DrawLayer(Layer& layer) = 0;
+	virtual bool DrawLayer() = 0;
 };

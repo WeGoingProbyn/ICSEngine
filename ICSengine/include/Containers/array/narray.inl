@@ -24,7 +24,7 @@ narray<T>::narray(unsigned int size)
 	m_Stride = sizeof(T);
 	m_AllocatedSize = m_Size;
 	m_Tag = MemoryType::ICS_ARRAY;
-	m_Ptr = Memory::AllocateMemory<T>(m_Stride * m_AllocatedSize, m_Tag);
+	m_Ptr = Memory::AllocateMemory<T>(m_AllocatedSize, m_Tag);
 	if (m_Ptr == nullptr) { ICS_ERROR("narray: Allocated pointer returned as nullptr"); }
 }
 
@@ -35,7 +35,7 @@ narray<T>::narray(unsigned int size, MemoryType type)
 	m_Size = size;
 	m_Stride = sizeof(T);
 	m_AllocatedSize = m_Size;
-	m_Ptr = Memory::AllocateMemory<T>(m_Stride * m_AllocatedSize, m_Tag);
+	m_Ptr = Memory::AllocateMemory<T>(m_AllocatedSize, m_Tag);
 	if (m_Ptr == nullptr) { ICS_ERROR("narray: Allocated pointer returned as nullptr"); }
 }
 
@@ -57,7 +57,7 @@ narray<T>::narray(Types... args)
 	m_Size = sizeof...(Types);
 	m_AllocatedSize = m_Size;
 	if (m_Tag == MemoryType::UNKNOWN) { m_Tag = MemoryType::ICS_ARRAY; }
-	m_Ptr = Memory::AllocateMemory<T>(m_Stride * m_AllocatedSize, m_Tag);
+	m_Ptr = Memory::AllocateMemory<T>(m_AllocatedSize, m_Tag);
 	unsigned int index = 0;
 	((m_Ptr[index++] = static_cast<T>(args)), ...);
 
@@ -68,7 +68,7 @@ narray<T>::~narray()
 {
 	if (m_Ptr)
 	{
-		if (Memory::FreeMemory(m_Ptr, m_Stride * m_AllocatedSize, m_Tag))
+		if (Memory::FreeMemory(m_Ptr, m_AllocatedSize, m_Tag))
 		{
 			m_Size = 0;
 			m_Stride = 0;
@@ -82,7 +82,7 @@ narray<T>::~narray()
 	}
 	else
 	{
-		ICS_DEBUG("narray: Memory was initialised as nullptr or has been destructed already");
+		ICS_TRACE("narray: Memory was initialised as nullptr or has been destructed already");
 	}
 }
 
@@ -104,11 +104,11 @@ narray<T>::narray(const narray& arr)
 		m_Size = arr.m_Size;
 		m_Stride = arr.m_Stride;
 		m_AllocatedSize = arr.m_AllocatedSize;
-		m_Ptr = Memory::AllocateMemory<T>(arr.m_Stride * arr.m_AllocatedSize, m_Tag);
-		if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
+		m_Ptr = Memory::AllocateMemory<T>(arr.m_AllocatedSize, m_Tag);
+		if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_AllocatedSize))
 		{
 			ICS_ERROR("narray: Could not copy memory on narray& copy construction");
-			Memory::FreeMemory(arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize, m_Tag);
+			Memory::FreeMemory(arr.m_Ptr, arr.m_AllocatedSize, m_Tag);
 			m_Ptr = nullptr;
 		}
 	}
@@ -149,14 +149,14 @@ narray<T>& narray<T>::operator=(const narray& arr)
 			// Can only deep copy if sizes are equal
 			if (m_AllocatedSize == arr.m_AllocatedSize)
 			{
-				if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
+				if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_AllocatedSize))
 				{
 					ICS_ERROR("narray: Could not copy memory on copy assignment");
 				}
 			}
 			else
 			{
-				Memory::FreeMemory(m_Ptr, m_Stride * m_AllocatedSize, m_Tag);
+				Memory::FreeMemory(m_Ptr, m_AllocatedSize, m_Tag);
 				m_Ptr = nullptr;
 			}
 		}
@@ -166,16 +166,16 @@ narray<T>& narray<T>::operator=(const narray& arr)
 			m_Size = arr.m_Size;
 			m_Stride = arr.m_Stride;
 			m_AllocatedSize = arr.m_AllocatedSize;
-			m_Ptr = Memory::AllocateMemory<T>(m_Stride * m_AllocatedSize, m_Tag);
+			m_Ptr = Memory::AllocateMemory<T>(m_AllocatedSize, m_Tag);
 
 			if (m_Ptr == nullptr)
 			{
 				ICS_WARN("narray: Allocated pointer returned nullptr on copy assignment");
 			}
-			else if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_Stride * arr.m_AllocatedSize))
+			else if (!Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, arr.m_AllocatedSize))
 			{
 				ICS_ERROR("narray: Could not copy memory on copy assignment");
-				Memory::FreeMemory(m_Ptr, m_Stride * m_AllocatedSize, m_Tag);
+				Memory::FreeMemory(m_Ptr, m_AllocatedSize, m_Tag);
 				m_Ptr = nullptr;
 			}
 		}
@@ -305,7 +305,7 @@ void narray<T>::PushToStart(T in)
 template<typename T>
 void narray<T>::Reset()
 {
-	Memory::ZeroMemoryBlock(m_Ptr, m_Stride * m_AllocatedSize);
+	Memory::ZeroMemoryBlock(m_Ptr, m_AllocatedSize);
 }
 
 template<typename T>
