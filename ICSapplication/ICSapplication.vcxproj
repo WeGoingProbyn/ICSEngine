@@ -136,6 +136,7 @@
     <ClInclude Include="Include\Application\Application.h" />
     <ClInclude Include="Include\Application\entry.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\Buffer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\DirectX11Logger.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Shader\PixelShader.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Shader\Shader.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Shader\VertexShader.h" />
@@ -149,7 +150,6 @@
     <ClInclude Include="Include\Layers\Layer.h" />
     <ClInclude Include="Include\Layers\LayerManager.h" />
     <ClInclude Include="Include\Layers\SkyBox.h" />
-    <ClInclude Include="Include\Layers\WorldSpace.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\Layer.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\SkyBox.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\WorldSpace.h" />
@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Application\Application.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\Buffer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\DirectX11Logger.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Shader\PixelShader.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Shader\Shader.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Shader\VertexShader.cpp" />

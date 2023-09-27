@@ -10,6 +10,8 @@ PixelShader::PixelShader()
 PixelShader::PixelShader(String& src)
 {
 	ICS_HRESULT_CHECK(D3DCompile(src.AsCstr(), src.GetSize(), nullptr, nullptr, nullptr, "main", "ps_4_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &m_ByteBlob, nullptr));
+	//ICS_HRESULT_CHECK(D3DReadFileToBlob(L"../Binaries/Build/PixelShader.cso", &m_ByteBlob));
+
 	CreateShader();
 };
 

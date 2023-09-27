@@ -137,7 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Core\FileIO\FileAsString.cpp" />
+    <ClCompile Include="source\Utilities\FileIO\FileAsString.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Indices.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Shaders.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Vertices.cpp" />
@@ -181,6 +181,7 @@
     <ClInclude Include="include\Core\Events\KeyEvents.h" />
     <ClInclude Include="include\Core\Events\MouseEvents.h" />
     <ClInclude Include="include\Core\Events\StateEvents.h" />
+    <ClInclude Include="include\Core\Managers\Manager.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Shaders.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Cube.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Geometry.h" />
@@ -199,7 +200,7 @@
     <ClInclude Include="include\Core\Structures\Spatial\Projection.h" />
     <ClInclude Include="include\Core\Structures\Spatial\Transformation.h" />
     <ClInclude Include="include\Defines.h" />
-    <ClInclude Include="include\Core\FileIO\FileAsString.h" />
+    <ClInclude Include="include\Utilities\FileIO\FileAsString.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Containers\array\darray.inl" />

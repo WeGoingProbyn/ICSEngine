@@ -4,10 +4,6 @@
 #include <Containers/array/darray.h>
 #include <Containers/Spatial/Vector.h>
 
-#include <Core/Structures/Buffers/Shaders.h>
-#include <Core/Structures/Buffers/Indices.h>
-#include <Core/Structures/Buffers/Vertices.h>
-
 #include "Platform/Platform.h"
 
 #include "Graphics/RenderPlatform.h"
@@ -21,6 +17,8 @@
 #include "Graphics/DirectX11/Shader/PixelShader.h"
 #include "Graphics/DirectX11/Shader/VertexShader.h"
 
+#include "Graphics/DirectX11/DirectX11Logger.h"
+
 class RenderDirectX11 : public RenderPlatform
 {
 	friend class Application;
@@ -32,13 +30,14 @@ public:
 	bool DrawClear() override;
 	bool DrawLayer() override;
 
-	void BindVertices(Vertices& vertices);
-	void BindIndicesNodes(Indices::Node indices);
+	ICS_API void BindVertices(Vertices& vertices) override;
+	ICS_API void BindIndicesNodes(Indices::Node indices) override;
 
 	// TODO: This should be done dynamically, all the info is contained
 	//		within the shaders object associated with the mesh being drawn
-	void BindPixelShader(String& src);
-	void BindVertexShader(String& src);
+	ICS_API void BindPixelShader(String& src) override;
+	ICS_API void BindVertexShader(String& src) override;
+	ICS_API void BindShaders(Shaders& shaders) override;
 
 private:
 	bool CreateDepthStencil();
@@ -64,6 +63,8 @@ private:
 	VertexBuffer m_Vertices;
 	PixelShader m_PixelShader;
 	VertexShader m_VertexShader;
+
+	DirectX11Logger m_RenderLog;
 
 public:
 	class StateAccess

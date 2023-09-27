@@ -26,15 +26,15 @@ Square::~Square()
 
 bool Square::FindIndices()
 {
-	m_Indices.PushToEnd({ Vector<unsigned int, 3>(0u, 1u, 2u), Vector<unsigned int, 3>(0u, 2u, 3u) });
+	m_Indices.PushToEnd({ Vector<unsigned int, 3>(0u, 1u, 2u), Vector<unsigned int, 3>(3u, 4u, 5u) });
 	return true;
 }
 
 bool Square::FindVertices()
 {
-	m_Vertices.PushToEnd({ 0.0f, 1.0f, 0.0f });
-	m_Vertices.PushToEnd({ 0.0f, 0.0f, 0.0f });
-	m_Vertices.PushToEnd({ 1.0f, 0.0f, 0.0f });
-	m_Vertices.PushToEnd({ 1.0f, 1.0f, 0.0f });
+	m_Vertices.PushToEnd({ -0.5f, 0.5f, 0.0f });
+	m_Vertices.PushToEnd({ -0.5f, -0.5f, 0.0f });
+	m_Vertices.PushToEnd({ 0.5f, -0.5f, 0.0f });
+	m_Vertices.PushToEnd({ 0.5f, 0.5f, 0.0f });
 	return true;
 }

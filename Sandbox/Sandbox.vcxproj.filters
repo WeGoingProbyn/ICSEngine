@@ -21,10 +21,20 @@
     <ClCompile Include="source\entry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\WorldSpace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\WorldSpace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resource\Shader\VertexShader.hlsl" />
+    <FxCompile Include="Resource\Shader\PixelShader.hlsl" />
   </ItemGroup>
 </Project>

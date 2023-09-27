@@ -1,4 +1,4 @@
-#include "Core/FileIO/FileAsString.h"
+#include "Utilities/FileIO/FileAsString.h"
 
 #include "Core/Memory/Memory.h"
 #include "Core/Debugger/Logger.h"

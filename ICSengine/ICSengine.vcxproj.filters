@@ -90,7 +90,7 @@
     <ClCompile Include="source\Core\Structures\Buffers\Shaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Core\FileIO\FileAsString.cpp">
+    <ClCompile Include="source\Utilities\FileIO\FileAsString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,7 +200,10 @@
     <ClInclude Include="include\Core\Structures\Buffers\Shaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\FileIO\FileAsString.h">
+    <ClInclude Include="include\Utilities\FileIO\FileAsString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Managers\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

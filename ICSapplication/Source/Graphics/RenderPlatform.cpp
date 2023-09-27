@@ -1,3 +1,5 @@
 #include "Graphics/RenderPlatform.h"
 
-RenderPlatform::~RenderPlatform() {}
+RenderPlatform::~RenderPlatform() 
+{
+}

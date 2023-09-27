@@ -78,3 +78,5 @@ public:
 #define ICS_TRACE(message, ...)
 #endif
 
+
+#define CHECK_DX11_MSG_QUEUE(call, infoqueue) infoqueue.SetCorrectIndexForMessages(); (call); { auto msg = infoqueue.GetInfoMessages(); if(msg.Size()) { ICS_FATAL(msg[0].AsCstr()); } }

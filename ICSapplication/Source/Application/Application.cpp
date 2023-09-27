@@ -1,5 +1,4 @@
 #include "Application/Application.h"
-#include "Layers/WorldSpace.h"
 
 #include <Core/Debugger/Logger.h>
 #include <Core/Structures/Geometry/Square.h>
@@ -10,6 +9,7 @@ Application::Application()
 {
 	m_ShouldRun = true;
 	m_ShouldPause = false;
+	RegisterListener(reinterpret_cast<EventListener&>(*this));
 	ICS_INFO("Application created");
 }
 
@@ -49,11 +49,15 @@ bool Application::RunApplication()
 		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
 		
 		m_Render.BindBackBuffer();
-		m_Layers.Get<WorldSpace>().OnRenderUpdate(m_Render);
+
+		for (Layer* layer : m_Layers.GetLayerStack())
+		{
+			layer->OnRenderUpdate(m_Render);
+		}
+
 		m_Render.FlipFrameBuffers();
 	}
 
-	m_Layers.PopLayer<WorldSpace>();
 
 	// NOTE: This is the end of the application life, all deallocations
 	// NOTE: and destructors should be called below. Or can be handled

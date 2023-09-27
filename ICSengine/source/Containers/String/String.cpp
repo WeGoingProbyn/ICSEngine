@@ -4,9 +4,7 @@
 
 String::String()
 	:
-	m_Size(1),
-	m_wSize(1),
-	m_wChars(nullptr)
+	m_Size(1)
 {
 	m_Chars = Memory::AllocateMemory<char>(m_Size, MemoryType::ICS_STRING);
 	if (m_Chars == nullptr) { ICS_ERROR("String: String allocation returned nullptr"); }
@@ -17,44 +15,22 @@ String::~String()
 	if (m_Chars)
 	{
 		Memory::FreeMemory(m_Chars, m_Size, MemoryType::ICS_STRING);
-		m_Chars = nullptr;
-	}
-	if (m_wChars)
-	{
-		Memory::FreeMemory(m_wChars, m_wSize, MemoryType::ICS_STRING);
-		m_wChars = nullptr;
 	}
 	m_Size = 0u;
+	m_Chars = nullptr;
 }
 
 String::String(const char* str)
 {
-	m_wSize = 0u;
-	m_wChars = nullptr;
-
 	// Need to include null terminator
 	m_Size = (unsigned int)strlen(str) + 1;
 	m_Chars = Memory::AllocateMemory<char>(m_Size, MemoryType::ICS_STRING);
 	if (m_Chars == nullptr) { ICS_ERROR("String: String allocation returned nullptr"); }
-	else { Memory::CopyMemoryBlock(m_Chars, str, m_Size); }
-}
-
-String::String(const wchar_t* str)
-{
-	m_wSize = 0u;
-	m_wChars = nullptr;
-
-	m_wSize = (unsigned int)wcslen(str) + 1;
-	m_Chars = Memory::AllocateMemory<char>(m_Size, MemoryType::ICS_STRING);
-	wcstombs_s(nullptr, m_Chars, m_Size, str, m_Size);
-	m_Chars[m_Size] = '\0';
+	else { Memory::DeepCopyMemoryBlock(m_Chars, str, m_Size); }
 }
 
 String::String(const String& str)
 {
-	m_wSize = 0u;
-	m_wChars = nullptr;
-
 	m_Size = str.m_Size;
 	m_Chars = Memory::AllocateMemory<char>(m_Size, MemoryType::ICS_STRING);
 	if (m_Chars == nullptr) { ICS_ERROR("String: String allocation returned nullptr"); }
@@ -64,15 +40,10 @@ String::String(const String& str)
 String::String(String&& str) noexcept
 {
 	*this = String(str);
-	if (m_Chars)
+	if (str.m_Chars)
 	{
 		Memory::FreeMemory(str.m_Chars, str.m_Size, MemoryType::ICS_STRING);
-		m_Chars = nullptr;
-	}
-	if (m_wChars)
-	{
-		Memory::FreeMemory(m_wChars, m_wSize, MemoryType::ICS_STRING);
-		m_wChars = nullptr;
+		str.m_Chars = nullptr;
 	}
 }
 
@@ -85,7 +56,12 @@ String& String::operator=(const char* str)
 	m_Size = (unsigned int)strlen(str) + 1;
 	m_Chars = Memory::AllocateMemory<char>(m_Size, MemoryType::ICS_STRING);
 	if (m_Chars == nullptr) { ICS_ERROR("String: Could not allocate memory on = operation"); return *this; }
-	else { Memory::DeepCopyMemoryBlock(m_Chars, str, m_Size); return *this; };
+	else 
+	{
+		Memory::DeepCopyMemoryBlock(m_Chars, str, m_Size); 
+		return *this; 
+	};
+	return *this;
 }
 
 String& String::operator=(const String& str)
@@ -104,6 +80,7 @@ String& String::operator=(const String& str)
 			return *this;
 		};
 	}
+	return *this;
 }
 
 String& String::operator=(String&& str) noexcept
@@ -122,6 +99,7 @@ String& String::operator=(String&& str) noexcept
 			return *this;
 		};
 	}
+	return *this;
 }
 
 bool String::operator==(const String& str)
@@ -175,19 +153,6 @@ String& String::operator+= (const String& str)
 	}
 
 	return *this;
-}
-
-wchar_t* String::AsWideChar()
-{
-	if (m_wChars)
-	{
-		Memory::FreeMemory(m_wChars, m_wSize, MemoryType::ICS_STRING);
-	}
-
-	m_wChars = Memory::AllocateMemory<wchar_t>(m_wSize, MemoryType::ICS_STRING); // +1 for null-terminator
-	mbstowcs_s(nullptr, m_wChars, m_Size - 1, m_Chars, m_Size);
-	m_wChars[m_Size] = L'\0';
-	return m_wChars;
 }
 
 String& String::GetVariadicString(const char* str, ...)

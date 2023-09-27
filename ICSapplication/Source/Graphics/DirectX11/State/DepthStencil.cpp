@@ -5,7 +5,8 @@ DepthStencil::DepthStencil()
 	m_DepthStencilDesc({}),
 	m_DepthStencilViewDesc({}),
 	m_DepthStencilState(nullptr),
-	m_DepthStencilTextureDesc({}) {
+	m_DepthStencilTextureDesc({})
+{
 	
 	m_DepthStencilDesc.DepthEnable = true;
 	m_DepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;

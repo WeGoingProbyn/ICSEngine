@@ -140,9 +140,11 @@
   <ItemGroup>
     <ClCompile Include="source\entry.cpp" />
     <ClCompile Include="source\Game.cpp" />
+    <ClCompile Include="source\WorldSpace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\WorldSpace.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ICSapplication\ICSapplication.vcxproj">
@@ -151,6 +153,16 @@
     <ProjectReference Include="..\ICSengine\ICSengine.vcxproj">
       <Project>{676482f9-8262-4fd6-8f46-40e5f44bb6be}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resource\Shader\PixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resource\Shader\VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

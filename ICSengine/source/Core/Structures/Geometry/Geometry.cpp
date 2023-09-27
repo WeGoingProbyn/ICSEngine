@@ -22,10 +22,11 @@ bool Geometry::FindNormals()
 	{
 		for (Vector<unsigned int, 3>&vertex : node)
 		{
-			// Face normals
-			Vector<float, 3> EdgeBA = m_Vertices[vertex[1]] - m_Vertices[vertex[0]];
-			Vector<float, 3> EdgeCA = m_Vertices[vertex[2]] - m_Vertices[vertex[0]];
-			m_Normals.PushToEnd({ (EdgeCA).CrossProduct(EdgeBA).Normalise() });
+			//// Face normals
+			//Vector<float, 3> EdgeBA = m_Vertices[vertex[1]] - m_Vertices[vertex[0]];
+			//Vector<float, 3> EdgeCA = m_Vertices[vertex[2]] - m_Vertices[vertex[0]];
+			//m_Normals.PushToEnd({ (EdgeBA).CrossProduct(EdgeCA).Normalise() });
+			m_Normals.PushToEnd({ 0.0f, 0.0f, 0.0f });
 		}
 	}
 	return true;

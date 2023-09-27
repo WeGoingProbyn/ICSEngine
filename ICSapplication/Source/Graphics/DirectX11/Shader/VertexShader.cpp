@@ -10,6 +10,7 @@ VertexShader::VertexShader()
 VertexShader::VertexShader(String& src)
 {
 	ICS_HRESULT_CHECK(D3DCompile(src.AsCstr(), src.GetSize(), nullptr, nullptr, nullptr, "main", "vs_4_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &m_ByteBlob, nullptr));
+	//ICS_HRESULT_CHECK(D3DReadFileToBlob(L"../Binaries/Build/VertexShader.cso", &m_ByteBlob));
 
 
 	// TODO: Need to pass the mesh vertices layout so this can be done dynamically, but for now this is fine...

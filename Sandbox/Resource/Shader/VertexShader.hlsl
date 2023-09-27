@@ -1,3 +1,5 @@
+#pragma enable_d3d11_debug_symbols
+
 struct VSout
 {
 	float4 position : SV_Position;

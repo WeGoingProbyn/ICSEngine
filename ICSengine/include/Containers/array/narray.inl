@@ -82,7 +82,7 @@ narray<T>::~narray()
 	}
 	else
 	{
-		ICS_TRACE("narray: Memory was initialised as nullptr or has been destructed already");
+		//ICS_TRACE("narray: Memory was initialised as nullptr or has been destructed already");
 	}
 }
 

@@ -149,7 +149,7 @@ void RenderDirectX11::BindIndicesNodes(Indices::Node indices)
 	m_Indices = IndexBuffer(indices);
 	m_Indices.BindBufferToPipeline();
 
-	StateAccess::GetInstance().m_DeviceContext->DrawIndexed(6u, 0u, 0u);
+	CHECK_DX11_MSG_QUEUE(StateAccess::GetInstance().m_DeviceContext->DrawIndexed(6u, 0u, 0u), m_RenderLog);
 }
 
 void RenderDirectX11::BindPixelShader(String& src)
@@ -162,6 +162,11 @@ void RenderDirectX11::BindVertexShader(String& src)
 {
 	m_VertexShader = VertexShader(src);
 	m_VertexShader.BindShaderToPipeline();
+}
+
+void RenderDirectX11::BindShaders(Shaders& shaders)
+{
+
 }
 
 bool RenderDirectX11::DrawClear()
