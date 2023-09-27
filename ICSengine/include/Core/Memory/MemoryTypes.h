@@ -8,6 +8,7 @@ enum struct MemoryType : unsigned int
 	ICS_SHADER,
 	ICS_TEXTURE,
 	ICS_RENDERER,
+	ICS_STACK_MANAGER,
 	ICS_ARRAY,
 	ICS_DARRAY,
 	ICS_STRING,

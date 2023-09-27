@@ -9,6 +9,6 @@ public:
 	ICS_API ~Square();
 
 private:
-	bool FindIndices() override;
-	bool FindVertices() override;
+	ICS_API bool FindIndices() override;
+	ICS_API bool FindVertices() override;
 };

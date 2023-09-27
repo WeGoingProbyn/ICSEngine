@@ -1,6 +1,7 @@
 #include "Application/Application.h"
 
 #include <Core/Debugger/Logger.h>
+#include <Core/Managers/Manager.h>
 #include <Core/Structures/Geometry/Square.h>
 
 Application::Application() 

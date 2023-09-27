@@ -21,12 +21,18 @@ public:
 	};
 public:
 	HashMap();
-	Value& operator[](const Key& key);
+	HashMap(MemoryType type);
+	Value& operator[](Key key);
 
-	int Exists(Key& key);
+	bool Exists(Key& key);
 	bool Remove(Key& key);
 	bool Insert(Key& key, Value& value);
+	bool Insert(Key&& key, Value&& value);
 
+private:
+	bool Resize();
+	int ExistsWhere(Key& key);
+	bool Emplace(Key& key, Value& value);
 private:
 	float m_LoadFactor;
 	darray<darray<HashMap::Pair>> m_Map;
@@ -35,27 +41,39 @@ private:
 template<typename Key, typename Value>
 HashMap<Key, Value>::HashMap()
 	:
-	m_Map(),
 	m_LoadFactor(0.7f)
 {
 	m_Map.Resize(50);
 }
 
 template<typename Key, typename Value>
-Value& HashMap<Key, Value>::operator[](const Key& key)
+HashMap<Key, Value>::HashMap(MemoryType type)
+	:
+	m_Map(type),
+	m_LoadFactor(0.7f)
 {
-	if (Exists(key)) { return m_Map[key.Hash() % m_Map.Size()].value; }
-	else 
-	{ 
-		ICS_WARN("HashMap: Key does not exist in HashMap, Returned Map[0][0].value")
-		return m_Map[0][0].value;
-	}
+	m_Map.Resize(50);
 }
 
 template<typename Key, typename Value>
-int HashMap<Key, Value>::Exists(Key& key)
+Value& HashMap<Key, Value>::operator[](Key key)
 {
-	unsigned int index = key.GetHashValue() % m_Map.Size();
+	Hashable<Key> hash(key);
+	int index = ExistsWhere(key);
+	ICS_ASSERT_MSG(index > -1, "HashMap: Trying to access non existant Key in HashMap");
+	return m_Map[hash.GetHashValue() % m_Map.Size()][index].value;
+}
+
+
+template<typename Key, typename Value>
+int HashMap<Key, Value>::ExistsWhere(Key& key)
+{
+	Hashable<Key> hash(key);
+	unsigned int index = hash.GetHashValue() % m_Map.Size();
+	if (!m_Map.GetRawPointer() + index)
+	{
+		return -1;
+	}
 	for (unsigned int indent = 0; indent < m_Map[index].Size(); indent++)
 	{
 		if (m_Map[index][indent].key == key)
@@ -69,10 +87,11 @@ int HashMap<Key, Value>::Exists(Key& key)
 template<typename Key, typename Value>
 bool HashMap<Key, Value>::Remove(Key& key)
 {
-	unsigned int index = Exists(key);
+	Hashable<Key> hash(key);
+	int index = ExistsWhere(key);
 	if (index > -1)
 	{
-		m_Map.PopAt(key.GetHashValue() % m_Map.Size());
+		m_Map[hash.GetHashValue() % m_Map.Size()].PopAt(index);
 		return true;
 	}
 	else
@@ -83,9 +102,14 @@ bool HashMap<Key, Value>::Remove(Key& key)
 }
 
 template<typename Key, typename Value>
-bool HashMap<Key, Value>::Insert(Key& key, Value& value)
+bool HashMap<Key, Value>::Insert(Key&& key, Value&& value)
 {
-	unsigned int index = Exists(key);
+	if (m_Map.Size() > m_Map.Allocated() * m_LoadFactor)
+	{
+		Resize();
+	}
+	Hashable<Key> hash(key);
+	int index = ExistsWhere(key);
 	if (index > -1)
 	{
 		ICS_WARN("HashMap: Trying to Insert a duplicate key");
@@ -93,15 +117,66 @@ bool HashMap<Key, Value>::Insert(Key& key, Value& value)
 	}
 	else
 	{
-		m_Map[key.GetHashValue() % m_Map.Size()].PushToEnd(HashMap<Key, Value>::Pair(key, value));
-		
-		unsigned int i = 0u;
-		if (m_Map[key.GetHashValue() % m_Map.Size()].Last() > 0)
-		{
-			i = m_Map[key.GetHashValue() % m_Map.Size()].Last();
-		}
-		
-		m_Map[key.GetHashValue() % m_Map.Size()][i].index = i;
-		return true;
+		Emplace(key, value);
 	}
+}
+
+template<typename Key, typename Value>
+bool HashMap<Key, Value>::Emplace(Key& key, Value& value)
+{
+	Hashable<Key> hash(key);
+	m_Map[hash.GetHashValue() % m_Map.Size()].PushToEnd({ key, value });
+	
+	unsigned int i = 0u;
+	if (m_Map[hash.GetHashValue() % m_Map.Size()].Last() > 0)
+	{
+		i = m_Map[hash.GetHashValue() % m_Map.Size()].Last();
+	}
+
+	m_Map[hash.GetHashValue() % m_Map.Size()][i].index = i;
+	return true;
+}
+
+template<typename Key, typename Value>
+bool HashMap<Key, Value>::Insert(Key& key, Value& value)
+{
+	if (m_Map.Size() > m_Map.Allocated() * m_LoadFactor)
+	{
+		Resize();
+	}
+	int index = ExistsWhere(key);
+	if (index > -1)
+	{
+		ICS_WARN("HashMap: Trying to Insert a duplicate key");
+		return false;
+	}
+	else
+	{
+		Emplace(key, value);
+	}
+}
+
+template<typename Key, typename Value>
+bool HashMap<Key, Value>::Resize()
+{
+	darray<darray<HashMap<Key, Value>::Pair>> tmp;
+	tmp.Resize(m_Map.Allocated() * 2u);
+
+	for (darray<HashMap<Key, Value>::Pair>& pairs : m_Map)
+	{
+		for (HashMap<Key, Value>::Pair& pair : pairs)
+		{
+			Hashable<Key> hash(pair.key);
+			tmp[hash.GetHashValue() % tmp.Size()].PushToEnd({ pair.key, pair.value });
+
+			unsigned int i = 0u;
+			if (tmp[hash.GetHashValue() % tmp.Size()].Last() > 0)
+			{
+				i = tmp[hash.GetHashValue() % tmp.Size()].Last();
+			}
+			tmp[hash.GetHashValue() % tmp.Size()][i].index = i;
+		}
+	}
+	m_Map = tmp;
+	return true;
 }

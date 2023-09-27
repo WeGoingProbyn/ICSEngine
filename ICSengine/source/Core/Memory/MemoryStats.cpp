@@ -23,6 +23,7 @@ const char* MemoryStats::Strings[static_cast<unsigned int>(MemoryType::MAX_TERMS
 		"ICS_SHADER		",
 		"ICS_TEXTURE		",
 		"ICS_RENDERER		",
+		"ICS_STACK_MANAGER	",
 		"ICS_ARRAY		",
 		"ICS_DARRAY		",
 		"ICS_STRING		",

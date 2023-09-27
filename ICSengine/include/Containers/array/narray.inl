@@ -248,7 +248,7 @@ bool narray<T>::operator!= (const narray<T>& rhs)
 template<typename T>
 T& narray<T>::operator[] (unsigned int index)
 {
-	ICS_ASSERT_MSG(index < m_Size&& m_Ptr != nullptr, "narray: Trying to access non-existant element");
+	ICS_ASSERT_MSG(index < m_Size && m_Ptr != nullptr, "narray: Trying to access non-existant element");
 	return m_Ptr[index];
 }
 

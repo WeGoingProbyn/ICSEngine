@@ -132,7 +132,7 @@ public:
 public:
 	Indices() {}
 
-	Indices(const Indices& rhs);
+	ICS_API Indices(const Indices& rhs);
 	ICS_API Indices(Hierachy hierachy);
 	ICS_API const Indices& operator=(const Indices& rhs);
 

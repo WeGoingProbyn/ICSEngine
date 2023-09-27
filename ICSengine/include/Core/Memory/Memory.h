@@ -28,17 +28,29 @@ public:
 	static bool CopyMemoryBlock(T* dest, const T* src, unsigned int size);
 	template<typename T>
 	static bool DeepCopyMemoryBlock(T* dest, const T* src, unsigned int size);
+	template<typename T, typename... Args>
+	static T* AllocateWithCstrctArgs(unsigned int size, MemoryType type, Args... args);
 public:
 	bool m_Initialised;
 };
 
+template<typename T, typename... Args>
+T* Memory::AllocateWithCstrctArgs(unsigned int size, MemoryType type, Args... args)
+{
+	if (size == 0) { ICS_WARN("Memory: Trying to allocate memory of size 0"); return nullptr; }
+	if (type == MemoryType::UNKNOWN)
+	{
+		ICS_WARN("Memory: Allocating unkown memory type is ill-advised");
+	}
+	MemoryStats::OnMemoryAssign(size * sizeof(T), type);
+	T* tmp = MemoryPlatform::PlatformAllocateWithCstrctArgs<T>(size, false, args...);
+	//Memory::ZeroMemoryBlock<T>(tmp, size);
+	return tmp;
+}
+
 template<typename T>
 T* Memory::AllocateMemory(unsigned int size, MemoryType type)
 {
-	if (type == MemoryType::ICS_APPLICATION)
-	{
-		int x = 0;
-	}
 	if (size == 0) { ICS_WARN("Memory: Trying to allocate memory of size 0"); return nullptr; }
 	if (type == MemoryType::UNKNOWN)
 	{

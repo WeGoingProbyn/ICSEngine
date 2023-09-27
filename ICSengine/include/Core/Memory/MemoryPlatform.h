@@ -17,7 +17,23 @@ public:
 	static bool PlatformMemorySet(T* dest, unsigned int val, unsigned int size);
 	template<typename T>
 	static bool PlatformMemoryDeepCopy(T* dest, const T* src, unsigned int size);
+	template<typename T, typename... Args>
+	static T* PlatformAllocateWithCstrctArgs(unsigned int size, bool aligned, Args... args);
 };
+
+template<typename T, typename... Args>
+T* MemoryPlatform::PlatformAllocateWithCstrctArgs(unsigned int size, bool aligned, Args... args)
+{
+	if (size > 0)
+	{
+		return new T[size](args...);
+	}
+	else
+	{
+		ICS_ERROR("MemoryPlatform: Could not allocate memory using size 0, allocation is nullptr");
+		return nullptr;
+	}
+}
 
 template<typename T>
 bool MemoryPlatform::PlatformMemoryFree(T* ptr)

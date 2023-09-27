@@ -57,8 +57,10 @@ public:
 
 	void Reset();
 	char* GetArrayPrintable();
+	inline T* GetRawPointer() { return m_Ptr; }
 	inline unsigned int Size() { return m_Size; }
 	inline unsigned int Last() { return m_Size - 1; }
+	inline unsigned int Allocated() { return m_AllocatedSize; }
 
 protected:
 	T* m_Ptr;

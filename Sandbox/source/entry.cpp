@@ -1,6 +1,6 @@
 #include <Application/entry.h>
-#include "Game.h"
 
+#include "Game.h"
 #include "WorldSpace.h"
 
 Application* ICS::CreateApplication()
@@ -15,7 +15,6 @@ Application* ICS::CreateApplication()
 	// must also be manually deleted by the user in destroy application
 	// the arguments are passed as types through the template
 	app->GetLayers().PushLayer<WorldSpace>();
-
 	return app;
 }
 

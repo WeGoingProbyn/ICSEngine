@@ -46,7 +46,7 @@ public:
 	T Magnitude();
 	//T DotProduct(Vector<T, dim> rhs);
 	T DotProduct(const Vector<T, dim>& rhs);
-	
+
 	Vector<T, dim> Normalise();
 	//Vector<T, dim> CrossProduct(Vector<T, dim> rhs);
 	Vector<T, dim> CrossProduct(const Vector<T, dim>& rhs);
@@ -59,7 +59,7 @@ public:
 	//Vector<T, dim> operator -(const T& rhs);
 	//Vector<T, dim> operator *(const T& rhs);
 	//Vector<T, dim> operator /(const T& rhs);
-	
+
 	Vector<T, dim>& operator +=(T rhs);
 	Vector<T, dim>& operator -=(T rhs);
 	Vector<T, dim>& operator *=(T rhs);
@@ -97,3 +97,5 @@ private:
 };
 
 #include "Vector.inl"
+
+

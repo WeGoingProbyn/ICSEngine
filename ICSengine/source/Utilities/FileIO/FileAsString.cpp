@@ -16,7 +16,7 @@ void FileAsString::GetStringFromFile(String file_name, String& out)
 	fseek(file, 0, SEEK_SET);
 
 	char* ptr = Memory::AllocateMemory<char>(size, MemoryType::ICS_STRING);
-	unsigned int read = fread(ptr, 1, size, file);
+	unsigned int read = (unsigned int)fread(ptr, 1, size, file);
 	ptr[read] = '\0';
 
 	fclose(file);

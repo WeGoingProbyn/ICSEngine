@@ -98,7 +98,7 @@ private:
 	};
 public:
 	Vertices();
-	Vertices(const Vertices& rhs);
+	ICS_API Vertices(const Vertices& rhs);
 	ICS_API Vertices(Layout layout);
 	ICS_API const Vertices& operator=(const Vertices& rhs);
 

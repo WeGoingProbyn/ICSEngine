@@ -188,8 +188,16 @@ void darray<T>::PopAt(unsigned int index)
 		ICS_WARN("darray: Trying to pop non-existant element");
 		return; 
 	}
+	else if (narray<T>::m_Size == 1)
+	{
+		Memory::FreeMemory(narray<T>::m_Ptr, 1u, narray<T>::m_Tag);
+		narray<T>::m_Ptr = nullptr;
+		narray<T>::m_Size--;
+		narray<T>::m_AllocatedSize--;
+		return;
+	}
 
-	if (Memory::DeepCopyMemoryBlock(narray<T>::m_Ptr + index, narray<T>::m_Ptr + index + 1, narray<T>::m_Size - index))
+	if (Memory::DeepCopyMemoryBlock(narray<T>::m_Ptr + index, narray<T>::m_Ptr + index + 1, narray<T>::m_Size - index - 1))
 	{
 		narray<T>::m_Size--;
 	}
