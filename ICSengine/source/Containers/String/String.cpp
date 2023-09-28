@@ -39,7 +39,10 @@ String::String(const String& str)
 
 String::String(String&& str) noexcept
 {
-	*this = String(str);
+	m_Size = str.m_Size;
+	m_Chars = Memory::AllocateMemory<char>(m_Size, MemoryType::ICS_STRING);
+	if (m_Chars == nullptr) { ICS_ERROR("String: String allocation returned nullptr"); }
+	else { Memory::CopyMemoryBlock(m_Chars, str.m_Chars, m_Size); }
 	if (str.m_Chars)
 	{
 		Memory::FreeMemory(str.m_Chars, str.m_Size, MemoryType::ICS_STRING);

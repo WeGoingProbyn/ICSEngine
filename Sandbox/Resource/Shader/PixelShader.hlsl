@@ -1,5 +1,3 @@
-#pragma enable_d3d11_debug_symbols
-
 struct PSin 
 {
 	float4 position : SV_Position;

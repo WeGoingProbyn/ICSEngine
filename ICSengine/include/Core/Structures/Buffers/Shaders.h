@@ -88,11 +88,17 @@ public:
 	class ShaderBuffer
 	{
 	public:
-		ShaderBuffer() {}
+		ShaderBuffer()
+			:
+			m_ByteBlob(MemoryType::ICS_SHADER)
+		{
+		}
 		ShaderBuffer(Layout& layout) 
 			: 
 			m_Layout(layout),
-			m_ByteBlob(MemoryType::ICS_SHADER) {}
+			m_ByteBlob(MemoryType::ICS_SHADER) 
+		{
+		}
 	
 		inline Layout& GetShaderLayout() { return m_Layout; }
 
@@ -100,6 +106,7 @@ public:
 		ICS_API inline Shader End() { return Shader(m_ByteBlob[m_ByteBlob.Last()], m_Layout); }
 		inline Shader operator[](unsigned int index) { return Shader(m_ByteBlob[index], m_Layout); }
 
+		ICS_API void PushShaderToBuffer(String str);
 		ICS_API void PushShaderToBuffer(String& str);
 	private:
 		Layout m_Layout;
@@ -108,6 +115,11 @@ public:
 
 public:
 	Shaders() {}
+	Shaders(Layout& layout)
+		:
+		m_Buffer(layout)
+	{
+	}
 
 	inline ShaderBuffer& GetBuffer() { return m_Buffer; }
 	inline Layout& GetLayout() { return m_Buffer.GetShaderLayout(); }

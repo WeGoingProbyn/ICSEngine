@@ -1,7 +1,7 @@
 #include "Application/Application.h"
 
 #include <Core/Debugger/Logger.h>
-#include <Core/Managers/Manager.h>
+#include <Utilities/FileIO/FileAsString.h>
 #include <Core/Structures/Geometry/Square.h>
 
 Application::Application() 
@@ -10,8 +10,11 @@ Application::Application()
 {
 	m_ShouldRun = true;
 	m_ShouldPause = false;
-	RegisterListener(reinterpret_cast<EventListener&>(*this));
 	ICS_INFO("Application created");
+
+	// Register the application instance as an active event listener
+	RegisterListener(reinterpret_cast<EventListener&>(*this));
+	LoadSimpleAssets();
 }
 
 Application::~Application() 
@@ -19,6 +22,23 @@ Application::~Application()
 	m_ShouldRun = false;
 	m_ShouldPause = false;
 	ICS_INFO("Application destroyed");
+	AssetManager::Assets().OnShutDown();
+}
+
+void Application::LoadSimpleAssets()
+{
+	// Add some basic geometry to the mesh stack
+	AssetManager::Assets().PushToStack<Mesh>("Square", Square());
+	AssetManager::Assets().PushToStack<Mesh>("Square2", Square());
+
+	Shaders::Layout simple_layout;
+	simple_layout.PushShaderType(Shaders::Types::PIXEL);
+	simple_layout.PushShaderType(Shaders::Types::VERTEX);
+	simple_layout.SetShaderPlatform(Shaders::Platform::DIRECTX);
+
+	AssetManager::Assets().PushToStack<Shaders>("Simple", simple_layout);
+	AssetManager::Assets().Get<Shaders>("Simple").GetBuffer().PushShaderToBuffer(FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl"));
+	AssetManager::Assets().Get<Shaders>("Simple").GetBuffer().PushShaderToBuffer(FileAsString::GetStringFromFile("Resource/Shader/PixelShader.hlsl"));
 }
 
 bool Application::RunApplication()

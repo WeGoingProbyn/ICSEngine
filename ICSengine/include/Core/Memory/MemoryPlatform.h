@@ -26,7 +26,12 @@ T* MemoryPlatform::PlatformAllocateWithCstrctArgs(unsigned int size, bool aligne
 {
 	if (size > 0)
 	{
-		return new T[size](args...);
+		T* ptr = new T[size];
+		for (unsigned int index = 0; index < size; index++)
+		{
+			ptr[index] = T(args...);
+		}
+		return ptr;
 	}
 	else
 	{

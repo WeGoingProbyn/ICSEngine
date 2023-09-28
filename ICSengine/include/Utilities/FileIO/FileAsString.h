@@ -5,5 +5,5 @@
 class FileAsString
 {
 public:
-	ICS_API static void GetStringFromFile(String file_name, String& out);
+	ICS_API static String GetStringFromFile(String file_name);
 };

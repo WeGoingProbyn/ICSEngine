@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void FileAsString::GetStringFromFile(String file_name, String& out)
+String FileAsString::GetStringFromFile(String file_name)
 {
 	FILE* file;
 	ICS_ASSERT_MSG(fopen_s(&file, file_name.AsCstr(), "r") == 0, "FileAsString: Could not open file using given file name");
@@ -20,6 +20,7 @@ void FileAsString::GetStringFromFile(String file_name, String& out)
 	ptr[read] = '\0';
 
 	fclose(file);
-	out = String(ptr);
+	String out(ptr);
 	Memory::FreeMemory(ptr, size, MemoryType::ICS_STRING);
+	return out;
 }

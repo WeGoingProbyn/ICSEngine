@@ -156,8 +156,13 @@ narray<T>& narray<T>::operator=(const narray& arr)
 			}
 			else
 			{
+				m_Tag = arr.m_Tag;
+				m_Size = arr.m_Size;
+				m_Stride = arr.m_Stride;
+				m_AllocatedSize = arr.m_AllocatedSize;
 				Memory::FreeMemory(m_Ptr, m_AllocatedSize, m_Tag);
-				m_Ptr = nullptr;
+				m_Ptr = Memory::AllocateMemory<T>(m_AllocatedSize, m_Tag);
+				Memory::DeepCopyMemoryBlock(m_Ptr, arr.m_Ptr, m_AllocatedSize);
 			}
 		}
 		else if (m_Ptr == nullptr)

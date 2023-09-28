@@ -6,20 +6,6 @@
 
 WorldSpace::WorldSpace()
 {
-	Square sqr;
-	String pixel;
-	String vertex;
-	FileAsString::GetStringFromFile("Resource/Shader/PixelShader.hlsl", pixel);
-	FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl", vertex);
-
-	sqr.GetShaders().GetLayout().SetShaderPlatform(Shaders::Platform::DIRECTX);
-	sqr.GetShaders().GetLayout().PushShaderType(Shaders::Types::VERTEX);
-	sqr.GetShaders().GetLayout().PushShaderType(Shaders::Types::PIXEL);
-
-	sqr.GetShaders().GetBuffer().PushShaderToBuffer(vertex);
-	sqr.GetShaders().GetBuffer().PushShaderToBuffer(pixel);
-
-	PushRootToScene(sqr);
 }
 
 WorldSpace::~WorldSpace()

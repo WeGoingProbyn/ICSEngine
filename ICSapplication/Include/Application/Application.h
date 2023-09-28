@@ -4,9 +4,9 @@
 #include <Core/Memory/Memory.h>
 #include <Core/Debugger/Logger.h>
 #include <Core/Events/EventHandler.h>
+#include <Core/Managers/AssetManager.h>
 
 #include "Layers/LayerManager.h"
-
 #ifdef ICS_PLATFORM_WINDOWS
 #include "Platform/PlatformWin32.h"
 #include "Graphics/DirectX11/RenderDirectX11.h"
@@ -20,8 +20,10 @@ public:
 
 	ICS_API bool RunApplication();
 	inline LayerManager& GetLayers() { return m_Layers; }
+	//inline AssetManager& GetAssets() { return m_Assets; }
 	inline void RegisterListener(EventListener& listener) { m_Platform.GetEventHandler().RegisterListener(listener); }
 private:
+	void LoadSimpleAssets();
 	ICS_API virtual bool ReactToEvent(KeyEvents::Event key_event, unsigned int EventIndex);
 	ICS_API virtual bool ReactToEvent(MouseEvents::Event mouse_event, unsigned int EventIndex);
 	ICS_API virtual bool ReactToEvent(StateEvents::Event state_event, unsigned int EventIndex);
@@ -37,10 +39,10 @@ private:
 	
 	Memory m_Memory;
 	LayerManager m_Layers;
+	//AssetManager m_Assets;
 
 #ifdef ICS_PLATFORM_WINDOWS
 	PlatformWin32 m_Platform;
 	RenderDirectX11 m_Render;
 #endif
-
 };
