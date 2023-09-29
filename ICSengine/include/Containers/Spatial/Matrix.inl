@@ -33,6 +33,14 @@ Matrix<T, dim>::Matrix(Types... args)
 }
 
 template<typename T, unsigned int dim>
+T& Matrix < T, dim>::operator [](unsigned int index)
+{
+	unsigned int row = index / dim;
+	unsigned int col = index % dim;
+	return m_Data[row][col];
+}
+
+template<typename T, unsigned int dim>
 T& Matrix < T, dim>::operator ()(unsigned int row, unsigned int col)
 {
 	return m_Data[row][col];
@@ -63,13 +71,13 @@ Matrix<T, dim> Matrix<T, dim>::Inverse()
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			if (!m_Data(row, column))
+			if (!m_Data[row][column])
 			{
 				tmp(row, column) = 0;
 			}
 			else
 			{
-				tmp(row, column) = 1 / m_Data(row, column);
+				tmp(row, column) = 1 / m_Data[row][column];
 			}
 		}
 	}
@@ -100,7 +108,7 @@ Matrix<T, dim> Matrix<T, dim>::operator +(T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			tmp.m_Data(row, column) = m_Data(row, column) + rhs;
+			tmp.m_Data[row][column] = m_Data[row][column] + rhs;
 		}
 	}
 	return tmp;
@@ -139,7 +147,7 @@ Matrix<T, dim> Matrix<T, dim>::operator -(T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			tmp.m_Data(row, column) = m_Data(row, column) - rhs;
+			tmp.m_Data[row][column] = m_Data[row][column] - rhs;
 		}
 	}
 	return tmp;
@@ -158,7 +166,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator -=(T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			m_Data(row, column) = m_Data(row, column) - rhs;
+			m_Data[row][column] = m_Data[row][column] - rhs;
 		}
 	}
 	return *this;
@@ -177,7 +185,7 @@ Matrix<T, dim> Matrix<T, dim>::operator *(T rhs) {
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			tmp.m_Data(row, column) = m_Data(row, column) * rhs;
+			tmp.m_Data[row][column] = m_Data[row][column] * rhs;
 		}
 	}
 	return tmp;
@@ -196,7 +204,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator *=(T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			m_Data(row, column) = m_Data(row, column) * rhs;
+			m_Data[row][column] = m_Data[row][column] * rhs;
 		}
 	}
 	return *this;
@@ -216,7 +224,7 @@ Matrix<T, dim> Matrix<T, dim>::operator /(T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			tmp.m_Data(row, column) = m_Data(row, column) / rhs;
+			tmp.m_Data[row][column] = m_Data[row][column] / rhs;
 		}
 	}
 	return tmp;
@@ -235,7 +243,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator /= (T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			m_Data(row, column) = m_Data(row, column) / rhs;
+			m_Data[row][column] = m_Data[row][column] / rhs;
 		}
 	}
 	return *this;
@@ -254,7 +262,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator =(T rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			m_Data(row, column) = rhs;
+			m_Data[row][column] = rhs;
 		}
 	}
 	return *this;
@@ -315,7 +323,7 @@ Matrix<T, dim> Matrix<T, dim>::operator -(Matrix<T, dim> rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			tmp.m_Data[row][column] = m_Data[row][column] - rhs.GetData[row][column];
+			tmp.m_Data[row][column] = m_Data[row][column] - rhs.GetData(row, column);
 		}
 	}
 	return tmp;
@@ -334,7 +342,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator -=(Matrix<T, dim> rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			m_Data[row][column] = m_Data[row][column] - rhs.GetData[row][column];
+			m_Data[row][column] = m_Data[row][column] - rhs.GetData(row, column);
 		}
 	}
 	return *this;
@@ -392,7 +400,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator *=(Matrix<T, dim> rhs)
 	//{
 	//	for (unsigned int column = 0; column < dim; column++) 
 	//	{
-	//		m_Data[row][column] = tmp.GetData[row][column];
+	//		m_Data[row][column] = tmp.GetData(row, column);
 	//	}
 	//}
 	return *this;
@@ -432,7 +440,7 @@ Matrix<T, dim>& Matrix<T, dim>::operator /=(Matrix<T, dim> rhs)
 	{
 		for (unsigned int column = 0; column < dim; column++)
 		{
-			m_Data[row][column] = m_Data[row][column] / rhs.GetData[row][column];
+			m_Data[row][column] = m_Data[row][column] / rhs.GetData(row, column);
 		}
 	}
 	return *this;

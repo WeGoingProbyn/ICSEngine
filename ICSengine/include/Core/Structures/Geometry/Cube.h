@@ -5,6 +5,10 @@
 class Cube : public Geometry
 {
 public:
-	bool FindIndices() override;
-	bool FindVertices() override;
+	ICS_API Cube();
+	ICS_API ~Cube();
+
+private:
+	ICS_API bool FindIndices() override;
+	ICS_API bool FindVertices() override;
 };

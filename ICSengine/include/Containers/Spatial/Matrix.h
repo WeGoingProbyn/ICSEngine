@@ -13,6 +13,7 @@ public:
 	Matrix<T, dim> Inverse();
 
 	Matrix<T, dim> operator -();
+	T& operator [](unsigned int index);
 	T& operator ()(unsigned int row, unsigned int col);
 
 	Matrix<T, dim>& operator =(T rhs);

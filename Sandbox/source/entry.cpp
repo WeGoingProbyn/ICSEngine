@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "WorldSpace.h"
 
+#include <Managers/Assets.h>
+
 Application* ICS::CreateApplication()
 { 
 	Game* app = Memory::AllocateMemory<Game>(1u, MemoryType::ICS_APPLICATION);

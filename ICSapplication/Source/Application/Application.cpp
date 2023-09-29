@@ -1,44 +1,44 @@
 #include "Application/Application.h"
+#include "Managers/Assets.h"
 
 #include <Core/Debugger/Logger.h>
 #include <Utilities/FileIO/FileAsString.h>
+
 #include <Core/Structures/Geometry/Square.h>
+#include <Core/Structures/Geometry/Cube.h>
 
 Application::Application() 
-	:
-	m_Render(m_Platform.GetConfig().width, m_Platform.GetConfig().height, m_Platform.GetPlatformHandle().InternalHandle)
 {
 	m_ShouldRun = true;
 	m_ShouldPause = false;
-	ICS_INFO("Application created");
-
+	
 	// Register the application instance as an active event listener
 	RegisterListener(reinterpret_cast<EventListener&>(*this));
-	LoadSimpleAssets();
+
+	Assets::OnStartUp();
+	m_Render = { m_Platform.GetConfig().width, m_Platform.GetConfig().height, m_Platform.GetPlatformHandle().InternalHandle };
+	ICS_INFO("Application created");
 }
 
 Application::~Application() 
 {
 	m_ShouldRun = false;
 	m_ShouldPause = false;
+	Assets::OnShutDown();
 	ICS_INFO("Application destroyed");
-	AssetManager::Assets().OnShutDown();
 }
 
 void Application::LoadSimpleAssets()
 {
 	// Add some basic geometry to the mesh stack
-	AssetManager::Assets().PushToStack<Mesh>("Square", Square());
-	AssetManager::Assets().PushToStack<Mesh>("Square2", Square());
+	Assets::PushToStack<Mesh>("Cube", Cube());
+	Assets::PushToStack<Mesh>("Square", Square());
 
-	Shaders::Layout simple_layout;
-	simple_layout.PushShaderType(Shaders::Types::PIXEL);
-	simple_layout.PushShaderType(Shaders::Types::VERTEX);
-	simple_layout.SetShaderPlatform(Shaders::Platform::DIRECTX);
-
-	AssetManager::Assets().PushToStack<Shaders>("Simple", simple_layout);
-	AssetManager::Assets().Get<Shaders>("Simple").GetBuffer().PushShaderToBuffer(FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl"));
-	AssetManager::Assets().Get<Shaders>("Simple").GetBuffer().PushShaderToBuffer(FileAsString::GetStringFromFile("Resource/Shader/PixelShader.hlsl"));
+	Constants::Layout const_layout(Constants::Types::SCALAR);
+	Shaders::Layout simple_layout(Shaders::Platform::DIRECTX, Shaders::Types::VERTEX, Shaders::Types::PIXEL);
+	Assets::PushToStack<Shaders>("Simple", simple_layout, const_layout);
+	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl"));
+	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/PixelShader.hlsl"));
 }
 
 bool Application::RunApplication()
@@ -57,7 +57,7 @@ bool Application::RunApplication()
 		{ 
 			ICS_INFO("Application: Read Messages break");
 			m_ShouldRun = false;
-		};
+		}
 		if (m_ShouldPause) 
 		{ 
 			continue; 
@@ -69,14 +69,10 @@ bool Application::RunApplication()
 
 		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
 		
-		m_Render.BindBackBuffer();
-
 		for (Layer* layer : m_Layers.GetLayerStack())
 		{
-			layer->OnRenderUpdate(m_Render);
+			layer->OnRenderUpdate();
 		}
-
-		m_Render.FlipFrameBuffers();
 	}
 
 

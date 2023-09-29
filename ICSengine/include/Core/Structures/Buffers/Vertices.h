@@ -104,6 +104,9 @@ public:
 
 	inline VertexBuffer& GetBuffer() { return m_Buffer; }
 	inline Layout& GetLayout() { return m_Buffer.GetLayout(); }
+
+	template<typename... Types>
+	void PushVertex(Types&&... args) { m_Buffer.PushVertexToBuffer(args...); }
 private:
 	VertexBuffer m_Buffer;
 };

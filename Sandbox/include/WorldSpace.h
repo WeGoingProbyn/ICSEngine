@@ -8,9 +8,9 @@ class WorldSpace : public Layer
 public:
 	WorldSpace();
 	virtual ~WorldSpace();
-	void OnRenderUpdate(RenderPlatform& platform) override;
+	void OnRenderUpdate() override;
 
-	inline void PushRootToScene(Mesh& mesh) { m_Scene.PushRootToScene(mesh); }
+	//inline void PushRoot(Mesh& mesh) { m_Scene.PushRoot(&mesh); }
 private:
 	Scene m_Scene;
 };

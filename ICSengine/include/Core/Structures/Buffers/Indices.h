@@ -23,22 +23,22 @@ public:
 		class Element
 		{
 		public:
-			Element() : m_ID(0u), m_Offset(0u), m_BlockSize(0u), m_Root(0u), m_PrimitiveType(Indices::Type::TriangleList) {}
-			Element(unsigned int id, unsigned int offset, unsigned int size, Indices::Type type) 
+			Element() : m_ID(0u), m_Offset(0u), m_BlockSize(0u), m_Root(0u), m_PrimitiveStride(0u) {}
+			Element(unsigned int id, unsigned int offset, unsigned int size, unsigned int stride)
 				: 
 				m_ID(id), 
 				m_Root(0u),
 				m_Offset(offset), 
 				m_BlockSize(size), 
-				m_PrimitiveType(type),
+				m_PrimitiveStride(stride),
 				m_Nodes(MemoryType::ICS_MODEL)
 			{}
-			Element(unsigned int id, unsigned int offset, unsigned int size, unsigned int root, Indices::Type type) :
+			Element(unsigned int id, unsigned int offset, unsigned int size, unsigned int root, unsigned int stride) :
 				m_ID(id), 
 				m_Root(root), 
 				m_Offset(offset), 
 				m_BlockSize(size), 
-				m_PrimitiveType(type),
+				m_PrimitiveStride(stride),
 				m_Nodes(MemoryType::ICS_MODEL)
 			{}
 
@@ -46,17 +46,14 @@ public:
 			{
 			}
 
-			static constexpr unsigned int SizeOfPrimitive(Type type);
 
 			inline unsigned int GetID() { return m_ID; }
 			inline unsigned int GetRootID() { return m_Root; }
 			inline unsigned int GetOffset() { return m_Offset; }
 			inline unsigned int GetBlockSize() { return m_BlockSize; }
-			inline Indices::Type GetType() { return m_PrimitiveType; }
 			inline darray<unsigned int>& GetNodeIDs() { return m_Nodes; }
 			inline unsigned int GetEndOfElement() { return m_Offset + GetSize(); }
-			inline unsigned int GetElementStride() { return SizeOfPrimitive(m_PrimitiveType); }
-			inline unsigned int GetSize() { return GetElementStride() * m_BlockSize; }
+			inline unsigned int GetSize() { return m_PrimitiveStride * m_BlockSize; }
 		private:
 			unsigned int m_Root;
 			darray<unsigned int> m_Nodes;
@@ -64,11 +61,11 @@ public:
 			unsigned int m_ID;
 			unsigned int m_Offset;
 			unsigned int m_BlockSize;
-			
-			Indices::Type m_PrimitiveType;
+			unsigned int m_PrimitiveStride;
 		};
 	public:
 		ICS_API Hierachy();
+		ICS_API Hierachy(Indices::Type type);
 
 		//template<typename... Types>
 		//Hierachy(Types&&... args);
@@ -76,9 +73,15 @@ public:
 		ICS_API inline darray<Element>& GetHierachy() { return m_IndexHierachy; }
 		ICS_API inline unsigned int GetTotalDescribedNodes() { return m_IndexHierachy.Size(); }
 		ICS_API inline Element& operator[](unsigned int index) { return m_IndexHierachy[index]; }
-		ICS_API void PushNodeToHierachy(unsigned int size, unsigned int root_id, Indices::Type type);
+
+		static constexpr unsigned int SizeOfPrimitive(Type type);
+		inline Indices::Type GetType() { return m_PrimitiveType; }
+		ICS_API void PushNodeToHierachy(unsigned int size, unsigned int root_id);
+		inline unsigned int GetElementStride() { return SizeOfPrimitive(m_PrimitiveType); }
+		inline unsigned int NumberPointsInPrimitive() { return GetElementStride() / sizeof(unsigned int); }
 	private:
 		unsigned int m_UniqueRoots;
+		Indices::Type m_PrimitiveType;
 		darray<Element> m_IndexHierachy;
 	};
 
@@ -97,7 +100,7 @@ public:
 		inline Indices::Hierachy& GetNodeHierachy() { return m_Hierachy; }
 		inline darray<unsigned int>& GetNodes() { return m_Hierachy[m_ID].GetNodeIDs(); }
 
-		inline unsigned int GetSize() { return m_Hierachy[m_ID].GetSize(); }
+		//inline unsigned int GetSize() { return m_Hierachy[m_ID].GetSize(); }
 	private:
 		template<typename Dest, typename Src>
 		bool SetNodeValue(char* ptr, darray<Src>&& value);
@@ -130,12 +133,38 @@ public:
 		unsigned int m_TotalBufferedNodes;
 	};
 public:
+	class Iterator {
+	public:
+		Iterator(Indices& indices, unsigned int start = 0) : BufferRef(indices), index(start) {}
+
+		// Define iterator operations
+		void operator++() { index++; }
+		Node operator*() { return BufferRef.GetBuffer()[index]; }
+		bool operator!=(const Iterator& other) const { return index != other.index; }
+	private:
+		unsigned int index;
+		Indices& BufferRef;
+	};
+
+	// Functions to get iterators
+	Iterator begin()
+	{
+		return Iterator(*this);
+	}
+
+	Iterator end() 
+	{
+		return Iterator(*this, m_Buffer.GetHierachy().GetTotalDescribedNodes());
+	}
+
 	Indices() {}
 
 	ICS_API Indices(const Indices& rhs);
 	ICS_API Indices(Hierachy hierachy);
 	ICS_API const Indices& operator=(const Indices& rhs);
 
+	template<typename T>
+	inline void PushNode(darray<T>& indices) { m_Buffer.PushNodeToBuffer(indices); }
 	inline IndexBuffer& GetBuffer() { return m_Buffer; }
 	inline Hierachy& GetHierachy() { return m_Buffer.GetHierachy(); }
 
@@ -152,7 +181,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 	char* attribute = m_Ptr + element.GetOffset();
 	if constexpr (std::is_same<T, unsigned int>::value)
 	{
-		switch (element.GetType())
+		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::LineList:
 		case Indices::Type::PointList:
@@ -165,7 +194,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 	}
 	if constexpr (std::is_same<T, Vector<unsigned int, 2>>::value)
 	{
-		switch (element.GetType())
+		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::LineStrip:
 			SetNodeValue<Vector<unsigned int, 2>>(attribute, std::forward<darray<T>>(indices));
@@ -177,7 +206,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 	}
 	else if constexpr (std::is_same<T, Vector<unsigned int, 3>>::value)
 	{
-		switch (element.GetType())
+		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::TriangleList:
 			SetNodeValue<Vector<unsigned int, 3>>(attribute, std::forward<darray<T>>(indices));
@@ -206,7 +235,7 @@ bool Indices::Node::SetNodeValue(char* ptr, darray<Src>&& value)
 	}
 	else
 	{
-		ICS_ERROR("Vertices: Type mismatch during attribute assignment");
+		ICS_ERROR("Indices: Type mismatch during attribute assignment");
 		return false;
 	}
 }
@@ -229,7 +258,7 @@ void Indices::IndexBuffer::PushNodeToBuffer(darray<T>& indices)
 
 }
 
-constexpr unsigned int Indices::Hierachy::Element::SizeOfPrimitive(Indices::Type type)
+constexpr unsigned int Indices::Hierachy::SizeOfPrimitive(Indices::Type type)
 {
 	switch (type)
 	{

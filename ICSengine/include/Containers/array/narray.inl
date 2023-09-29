@@ -308,12 +308,6 @@ void narray<T>::PushToStart(T in)
 }
 
 template<typename T>
-void narray<T>::Reset()
-{
-	Memory::ZeroMemoryBlock(m_Ptr, m_AllocatedSize);
-}
-
-template<typename T>
 char* narray<T>::GetArrayPrintable()
 {
 	const unsigned int buffmax = 6000u;

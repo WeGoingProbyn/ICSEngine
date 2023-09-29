@@ -21,25 +21,22 @@
 
 class RenderDirectX11 : public RenderPlatform
 {
-	friend class Application;
+	friend class RenderAPI;
 public:
 	RenderDirectX11() {}
 	~RenderDirectX11();
 	RenderDirectX11(int width, int height, void* window);
 	
-	bool DrawClear() override;
-	bool DrawLayer() override;
+	bool PresentDraw() override;
+	bool DrawBoundElements() override;
 
-	ICS_API void BindVertices(Vertices& vertices) override;
-	ICS_API void BindIndicesNodes(Indices::Node indices) override;
-
-	// TODO: This should be done dynamically, all the info is contained
-	//		within the shaders object associated with the mesh being drawn
-	ICS_API void BindPixelShader(String& src) override;
-	ICS_API void BindVertexShader(String& src) override;
 	ICS_API void BindShaders(Shaders& shaders) override;
+	ICS_API void BindIndices(Indices& indices) override;
+	ICS_API void BindVertices(Vertices& vertices) override;
+
 
 private:
+	void StartUp(int width, int height, void* window);
 	bool CreateDepthStencil();
 	bool CreateRasterizer();
 	bool CreateTargetView();
@@ -59,10 +56,10 @@ private:
 
 	// TODO: This should maybe be contained within its own class...
 	//		these might also benefit from being darray's..........
-	IndexBuffer m_Indices;
 	VertexBuffer m_Vertices;
 	PixelShader m_PixelShader;
 	VertexShader m_VertexShader;
+	darray<IndexBuffer> m_Indices;
 
 	DirectX11Logger m_RenderLog;
 

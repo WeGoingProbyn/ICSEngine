@@ -11,7 +11,8 @@ VertexBuffer::VertexBuffer(Vertices& input)
 	Buffer() {
 	m_Offset = 0u;
 	m_Stride = input.GetLayout().Size();
-	m_DataSize = input.GetBuffer().GetNumberVertices();
+	//m_BaseSizeTotal = input.GetBuffer().GetNumberVertices();
+	m_DataSize = input.GetBuffer().GetNumberVertices() * m_Stride;
 	m_BufferDescription.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	m_BufferDescription.Usage = D3D11_USAGE_IMMUTABLE;
 	m_BufferDescription.CPUAccessFlags = 0u;

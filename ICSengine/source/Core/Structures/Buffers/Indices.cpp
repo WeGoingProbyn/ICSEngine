@@ -1,14 +1,14 @@
 #include "Core/Structures/Buffers/Indices.h"
 
-void Indices::Hierachy::PushNodeToHierachy(unsigned int size, unsigned int root_id, Indices::Type type)
+void Indices::Hierachy::PushNodeToHierachy(unsigned int size, unsigned int root_id)
 {
 	if (m_IndexHierachy.Size() > 0)
 	{
-		m_IndexHierachy.PushToEnd(Indices::Hierachy::Element(m_IndexHierachy.Size(), m_IndexHierachy[m_IndexHierachy.Last()].GetEndOfElement(), size, root_id, type));
+		m_IndexHierachy.PushToEnd({ m_IndexHierachy.Size(), m_IndexHierachy[m_IndexHierachy.Last()].GetEndOfElement(), size, root_id, SizeOfPrimitive(m_PrimitiveType)});
 	}
 	else
 	{
-		m_IndexHierachy.PushToEnd(Indices::Hierachy::Element(0u, 0u, size, root_id, type));
+		m_IndexHierachy.PushToEnd({ 0u, 0u, size, root_id, SizeOfPrimitive(m_PrimitiveType) });
 
 	}
 
@@ -72,6 +72,14 @@ Indices::IndexBuffer::IndexBuffer(Hierachy& hierachy)
 
 Indices::Hierachy::Hierachy()
 	:
-	m_IndexHierachy(MemoryType::ICS_MODEL)
+	m_IndexHierachy(MemoryType::ICS_MODEL),
+	m_PrimitiveType(Indices::Type::TriangleList)
+{
+}
+
+Indices::Hierachy::Hierachy(Indices::Type type)
+	:
+	m_IndexHierachy(MemoryType::ICS_MODEL),
+	m_PrimitiveType(type)
 {
 }

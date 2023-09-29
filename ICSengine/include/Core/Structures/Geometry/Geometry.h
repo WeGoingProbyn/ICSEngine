@@ -10,6 +10,7 @@ public:
 
 protected:
 	bool FindNormals();
+	bool FindInterleaved();
 	bool FindTextureCoords();
 	virtual bool FindIndices() = 0;
 	virtual bool FindVertices() = 0;

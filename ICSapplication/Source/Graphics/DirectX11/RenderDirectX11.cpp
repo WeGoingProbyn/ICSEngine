@@ -3,6 +3,13 @@
 
 RenderDirectX11::RenderDirectX11(int width, int height, void* window)
 {
+	StartUp(width, height, window);
+}
+
+RenderDirectX11::~RenderDirectX11() {}
+
+void RenderDirectX11::StartUp(int width, int height, void* window)
+{
 	m_WindowSize(0) = width;
 	m_WindowSize(1) = height;
 	StateAccess::GetInstance().m_SwapChainDesc.BufferDesc.Width = 0;
@@ -33,7 +40,7 @@ RenderDirectX11::RenderDirectX11(int width, int height, void* window)
 		nullptr, 0,
 		D3D11_SDK_VERSION,
 		&StateAccess::GetInstance().m_SwapChainDesc,
-		&StateAccess::GetInstance().m_SwapChain, 
+		&StateAccess::GetInstance().m_SwapChain,
 		&StateAccess::GetInstance().m_Device,
 		nullptr, &StateAccess::GetInstance().m_DeviceContext));
 
@@ -47,8 +54,6 @@ RenderDirectX11::RenderDirectX11(int width, int height, void* window)
 	// TODO: This should be done dynamically
 	StateAccess::GetInstance().m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
-
-RenderDirectX11::~RenderDirectX11() {}
 
 bool RenderDirectX11::BindBackBufferAndClearDepth() 
 {
@@ -144,41 +149,59 @@ void RenderDirectX11::BindVertices(Vertices& vertices)
 	m_Vertices.BindBufferToPipeline();
 }
 
-void RenderDirectX11::BindIndicesNodes(Indices::Node indices)
+void RenderDirectX11::BindIndices(Indices& indices)
 {
-	m_Indices = IndexBuffer(indices);
-	m_Indices.BindBufferToPipeline();
-
-	CHECK_DX11_MSG_QUEUE(StateAccess::GetInstance().m_DeviceContext->DrawIndexed(6u, 0u, 0u), m_RenderLog);
+	for (Indices::Node node : indices)
+	{
+		m_Indices.PushToEnd({ node });
+		
+	}
 }
 
-void RenderDirectX11::BindPixelShader(String& src)
-{
-	m_PixelShader = PixelShader(src);
-	m_PixelShader.BindShaderToPipeline();
-}
-
-void RenderDirectX11::BindVertexShader(String& src)
-{
-	m_VertexShader = VertexShader(src);
-	m_VertexShader.BindShaderToPipeline();
-}
+//void RenderDirectX11::BindPixelShader(String& src)
+//{
+//	m_PixelShader = PixelShader(src);
+//	m_PixelShader.BindShaderToPipeline();
+//}
+//
+//void RenderDirectX11::BindVertexShader(String& src)
+//{
+//	m_VertexShader = VertexShader(src);
+//	m_VertexShader.BindShaderToPipeline();
+//}
 
 void RenderDirectX11::BindShaders(Shaders& shaders)
 {
-
+	for (Shaders::Layout::Element& element : shaders.GetLayout().GetStructure())
+	{
+		switch (element.GetType())
+		{
+		case Shaders::Types::PIXEL:
+			m_PixelShader = PixelShader(shaders.GetBuffer()[element.GetID()].GetShaderString());
+			m_PixelShader.BindShaderToPipeline();
+			break;
+		case Shaders::Types::VERTEX:
+			m_VertexShader = VertexShader(shaders.GetBuffer()[element.GetID()].GetShaderString());
+			m_VertexShader.BindShaderToPipeline();
+			break;
+		}
+	}
 }
 
-bool RenderDirectX11::DrawClear()
+bool RenderDirectX11::DrawBoundElements()
 {
-	if (!FlipFrameBuffers()) { return false; }
+	for (IndexBuffer& indices : m_Indices)
+	{
+		indices.BindBufferToPipeline();
+		CHECK_DX11_MSG_QUEUE(StateAccess::GetInstance().m_DeviceContext->DrawIndexed(indices.GetBaseSizeTotal(), 0u, 0u), m_RenderLog);
+	}
 
+	m_Indices.Flush();
 	return true;
 }
 
-bool RenderDirectX11::DrawLayer()
+bool RenderDirectX11::PresentDraw()
 {
-	if (!FlipFrameBuffers()) { return false; }
-
+	FlipFrameBuffers();
 	return true;
 }

@@ -10,12 +10,13 @@ IndexBuffer::IndexBuffer(Indices::Node& indices)
 	:
 	Buffer() 
 {
-	m_DataSize = indices.GetNodeHierachy()[indices.GetID()].GetBlockSize();
+	m_BaseSizeTotal = indices.GetNodeHierachy()[indices.GetID()].GetBlockSize() * indices.GetNodeHierachy().NumberPointsInPrimitive();
+	m_DataSize = indices.GetNodeHierachy()[indices.GetID()].GetBlockSize() * indices.GetNodeHierachy().GetElementStride();
 	m_BufferDescription.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	m_BufferDescription.Usage = D3D11_USAGE_IMMUTABLE;	  // No changing
 	m_BufferDescription.CPUAccessFlags = 0u;			  // No CPU access
 	m_BufferDescription.MiscFlags = 0u;
-	m_BufferDescription.ByteWidth = m_DataSize * indices.GetNodeHierachy()[indices.GetID()].GetElementStride();
+	m_BufferDescription.ByteWidth = m_DataSize;
 	m_BufferDescription.StructureByteStride = sizeof(unsigned int); // Should always be using unsigned ints
 	m_BufferInputHandle.pSysMem = indices.GetNodePointer();
 	CreateBuffer();

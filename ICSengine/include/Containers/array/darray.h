@@ -13,6 +13,7 @@ public:
 	~darray();
 	darray(MemoryType type);
 	
+	void Flush();
 	void Resize(unsigned int size);
 	void PopAtEnd() ;
 	void PopAtStart() ;

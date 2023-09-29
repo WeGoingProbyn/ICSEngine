@@ -55,7 +55,6 @@ public:
 	void PopAt(unsigned int index);
 	void PushAt(T in, unsigned int index);
 
-	void Reset();
 	char* GetArrayPrintable();
 	inline T* GetRawPointer() { return m_Ptr; }
 	inline unsigned int Size() { return m_Size; }

@@ -13,6 +13,6 @@ public:
 	// TODO: Need to define vritual functions within render platform
 	//		that describe the binding and drawing steps for each back end
 	//		for now this is ok i guess...
-	virtual void OnRenderUpdate(RenderPlatform& platform) {}
+	virtual void OnRenderUpdate() {}
 	
 };

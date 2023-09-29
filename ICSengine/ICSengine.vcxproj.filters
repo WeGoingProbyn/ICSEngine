@@ -200,10 +200,7 @@
     <ClInclude Include="include\Utilities\FileIO\FileAsString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Managers\Manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Managers\AssetManager.h">
+    <ClInclude Include="include\Core\Structures\Buffers\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -46,6 +46,6 @@ template<typename Value>
 template<typename... Args>
 void Manager<Value>::PushToStack(String&& name, Args... args)
 {
-	Value* ptr = Memory::AllocateWithCstrctArgs<Value>(1u, MemoryType::ICS_STACK_MANAGER, args...);
+	Value* ptr = Memory::AllocateMemory<Value>(1u, MemoryType::ICS_STACK_MANAGER, args...);
 	m_Stack.Insert(name, ptr);
 }

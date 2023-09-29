@@ -2,6 +2,7 @@
 
 #include "Containers/array/darray.h"
 #include "Containers/String/String.h"
+#include "Core/Structures/Buffers/Constants.h"
 
 class Shaders
 {
@@ -33,12 +34,20 @@ public:
 		public:
 			Element() 
 				:
-				m_Type(Types::UNKOWN_SHADER) {}
+				m_ID(0u),
+				m_Type(Types::UNKOWN_SHADER)
+			{
+			}
 
-			Element(Types type) 
+			Element(unsigned int id, Types type) 
 				:
-				m_Type(type) {}
+				m_ID(id),
+				m_Type(type)
+			{
+			}
 
+			inline unsigned int GetID() { return m_ID; }
+			inline Shaders::Types GetType() { return m_Type; }
 			// TODO: If the type of shader being pushed does not match
 			//		the layout then can try and traverse the string to find
 			//		indicators on what type of shader is being added....
@@ -47,6 +56,7 @@ public:
 
 		private:
 			Types m_Type;
+			unsigned int m_ID;
 		};
 	
 	public:
@@ -55,8 +65,13 @@ public:
 			m_Structure(MemoryType::ICS_SHADER),
 			m_Platform(Platform::UNKOWN_PLATFORM) {}
 
+		template<typename... Args>
+		Layout(Shaders::Platform platform_type, Args... shader_types);
+
 		void SetShaderPlatform(Platform platform) { m_Platform = platform; }
-		void PushShaderType(Types type) { m_Structure.PushToEnd({ type }); }
+		void PushShaderType(Types type) { m_Structure.PushToEnd({ m_Structure.Size(), type }); }
+
+		inline darray<Element>& GetStructure() { return m_Structure; }
 
 		// TODO: If Platform is not set by the user, can try and check the loaded strings
 		//		for certain key words which are contained within the different languages
@@ -106,7 +121,7 @@ public:
 		ICS_API inline Shader End() { return Shader(m_ByteBlob[m_ByteBlob.Last()], m_Layout); }
 		inline Shader operator[](unsigned int index) { return Shader(m_ByteBlob[index], m_Layout); }
 
-		ICS_API void PushShaderToBuffer(String str);
+		//ICS_API void PushShaderToBuffer(String str);
 		ICS_API void PushShaderToBuffer(String& str);
 	private:
 		Layout m_Layout;
@@ -115,15 +130,35 @@ public:
 
 public:
 	Shaders() {}
-	Shaders(Layout& layout)
+	Shaders(Layout& layout, Constants::Layout& const_layout)
 		:
-		m_Buffer(layout)
+		m_Buffer(layout),
+		m_Constants(const_layout)
 	{
 	}
 
+	template<typename T>
+	inline void PushConstant(T constant);
+
+	inline void PushSource(String str) { return m_Buffer.PushShaderToBuffer(str); }
 	inline ShaderBuffer& GetBuffer() { return m_Buffer; }
 	inline Layout& GetLayout() { return m_Buffer.GetShaderLayout(); }
-
+	inline void FlushConstants() { m_Constants.GetBuffer().Flush(); }
 private:
+	Constants m_Constants;
 	ShaderBuffer m_Buffer;
 };
+
+template<typename... Args>
+Shaders::Layout::Layout(Shaders::Platform platform_type, Args... shader_types)
+	:
+	m_Platform(platform_type)
+{
+	(PushShaderType(shader_types), ...);
+};
+
+template<typename T>
+void Shaders::PushConstant(T constant)
+{
+	m_Constants.PushConstant(constant);
+}

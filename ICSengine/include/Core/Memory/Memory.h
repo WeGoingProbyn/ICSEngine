@@ -29,13 +29,13 @@ public:
 	template<typename T>
 	static bool DeepCopyMemoryBlock(T* dest, const T* src, unsigned int size);
 	template<typename T, typename... Args>
-	static T* AllocateWithCstrctArgs(unsigned int size, MemoryType type, Args... args);
+	static T* AllocateMemory(unsigned int size, MemoryType type, Args... args);
 public:
 	bool m_Initialised;
 };
 
 template<typename T, typename... Args>
-T* Memory::AllocateWithCstrctArgs(unsigned int size, MemoryType type, Args... args)
+T* Memory::AllocateMemory(unsigned int size, MemoryType type, Args... args)
 {
 	if (size == 0) { ICS_WARN("Memory: Trying to allocate memory of size 0"); return nullptr; }
 	if (type == MemoryType::UNKNOWN)
@@ -51,6 +51,10 @@ T* Memory::AllocateWithCstrctArgs(unsigned int size, MemoryType type, Args... ar
 template<typename T>
 T* Memory::AllocateMemory(unsigned int size, MemoryType type)
 {
+	if (type == MemoryType::ICS_DARRAY)
+	{
+		int x = 0;
+	}
 	if (size == 0) { ICS_WARN("Memory: Trying to allocate memory of size 0"); return nullptr; }
 	if (type == MemoryType::UNKNOWN)
 	{

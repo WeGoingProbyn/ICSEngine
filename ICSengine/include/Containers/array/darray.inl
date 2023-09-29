@@ -284,3 +284,15 @@ void darray<T>::PushAt(T in, unsigned int index)
 		}
 	}
 }
+
+template<typename T>
+void darray<T>::Flush()
+{
+	if (narray<T>::m_Ptr)
+	{
+		Memory::FreeMemory(narray<T>::m_Ptr, narray<T>::m_Size, narray<T>::m_Tag);
+		narray<T>::m_Ptr = nullptr;
+		narray<T>::m_Size = 0u;
+		narray<T>::m_AllocatedSize = 0u;
+	}
+}

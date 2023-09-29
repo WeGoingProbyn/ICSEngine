@@ -10,9 +10,9 @@ class IndexBuffer : public Buffer
 {
 public:
 	IndexBuffer();
+	~IndexBuffer();
 	IndexBuffer(Indices::Node& indices);
 	void BindBufferToPipeline() override;
 	void CleanUp();
-	~IndexBuffer();
 };
 

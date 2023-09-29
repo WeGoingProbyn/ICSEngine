@@ -180,8 +180,7 @@
     <ClInclude Include="include\Core\Events\KeyEvents.h" />
     <ClInclude Include="include\Core\Events\MouseEvents.h" />
     <ClInclude Include="include\Core\Events\StateEvents.h" />
-    <ClInclude Include="include\Core\Managers\AssetManager.h" />
-    <ClInclude Include="include\Core\Managers\Manager.h" />
+    <ClInclude Include="include\Core\Structures\Buffers\Constants.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Shaders.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Cube.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Geometry.h" />

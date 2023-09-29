@@ -136,6 +136,7 @@
     <ClInclude Include="Include\Application\Application.h" />
     <ClInclude Include="Include\Application\entry.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\Buffer.h" />
+    <ClInclude Include="Include\Graphics\DirectX11\Buffer\ConstantBuffer.h" />
     <ClInclude Include="Include\Graphics\DirectX11\DirectX11Logger.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Shader\PixelShader.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Shader\Shader.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Include\Graphics\DirectX11\RenderDirectX11.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\VertexBuffer.h" />
     <ClInclude Include="Include\Graphics\DirectX11\State\ViewPort.h" />
+    <ClInclude Include="Include\Graphics\RenderAPI.h" />
     <ClInclude Include="Include\Graphics\RenderPlatform.h" />
     <ClInclude Include="Include\Layers\Layer.h" />
     <ClInclude Include="Include\Layers\LayerManager.h" />
@@ -160,10 +162,13 @@
     <ClInclude Include="Include\Platform\EventOwner.h" />
     <ClInclude Include="Include\Platform\Platform.h" />
     <ClInclude Include="Include\Platform\PlatformWin32.h" />
+    <ClInclude Include="Include\Managers\Assets.h" />
+    <ClInclude Include="Include\Managers\Manager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application\Application.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\Buffer.cpp" />
+    <ClCompile Include="Source\Graphics\DirectX11\Buffer\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\DirectX11Logger.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Shader\PixelShader.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Shader\Shader.cpp" />
@@ -174,9 +179,11 @@
     <ClCompile Include="Source\Graphics\DirectX11\RenderDirectX11.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\State\ViewPort.cpp" />
+    <ClCompile Include="Source\Graphics\RenderAPI.cpp" />
     <ClCompile Include="Source\Graphics\RenderPlatform.cpp" />
     <ClCompile Include="Source\Layers\LayerManager.cpp" />
     <ClCompile Include="Source\Layers\WorldSpace.cpp" />
+    <ClCompile Include="Source\Managers\Assets.cpp" />
     <ClCompile Include="Source\Platform\EventOwner.cpp" />
     <ClCompile Include="Source\Platform\Platform.cpp" />
     <ClCompile Include="Source\Platform\PlatformWin32.cpp" />
