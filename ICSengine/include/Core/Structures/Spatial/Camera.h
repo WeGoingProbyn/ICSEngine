@@ -17,7 +17,7 @@ public:
 	ICS_API inline void SetPosition(Vector<float, 3> position) { m_Position = position; }
 	ICS_API void RealignBasisVectors();
 	
-	//Matrix<float, 4>  TranslateCamera();
+	ICS_API Matrix<float, 4> Translate();
 	//void RotateCamera(Vector<float, 2> rotation);
 	//void CheckRotationInput(Vector<int, 2> mouseposition);
 	//void CheckTranslationInput(bool* translation, float execute);

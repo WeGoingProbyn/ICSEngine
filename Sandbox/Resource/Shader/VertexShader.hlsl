@@ -1,3 +1,8 @@
+cbuffer ConstantUniforms
+{
+    matrix Transform;
+};
+
 struct VSout
 {
 	float4 position : SV_Position;
@@ -6,8 +11,8 @@ struct VSout
 
 VSout main(float3 position : Position, float3 normal : Normal) 
 {
-	VSout output;
-	output.normal = float4(normal, 1.0f);
-	output.position = float4(position, 1.0f);
-	return output;
+    VSout output;
+    output.position = mul(float4(position, 1.0f), Transform);
+    output.normal = float4(normal, 1.0f);
+    return output;
 }

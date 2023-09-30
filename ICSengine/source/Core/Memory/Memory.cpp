@@ -1,6 +1,5 @@
 #include "Core/Memory/Memory.h"
 #include "Core/Debugger/Logger.h"
-#include "Platform/Platform.h"
 
 // TODO: Remove no?
 #include <stdio.h>

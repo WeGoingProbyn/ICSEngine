@@ -16,7 +16,7 @@ Application::Application()
 	RegisterListener(reinterpret_cast<EventListener&>(*this));
 
 	Assets::OnStartUp();
-	m_Render = { m_Platform.GetConfig().width, m_Platform.GetConfig().height, m_Platform.GetPlatformHandle().InternalHandle };
+	m_Render = { Platform::GetConfig().width, Platform::GetConfig().height, m_Platform.GetPlatformHandle().InternalHandle };
 	ICS_INFO("Application created");
 }
 
@@ -34,7 +34,7 @@ void Application::LoadSimpleAssets()
 	Assets::PushToStack<Mesh>("Cube", Cube());
 	Assets::PushToStack<Mesh>("Square", Square());
 
-	Constants::Layout const_layout(Constants::Types::SCALAR);
+	Constants::Layout const_layout(Constants::Types::MATRIX);
 	Shaders::Layout simple_layout(Shaders::Platform::DIRECTX, Shaders::Types::VERTEX, Shaders::Types::PIXEL);
 	Assets::PushToStack<Shaders>("Simple", simple_layout, const_layout);
 	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl"));

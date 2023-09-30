@@ -186,6 +186,8 @@ void RenderDirectX11::BindShaders(Shaders& shaders)
 			break;
 		}
 	}
+	m_Constants = ConstantBuffer(shaders.GetConstants());
+	m_Constants.BindBufferToPipeline();
 }
 
 bool RenderDirectX11::DrawBoundElements()

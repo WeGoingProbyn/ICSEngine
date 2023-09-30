@@ -22,6 +22,33 @@ Matrix<T, dim>::Matrix()
 }
 
 template<typename T, unsigned int dim>
+Matrix<T, dim>::Matrix(Initial type)
+{
+	switch (type)
+	{
+	case Matrix::Initial::INDENTITY:
+		Matrix();
+		break;
+	case Matrix::Initial::ONES:
+		for (unsigned int row = 0; row < dim; row++)
+		{
+			for (unsigned int column = 0; column < dim; column++)
+			{
+				m_Data[column][row] = (T)1;
+			}
+		}
+	case Matrix::Initial::ZEROS:
+		for (unsigned int row = 0; row < dim; row++)
+		{
+			for (unsigned int column = 0; column < dim; column++)
+			{
+				m_Data[column][row] = (T)0;
+			}
+		}
+	}
+}
+
+template<typename T, unsigned int dim>
 template<typename... Types>
 Matrix<T, dim>::Matrix(Types... args)
 {
@@ -56,7 +83,7 @@ Matrix<T, dim> Matrix<T, dim>::Transpose()
 		{
 			if (row != column)
 			{
-				tmp(row, column) = m_Data(column, row);
+				tmp(row, column) = m_Data[column][row];
 			}
 		}
 	}

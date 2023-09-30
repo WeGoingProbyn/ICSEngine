@@ -6,7 +6,16 @@ template<typename T, unsigned int dim>
 class Matrix
 {
 public:
+
+	enum Initial
+	{
+		ONES,
+		ZEROS,
+		INDENTITY
+	};
+
 	Matrix();
+	Matrix(Initial type);
 	template<typename... Types>
 	Matrix(Types... args);
 	Matrix<T, dim> Transpose();

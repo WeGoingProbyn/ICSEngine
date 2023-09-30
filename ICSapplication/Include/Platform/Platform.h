@@ -6,7 +6,7 @@
 
 class EventHandler;
 
-class Platform
+class ICS_API Platform
 {
 public:
 	struct Config
@@ -27,11 +27,11 @@ public:
 	virtual bool ReadMessageQueue() = 0;
 	inline Platform(const Platform& mem) = delete;
 	inline Platform& operator=(const Platform& mem) = delete;
-
-	inline Platform::Config& GetConfig() { return m_Config; }
 	inline Platform::PlatformHandle& GetPlatformHandle() { return m_Handle; }
 
+	static Platform::Config& GetConfig() { return Platform::m_Config; }
+
 protected:
-	Platform::Config m_Config;
+	static Platform::Config m_Config;
 	Platform::PlatformHandle m_Handle;
 };

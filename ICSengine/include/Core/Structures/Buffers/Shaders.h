@@ -142,6 +142,7 @@ public:
 
 	inline void PushSource(String str) { return m_Buffer.PushShaderToBuffer(str); }
 	inline ShaderBuffer& GetBuffer() { return m_Buffer; }
+	inline Constants& GetConstants() { return m_Constants; }
 	inline Layout& GetLayout() { return m_Buffer.GetShaderLayout(); }
 	inline void FlushConstants() { m_Constants.GetBuffer().Flush(); }
 private:
@@ -161,4 +162,5 @@ template<typename T>
 void Shaders::PushConstant(T constant)
 {
 	m_Constants.PushConstant(constant);
-}
+};
+

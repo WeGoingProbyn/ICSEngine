@@ -5,15 +5,14 @@
 
 class Projection {
 public:
-	Projection(Vector<float, 2> screen);
-	inline Vector<float, 2> GetNearFar() { return { m_ZNear,m_ZFar }; }
-	inline Vector<float, 2> GetFovCharacteristics() { return { m_Fov,m_FovTrig }; }
-	inline Vector<float, 3> GetWindowCharacteristics() { return { m_Width,m_Height,m_AspectRatio }; }
-	inline Vector<float, 4> GetFrustrumSize() { return { m_FTop,m_FBottom,m_FRight,m_FLeft }; }
+	ICS_API Projection(Vector<float, 2> screen);
 
-	void PerspectiveProject();
-	//void OrthographicProject();
-	inline Matrix<float, 4>& GetProjection() { return m_Projection; }
+	ICS_API void PerspectiveProject();
+	ICS_API inline Vector<float, 2> GetNearFar() { return { m_ZNear,m_ZFar }; }
+	ICS_API inline Vector<float, 2> GetFovCharacteristics() { return { m_Fov,m_FovTrig }; }
+	ICS_API inline Vector<float, 3> GetWindowCharacteristics() { return { m_Width,m_Height,m_AspectRatio }; }
+	ICS_API inline Vector<float, 4> GetFrustrumSize() { return { m_FTop,m_FBottom,m_FRight,m_FLeft }; }
+	ICS_API inline Matrix<float, 4>& GetProjection() { return m_Projection; }
 
 private:
 	float m_ZNear;

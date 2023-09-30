@@ -5,6 +5,7 @@
 
 class ConstantBuffer : public Buffer {
 public:
+	ConstantBuffer() {}
 	ConstantBuffer(Constants& cbuff);
 	
 	void BindBufferToPipeline() override;

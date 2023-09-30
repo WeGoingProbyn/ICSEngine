@@ -12,5 +12,5 @@ void Assets::OnStartUp()
 void Assets::OnShutDown()
 {
 	Memory::FreeMemory(m_MeshStack, 1u, MemoryType::ICS_STACK_MANAGER);
-	Memory::FreeMemory(m_ShaderStack, 1u, MemoryType::ICS_STACK_MANAGER);
+ 	Memory::FreeMemory(m_ShaderStack, 1u, MemoryType::ICS_STACK_MANAGER);
 }

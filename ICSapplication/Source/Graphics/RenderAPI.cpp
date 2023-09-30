@@ -13,6 +13,7 @@ void RenderAPI::BindMesh(Mesh& mesh)
 {
 	m_Render.BindVertices(mesh.GetInterleaved());
 	m_Render.BindIndices(mesh.GetIndices());
+
 }
 
 void RenderAPI::BindShaders(Shaders& shaders)

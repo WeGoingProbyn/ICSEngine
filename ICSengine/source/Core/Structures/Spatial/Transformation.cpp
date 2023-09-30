@@ -13,10 +13,11 @@ void Transformation::SetRotation(Vector<float, 3> actor) {
 void Transformation::SetTranslation(Vector<float, 3> actor) { m_Translation = actor; }
 
 Matrix<float, 4> Transformation::ScaleVector() {
-	return Matrix<float, 4>(m_Scale[0], 0.0f, 0.0f, 0.0f,
-							0.0f, m_Scale[1], 0.0f, 0.0f,
-							0.0f, 0.0f, m_Scale[2], 0.0f,
-							0.0f, 0.0f,		  0.0f, 1.0f);
+	Matrix<float, 4> scale;
+	scale(0, 0) = m_Scale[0];
+	scale(1, 1) = m_Scale[1];
+	scale(2, 2) = m_Scale[2];
+	return scale;
 }
 
 Matrix<float, 4> Transformation::TranslateVector() {
@@ -52,7 +53,8 @@ Matrix<float, 4> Transformation::RotateWithEuler() {
 }
 
 Matrix<float, 4> Transformation::Transform() {
-	return  (TranslateVector() * RotateWithEuler() * ScaleVector());
+	Matrix<float, 4> transform = (TranslateVector() * RotateWithEuler() * ScaleVector());
+	return transform;
 }
 
 Matrix<float, 4> Transformation::TransformNoTranslation() {

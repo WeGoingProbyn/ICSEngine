@@ -94,9 +94,8 @@ private:
 		{
 			for (unsigned int index = 0; index < sizeof(constant) / sizeof(float); index++)
 			{
-				*reinterpret_cast<Dest*>(ptr + (index * sizeof(float))) = constant[index];
+				*reinterpret_cast<float*>(ptr + (index * sizeof(float))) = constant[index];
 			}
-
 		}
 		else
 		{

@@ -13,6 +13,7 @@
 
 #include "Graphics/DirectX11/Buffer/IndexBuffer.h"
 #include "Graphics/DirectX11/Buffer/VertexBuffer.h"
+#include "Graphics/DirectX11/Buffer/ConstantBuffer.h"
 
 #include "Graphics/DirectX11/Shader/PixelShader.h"
 #include "Graphics/DirectX11/Shader/VertexShader.h"
@@ -58,6 +59,7 @@ private:
 	//		these might also benefit from being darray's..........
 	VertexBuffer m_Vertices;
 	PixelShader m_PixelShader;
+	ConstantBuffer m_Constants;
 	VertexShader m_VertexShader;
 	darray<IndexBuffer> m_Indices;
 

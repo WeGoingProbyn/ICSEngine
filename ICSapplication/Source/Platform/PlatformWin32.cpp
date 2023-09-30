@@ -28,22 +28,22 @@ PlatformWin32::InstanceHandler::~InstanceHandler() { UnregisterClass((LPCWSTR)m_
 PlatformWin32::PlatformWin32()
 {
 	// TODO: Maybe do this better
-	m_Config.x = 0u;
-	m_Config.y = 0u;
-	m_Config.width = 1200u;
-	m_Config.height = 720u;
-	m_Config.name = L"ICS engine";
+	Platform::m_Config.x = 0u;
+	Platform::m_Config.y = 0u;
+	Platform::m_Config.width = 1200u;
+	Platform::m_Config.height = 720u;
+	Platform::m_Config.name = L"ICS engine";
 
 	m_Handle.InternalHandle = static_cast<void*>(PlatformWin32::InstanceHandler::GetWindow());
 	RECT WindowRectangle;
-	WindowRectangle.left = m_Config.x;
-	WindowRectangle.top = m_Config.y;
-	WindowRectangle.right = m_Config.width + WindowRectangle.left;
-	WindowRectangle.bottom = m_Config.height + WindowRectangle.top;
+	WindowRectangle.left = Platform::m_Config.x;
+	WindowRectangle.top = Platform::m_Config.y;
+	WindowRectangle.right = Platform::m_Config.width + WindowRectangle.left;
+	WindowRectangle.bottom = Platform::m_Config.height + WindowRectangle.top;
 
 	ICS_INFO("WIN32: Creating window class and retreiving handle...");
 	if (!AdjustWindowRect(&WindowRectangle, WS_OVERLAPPEDWINDOW, FALSE)) { ICS_FATAL("WIN32: Cannot find window dimensions "); };
-	m_Handle.InternalHandle = CreateWindow((LPCWSTR)InstanceHandler::GetWindowName(), (LPCWSTR)(wchar_t*)m_Config.name,
+	m_Handle.InternalHandle = CreateWindow((LPCWSTR)InstanceHandler::GetWindowName(), (LPCWSTR)(wchar_t*)Platform::m_Config.name,
 		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
 		CW_USEDEFAULT, WindowRectangle.right - WindowRectangle.left,
 		WindowRectangle.bottom - WindowRectangle.top, nullptr, nullptr,
