@@ -11,6 +11,7 @@ public:
 	virtual ~WorldSpace();
 	void OnRenderUpdate(Clock::Time& delta_time) override;
 
+	inline ViewProjection& GetViewProjeciton() { return m_ViewProjection; }
 	//inline void PushRoot(Mesh& mesh) { m_Scene.PushRoot(&mesh); }
 private:
 	Scene m_Scene;

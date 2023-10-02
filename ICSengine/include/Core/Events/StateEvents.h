@@ -37,6 +37,7 @@ public:
 	Event GetStateEvent();
 	ICS_API void AddStateEventToQueue(Event input);
 	inline void Flush() { m_StateEventBuffer = darray<Event>(); }
+	inline unsigned int Size() { return m_StateEventBuffer.Size(); }
 private:
 	darray<Event> m_StateEventBuffer;
 };

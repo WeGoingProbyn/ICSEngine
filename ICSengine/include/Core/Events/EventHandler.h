@@ -17,7 +17,7 @@ public:
 
 	ICS_API bool DistributeKeyEventsToListeners();
 	//bool DistributeMouseEventsToListeners();
-	//bool DistributeStateEventsToListeners();
+	ICS_API bool DistributeStateEventsToListeners();
 	ICS_API bool RegisterListener(EventListener& listener);
 	ICS_API bool UnRegisterListener(EventListener& listener);
 private:

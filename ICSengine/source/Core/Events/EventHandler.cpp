@@ -37,6 +37,27 @@ bool EventHandler::DistributeKeyEventsToListeners()
 	return true;
 }
 
+bool EventHandler::DistributeStateEventsToListeners()
+{
+	if (m_StateEvents.Size() == 0) { return false; }
+	for (unsigned int i = 0; i < m_StateEvents.Size(); i++)
+	{
+		StateEvents::Event state_event = m_StateEvents.GetStateEvent();
+		for (EventListener* listener : m_Listeners)
+		{
+			for (EventListener::EventTypes type : listener->GetActiveEvents())
+			{
+				if (type == EventListener::EventTypes::ICS_PLATFORM_STATE_CHANGE)
+				{
+					listener->ReactToEvent(state_event, static_cast<unsigned int>(EventListener::EventTypes::ICS_PLATFORM_STATE_CHANGE));
+				}
+
+			}
+		}
+	}
+	return true;
+}
+
 bool EventHandler::RegisterListener(EventListener& listener)
 {
 	m_Listeners.PushToEnd(&listener);

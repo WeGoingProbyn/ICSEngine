@@ -5,9 +5,11 @@
 
 class Projection {
 public:
-	ICS_API Projection(Vector<float, 2> screen);
+	ICS_API Projection(Vector<unsigned int, 2> screen);
+	ICS_API Projection(unsigned int width, unsigned int height);
 
 	ICS_API void PerspectiveProject();
+	ICS_API void RebuildProjection(unsigned int width, unsigned int height);
 	ICS_API inline Vector<float, 2> GetNearFar() { return { m_ZNear,m_ZFar }; }
 	ICS_API inline Vector<float, 2> GetFovCharacteristics() { return { m_Fov,m_FovTrig }; }
 	ICS_API inline Vector<float, 3> GetWindowCharacteristics() { return { m_Width,m_Height,m_AspectRatio }; }

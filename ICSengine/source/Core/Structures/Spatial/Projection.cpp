@@ -1,6 +1,18 @@
 #include "Core/Structures/Spatial/Projection.h"
 
-Projection::Projection(Vector<float, 2> screen) {
+Projection::Projection(unsigned int width, unsigned int height)
+{
+	RebuildProjection(width, height);
+}
+
+Projection::Projection(Vector<unsigned int, 2> screen) 
+	:	
+	Projection(screen[0], screen[1])
+{
+}
+
+void Projection::RebuildProjection(unsigned int width, unsigned int height)
+{
 	m_Projection = Matrix<float, 4>();
 	m_ZFar = 100.0f;
 	m_ZNear = 0.1f;
@@ -8,9 +20,9 @@ Projection::Projection(Vector<float, 2> screen) {
 	m_Fov = 45 * (3.14159f / 180.0f); // Hard coded to 45 degree
 	m_FovTrig = std::tan(0.5f * m_Fov);
 
-	m_Width = screen(0);
-	m_Height = screen(1);
-	m_AspectRatio = screen(0) / screen(1);
+	m_Width = (float)width;
+	m_Height = (float)height;
+	m_AspectRatio = (float)width / (float)height;
 
 	m_FTop = m_FovTrig * m_ZNear;
 	m_FBottom = -m_FTop;
@@ -18,7 +30,8 @@ Projection::Projection(Vector<float, 2> screen) {
 	m_FLeft = -m_FRight;
 }
 
-void Projection::PerspectiveProject() {
+void Projection::PerspectiveProject() 
+{
 	m_Projection = Matrix<float, 4>();
 	m_Projection(0, 0) = 2 * m_ZNear / (m_FTop - m_FBottom);
 	m_Projection(1, 1) = 2 * m_ZNear / (m_FRight - m_FLeft);

@@ -15,11 +15,14 @@ public:
 	{
 		ICS_APPLICATION_QUIT,
 		ICS_MEMORY_QUERY_ALLOC,
+		ICS_PLATFORM_STATE_CHANGE,
 		ICS_EVENT_TYPES_MAX
 	};
 
 	const char* Strings[static_cast<unsigned int>(EventListener::EventTypes::ICS_EVENT_TYPES_MAX)] = {
 		"ICS_APPLICATION_QUIT",
+		"ICS_MEMORY_QUERY_ALLOC",
+		"ICS_PLATFORM_STATE_CHANGE",
 	};
 public:
 	ICS_API EventListener();

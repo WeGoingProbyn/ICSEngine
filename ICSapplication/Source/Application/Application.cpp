@@ -74,6 +74,7 @@ bool Application::RunApplication()
 		
 		m_Clock.OnUpdate();
 		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
+		//m_Platform.GetEventHandler().DistributeStateEventsToListeners();
 	}
 
 
