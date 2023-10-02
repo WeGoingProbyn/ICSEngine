@@ -1,8 +1,5 @@
-#include "Defines.h"
-#include "Core/Debugger/Logger.h"
 #include "Platform/Platform.h"
-
-Platform::Config Platform::m_Config;
+#include "Core/Debugger/Logger.h"
 
 Platform::Platform()
 	:

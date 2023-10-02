@@ -2,10 +2,10 @@
 
 Camera::Camera()
 {
-	m_Position = Vector<float, 3>(0.0f, 0.0f, 10.0f);
+	m_Position = Vector<float, 3>(0.0f, 0.0f, 1.0f);
 	m_Target = Vector<float, 3>(0.0f, 0.0f, 0.0f);
 	m_UpwardBasis = Vector<float, 3>(0.0f, 1.0f, 0.0f);
-	m_ForwardBasis = (m_Position - m_Target).Normalise();
+	m_ForwardBasis = -(m_Position - m_Target).Normalise();
 	RealignBasisVectors();
 }
 
@@ -15,6 +15,28 @@ void Camera::RealignBasisVectors()
 	m_UpwardBasis = m_RightBasis.CrossProduct(m_ForwardBasis).Normalise();
 }
 
+Matrix<float, 4> Camera::Translate() {
+	Matrix<float, 4> CameraVectors;
+	Matrix<float, 4> CameraPosition;
+
+	CameraVectors(0, 0) = m_RightBasis[0];
+	CameraVectors(0, 1) = m_RightBasis[1];
+	CameraVectors(0, 2) = m_RightBasis[2];
+
+	CameraVectors(1, 0) = m_UpwardBasis[0];
+	CameraVectors(1, 1) = m_UpwardBasis[1];
+	CameraVectors(1, 2) = m_UpwardBasis[2];
+
+	CameraVectors(2, 0) = m_ForwardBasis[0];
+	CameraVectors(2, 1) = m_ForwardBasis[1];
+	CameraVectors(2, 2) = m_ForwardBasis[2];
+
+	CameraPosition(3, 0) = -m_Position[0];
+	CameraPosition(3, 1) = -m_Position[1];
+	CameraPosition(3, 2) = -m_Position[2];
+
+	return (CameraPosition * CameraVectors);
+}
 
 //void Camera::CheckTranslationInput(bool* translation, float execute) {
 //	// Forwards, Backwards, Right, Left, Up, Down
@@ -49,28 +71,7 @@ void Camera::RealignBasisVectors()
 //	}
 //}
 // 
-Matrix<float, 4> Camera::Translate() {
-	Matrix<float, 4> CameraVectors;
-	Matrix<float, 4> CameraPosition;
 
-	CameraVectors(0, 0) = m_RightBasis[0];
-	CameraVectors(0, 1) = m_RightBasis[1];
-	CameraVectors(0, 2) = m_RightBasis[2];
-
-	CameraVectors(1, 0) = m_UpwardBasis[0];
-	CameraVectors(1, 1) = m_UpwardBasis[1];
-	CameraVectors(1, 2) = m_UpwardBasis[2];
-
-	CameraVectors(2, 0) = m_ForwardBasis[0];
-	CameraVectors(2, 1) = m_ForwardBasis[1];
-	CameraVectors(2, 2) = m_ForwardBasis[2];
-
-	CameraPosition(3, 0) = -m_Position[0];
-	CameraPosition(3, 1) = -m_Position[1];
-	CameraPosition(3, 2) = -m_Position[2];
-
-	return (CameraPosition * CameraVectors);
-}
 
 //void Camera::CheckRotationInput(Vector<int, 2> mouseposition) {
 //	if (mouseposition == m_LastKnownPosition) { ; }

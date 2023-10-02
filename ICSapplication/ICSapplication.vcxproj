@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Application\Application.h" />
+    <ClInclude Include="Include\Application\Config.h" />
     <ClInclude Include="Include\Application\entry.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\Buffer.h" />
     <ClInclude Include="Include\Graphics\DirectX11\Buffer\ConstantBuffer.h" />
@@ -149,9 +150,11 @@
     <ClInclude Include="Include\Graphics\DirectX11\State\ViewPort.h" />
     <ClInclude Include="Include\Graphics\RenderAPI.h" />
     <ClInclude Include="Include\Graphics\RenderPlatform.h" />
+    <ClInclude Include="Include\Graphics\Screen\ViewProjection.h" />
     <ClInclude Include="Include\Layers\Layer.h" />
     <ClInclude Include="Include\Layers\LayerManager.h" />
     <ClInclude Include="Include\Layers\SkyBox.h" />
+    <ClInclude Include="Include\Platform\Clock.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\Layer.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\SkyBox.h" />
     <ClInclude Include="Source\Graphics\RenderFront\Structure\Layers\WorldSpace.h" />
@@ -167,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application\Application.cpp" />
+    <ClCompile Include="Source\Application\Config.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\Buffer.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\Buffer\ConstantBuffer.cpp" />
     <ClCompile Include="Source\Graphics\DirectX11\DirectX11Logger.cpp" />
@@ -181,9 +185,11 @@
     <ClCompile Include="Source\Graphics\DirectX11\State\ViewPort.cpp" />
     <ClCompile Include="Source\Graphics\RenderAPI.cpp" />
     <ClCompile Include="Source\Graphics\RenderPlatform.cpp" />
+    <ClCompile Include="Source\Graphics\Screen\ViewProjection.cpp" />
     <ClCompile Include="Source\Layers\LayerManager.cpp" />
     <ClCompile Include="Source\Layers\WorldSpace.cpp" />
     <ClCompile Include="Source\Managers\Assets.cpp" />
+    <ClCompile Include="Source\Platform\Clock.cpp" />
     <ClCompile Include="Source\Platform\EventOwner.cpp" />
     <ClCompile Include="Source\Platform\Platform.cpp" />
     <ClCompile Include="Source\Platform\PlatformWin32.cpp" />

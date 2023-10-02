@@ -2,6 +2,7 @@
 
 #include <Managers/Assets.h>
 #include <Graphics/RenderAPI.h>
+#include <Application/Config.h>
 
 #include <Utilities/FileIO/FileAsString.h>
 #include <Core/Structures/Geometry/Cube.h>
@@ -27,21 +28,16 @@ WorldSpace::~WorldSpace()
 {
 }
 
-void WorldSpace::OnRenderUpdate()
+void WorldSpace::OnRenderUpdate(Clock::Time& delta_time)
 {
-	Camera camera;
 	Transformation transform;
-	transform.SetScale({ 10.0f, 10.0f, 10.0f });
-	transform.SetRotation({ 0.0f, 0.0f, 0.0f });
-	transform.SetTranslation({ 0.0f, 0.0f, 0.0f });
-	Projection projection({ Platform::GetConfig().width, Platform::GetConfig().height });
-	projection.PerspectiveProject();
-	
-	auto x = (transform.Transform() * camera.Translate() * projection.GetProjection()).Transpose();
-	Matrix<float, 4> tmp;
+	transform.SetScale({ 1.0f, 1.0f, 1.0f });
+	transform.SetRotation({ delta_time.Elapsed * 5.0f, delta_time.Elapsed * 20.0f, 0.0f});
+	transform.SetTranslation({ 0.0f, 0.0f, 5.0f + std::sin(delta_time.Elapsed)});
+
+	auto tmp = m_ViewProjection.Project(transform);
 	Assets::Get<Shaders>("Simple").FlushConstants();
-	Assets::Get<Shaders>("Simple").PushConstant((transform.Transform() * camera.Translate() * projection.GetProjection()).Transpose());
-	//Assets::Get<Shaders>("Simple").PushConstant(Matrix<float, 4>());
+	Assets::Get<Shaders>("Simple").PushConstant(m_ViewProjection.Project(transform));
 	
 	RenderAPI::BindShaders(Assets::Get<Shaders>("Simple"));
 

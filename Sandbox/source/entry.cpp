@@ -4,9 +4,16 @@
 #include "WorldSpace.h"
 
 #include <Managers/Assets.h>
+#include <Application/Config.h>
 
 Application* ICS::CreateApplication()
 { 
+	Config::platform.x = 0u;
+	Config::platform.y = 0u;
+	Config::platform.width = 1200u;
+	Config::platform.height = 720u;
+	Config::platform.name = L"ICS engine";
+
 	Game* app = Memory::AllocateMemory<Game>(1u, MemoryType::ICS_APPLICATION);
 
 	// Any user defined logic should go here, things like event listeners and the like

@@ -5,7 +5,7 @@ Rasterizer::Rasterizer()
 	m_ShouldUpdate(false)
 {
 	m_RasterDesc.AntialiasedLineEnable = false;
-	m_RasterDesc.CullMode = D3D11_CULL_FRONT;
+	m_RasterDesc.CullMode = D3D11_CULL_BACK;
 	m_RasterDesc.DepthBias = 0;
 	m_RasterDesc.DepthBiasClamp = 0.0f;
 	m_RasterDesc.DepthClipEnable = true;

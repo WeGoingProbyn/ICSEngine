@@ -6,6 +6,6 @@ struct PSin
 
 float4 main(PSin input) : SV_Target 
 {
-	float4 colour = float4(1.0f, 0.0f, 0.0f, 1.0f);
+    float4 colour = normalize(input.normal + 1);
 	return colour;
 }

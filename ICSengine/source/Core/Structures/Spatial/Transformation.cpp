@@ -23,9 +23,9 @@ Matrix<float, 4> Transformation::ScaleVector() {
 Matrix<float, 4> Transformation::TranslateVector() {
 	Matrix<float, 4> translate;
 
-	translate(3, 0) = m_Translation(0);
-	translate(3, 1) = m_Translation(1);
-	translate(3, 2) = m_Translation(2);
+	translate(3, 0) = m_Translation[0];
+	translate(3, 1) = m_Translation[1];
+	translate(3, 2) = m_Translation[2];
 	return translate;
 }
 
@@ -53,11 +53,11 @@ Matrix<float, 4> Transformation::RotateWithEuler() {
 }
 
 Matrix<float, 4> Transformation::Transform() {
-	Matrix<float, 4> transform = (TranslateVector() * RotateWithEuler() * ScaleVector());
+	Matrix<float, 4> transform = (RotateWithEuler() * ScaleVector() * TranslateVector());
 	return transform;
 }
 
 Matrix<float, 4> Transformation::TransformNoTranslation() {
-	return ScaleVector() * RotateWithEuler();
+	return RotateWithEuler() * ScaleVector();
 }
 

@@ -85,6 +85,10 @@ Matrix<T, dim> Matrix<T, dim>::Transpose()
 			{
 				tmp(row, column) = m_Data[column][row];
 			}
+			else
+			{
+				tmp(row, column) = m_Data[row][column];
+			}
 		}
 	}
 	return tmp;

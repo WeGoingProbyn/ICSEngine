@@ -12,7 +12,7 @@ class RenderAPI
 {
 public:
 	RenderAPI() {}
-	ICS_API RenderAPI(int width, int height, void* window);
+	ICS_API RenderAPI(unsigned int width, unsigned int height, void* window);
 
 	ICS_API static void SetUpToDraw();
 	ICS_API static void PresentDraw();

@@ -1,14 +1,14 @@
 #include "Graphics/DirectX11/RenderDirectX11.h"
 
 
-RenderDirectX11::RenderDirectX11(int width, int height, void* window)
+RenderDirectX11::RenderDirectX11(unsigned int width, unsigned int height, void* window)
 {
 	StartUp(width, height, window);
 }
 
 RenderDirectX11::~RenderDirectX11() {}
 
-void RenderDirectX11::StartUp(int width, int height, void* window)
+void RenderDirectX11::StartUp(unsigned int width, unsigned int height, void* window)
 {
 	m_WindowSize(0) = width;
 	m_WindowSize(1) = height;

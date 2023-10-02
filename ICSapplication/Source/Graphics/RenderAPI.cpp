@@ -4,7 +4,7 @@
 RenderDirectX11 RenderAPI::m_Render;
 #endif
 
-RenderAPI::RenderAPI(int width, int height, void* window)
+RenderAPI::RenderAPI(unsigned int width, unsigned int height, void* window)
 {
 	m_Render.StartUp(width, height, window);
 }

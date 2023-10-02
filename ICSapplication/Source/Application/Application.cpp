@@ -1,5 +1,6 @@
-#include "Application/Application.h"
 #include "Managers/Assets.h"
+#include "Application/Config.h"
+#include "Application/Application.h"
 
 #include <Core/Debugger/Logger.h>
 #include <Utilities/FileIO/FileAsString.h>
@@ -16,7 +17,7 @@ Application::Application()
 	RegisterListener(reinterpret_cast<EventListener&>(*this));
 
 	Assets::OnStartUp();
-	m_Render = { Platform::GetConfig().width, Platform::GetConfig().height, m_Platform.GetPlatformHandle().InternalHandle };
+	m_Render = { Config::platform.width, Config::platform.height, m_Platform.GetPlatformHandle().InternalHandle };
 	ICS_INFO("Application created");
 }
 
@@ -62,17 +63,17 @@ bool Application::RunApplication()
 		{ 
 			continue; 
 		}
-		if (!Update(0.0f)) 
+		if (!Update(m_Clock.time))
 		{
 			ICS_ERROR("Application: Could not find user defined update logic")
 		}
-
-		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
-		
 		for (Layer* layer : m_Layers.GetLayerStack())
 		{
-			layer->OnRenderUpdate();
+			layer->OnRenderUpdate(m_Clock.time);
 		}
+		
+		m_Clock.OnUpdate();
+		m_Platform.GetEventHandler().DistributeKeyEventsToListeners();
 	}
 
 

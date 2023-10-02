@@ -7,5 +7,5 @@ class Game : public Application
 public:
 	Game() {};
 
-	bool Update(float deltaTime) override;
+	bool Update(Clock::Time& delta_time) override;
 };

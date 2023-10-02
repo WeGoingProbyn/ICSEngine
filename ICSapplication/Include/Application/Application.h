@@ -5,6 +5,7 @@
 #include <Core/Debugger/Logger.h>
 #include <Core/Events/EventHandler.h>
 
+#include "Platform/Clock.h"
 #include "Layers/LayerManager.h"
 #ifdef ICS_PLATFORM_WINDOWS
 #include "Platform/PlatformWin32.h"
@@ -30,12 +31,13 @@ private:
 	inline bool ShouldRun() { return m_ShouldRun; }
 	inline bool ShouldPause() { return m_ShouldPause; }
 
-	ICS_API virtual bool Update(float deltaTime) = 0;
+	ICS_API virtual bool Update(Clock::Time& delta_time) = 0;
 
 private:
 	bool m_ShouldRun;
 	bool m_ShouldPause;
 	
+	Clock m_Clock;
 	Memory m_Memory;
 	RenderAPI m_Render;
 	LayerManager m_Layers;

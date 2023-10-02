@@ -26,7 +26,7 @@ class RenderDirectX11 : public RenderPlatform
 public:
 	RenderDirectX11() {}
 	~RenderDirectX11();
-	RenderDirectX11(int width, int height, void* window);
+	RenderDirectX11(unsigned int width, unsigned int height, void* window);
 	
 	bool PresentDraw() override;
 	bool DrawBoundElements() override;
@@ -37,7 +37,7 @@ public:
 
 
 private:
-	void StartUp(int width, int height, void* window);
+	void StartUp(unsigned int width, unsigned int height, void* window);
 	bool CreateDepthStencil();
 	bool CreateRasterizer();
 	bool CreateTargetView();

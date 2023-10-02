@@ -2,6 +2,7 @@
 
 #include "Defines.h"
 
+#include "Platform/Clock.h"
 #include "Graphics/RenderPlatform.h"
 
 class Layer
@@ -13,6 +14,6 @@ public:
 	// TODO: Need to define vritual functions within render platform
 	//		that describe the binding and drawing steps for each back end
 	//		for now this is ok i guess...
-	virtual void OnRenderUpdate() {}
+	virtual void OnRenderUpdate(Clock::Time& delta_time) {}
 	
 };
