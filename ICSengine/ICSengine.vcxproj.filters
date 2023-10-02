@@ -90,6 +90,9 @@
     <ClCompile Include="source\Utilities\FileIO\FileAsString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Core\Structures\Geometry\Circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Debugger\Logger.h">
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Structures\Buffers\Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Structures\Geometry\Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

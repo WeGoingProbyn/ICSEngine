@@ -6,6 +6,7 @@
 
 #include <Utilities/FileIO/FileAsString.h>
 #include <Core/Structures/Geometry/Cube.h>
+#include <Core/Structures/Geometry/Circle.h>
 #include <Core/Structures/Geometry/Square.h>
 
 #include <Core/Structures/Spatial/Camera.h>
@@ -14,6 +15,7 @@
 
 WorldSpace::WorldSpace()
 {
+	Assets::PushToStack<Mesh>("Circle", Circle());
 	Assets::PushToStack<Mesh>("Cube", Cube());
 	Assets::PushToStack<Mesh>("Square", Square());
 	Constants::Layout const_layout(Constants::Types::MATRIX);

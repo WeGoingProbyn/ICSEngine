@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Core\Structures\Geometry\Circle.cpp" />
     <ClCompile Include="source\Utilities\FileIO\FileAsString.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Indices.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Shaders.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="include\Core\Events\StateEvents.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Constants.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Shaders.h" />
+    <ClInclude Include="include\Core\Structures\Geometry\Circle.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Cube.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Geometry.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Square.h" />
