@@ -137,8 +137,8 @@ public:
 	{
 	}
 
-	template<typename T>
-	inline void PushConstant(T constant);
+	template<typename... Args>
+	inline void PushConstants(Args... args);
 
 	inline void PushSource(String str) { return m_Buffer.PushShaderToBuffer(str); }
 	inline ShaderBuffer& GetBuffer() { return m_Buffer; }
@@ -158,9 +158,9 @@ Shaders::Layout::Layout(Shaders::Platform platform_type, Args... shader_types)
 	(PushShaderType(shader_types), ...);
 };
 
-template<typename T>
-void Shaders::PushConstant(T constant)
+template<typename... Args>
+void Shaders::PushConstants(Args... args)
 {
-	m_Constants.PushConstant(constant);
+	m_Constants.PushConstantSet(args...);
 };
 

@@ -11,10 +11,6 @@ Geometry::Geometry()
 	m_Interleaved = Vertices(layout);
 }
 
-Geometry::~Geometry()
-{
-}
-
 bool Geometry::FindInterleaved()
 {
 	for (unsigned int root_index = 0; root_index < m_Indices.Size(); root_index++)

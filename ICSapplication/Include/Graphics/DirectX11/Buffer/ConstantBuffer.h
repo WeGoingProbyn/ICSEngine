@@ -6,7 +6,7 @@
 class ConstantBuffer : public Buffer {
 public:
 	ConstantBuffer() {}
-	ConstantBuffer(Constants& cbuff);
+	ConstantBuffer(Constants::Set cbuff);
 	
 	void BindBufferToPipeline() override;
 };

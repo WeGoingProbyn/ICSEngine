@@ -186,19 +186,36 @@ void RenderDirectX11::BindShaders(Shaders& shaders)
 			break;
 		}
 	}
-	m_Constants = ConstantBuffer(shaders.GetConstants());
-	m_Constants.BindBufferToPipeline();
+
+	for (unsigned int index = 0; index < shaders.GetConstants().GetNumberOfSets(); index++)
+	{
+		m_Constants.PushToEnd(ConstantBuffer(shaders.GetConstants().GetBuffer()[index]));
+	}
 }
 
 bool RenderDirectX11::DrawBoundElements()
 {
-	for (IndexBuffer& indices : m_Indices)
+	if (m_Indices.Size() != m_Constants.Size())
 	{
-		indices.BindBufferToPipeline();
-		CHECK_DX11_MSG_QUEUE(StateAccess::GetInstance().m_DeviceContext->DrawIndexed(indices.GetBaseSizeTotal(), 0u, 0u), m_RenderLog);
+		m_Constants[0].BindBufferToPipeline();
+		for (unsigned int index = 0; index < m_Indices.Size(); index++)
+		{
+			m_Indices[index].BindBufferToPipeline();
+			CHECK_DX11_MSG_QUEUE(StateAccess::GetInstance().m_DeviceContext->DrawIndexed(m_Indices[index].GetBaseSizeTotal(), 0u, 0u), m_RenderLog);
+		}
+		ICS_WARN("Render: Number of index buffers to draw differs from the number of constant sets loaded, Using only first constant set");
 	}
-
+	else
+	{
+		for (unsigned int index = 0; index < m_Indices.Size(); index++)
+		{
+			m_Indices[index].BindBufferToPipeline();
+			m_Constants[index].BindBufferToPipeline();
+			CHECK_DX11_MSG_QUEUE(StateAccess::GetInstance().m_DeviceContext->DrawIndexed(m_Indices[index].GetBaseSizeTotal(), 0u, 0u), m_RenderLog);
+		}
+	}
 	m_Indices.Flush();
+	m_Constants.Flush();
 	return true;
 }
 

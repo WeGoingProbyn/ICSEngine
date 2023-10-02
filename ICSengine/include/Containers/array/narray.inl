@@ -326,3 +326,23 @@ char* narray<T>::GetArrayPrintable()
 	// TODO: Change this to use the String container
 	return _strdup(buff);
 }
+
+
+template<typename T>
+void narray<T>::Reverse()
+{
+	if (m_Ptr)
+	{
+		T* ptr = Memory::AllocateMemory<T>(m_Size, m_Tag);
+		for (unsigned int index = 0; index < m_Size; index++)
+		{
+			ptr[Last() - index] = m_Ptr[index];
+		}
+		Memory::FreeMemory(m_Ptr, 1u, m_Tag);
+		m_Ptr = ptr;
+	}
+	else
+	{
+		ICS_WARN("narray: Trying to reverse a non existant narray");
+	}
+}

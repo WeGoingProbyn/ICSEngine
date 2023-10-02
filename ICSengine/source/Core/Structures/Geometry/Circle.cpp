@@ -3,18 +3,45 @@
 #include <math.h>
 
 Circle::Circle()
-{
-	FindVertices();
-	FindIndices();
-	FindNormals();
-
-	Indices::Hierachy hierachy(Indices::Type::TriangleList);
-	hierachy.PushNodeToHierachy(3u, 0u);
-	m_Indexing = Indices(hierachy);
-
-	FindInterleaved();
+	:
+	Circle(10u)
+{ 
 }
 
+Circle::Circle(unsigned int faces)
+	:
+	m_Faces(faces)
+{
+	*this = Circle(faces, true);
+}
+
+Circle::Circle(unsigned int faces, bool build_buffers)
+	:
+	m_Faces(faces)
+{
+	*this = Circle(faces, 0.0f, false);
+}
+
+Circle::Circle(unsigned int faces, float base_origin_depth, bool build_buffers)
+	:
+	m_Faces(faces)
+{
+	FindVertices();
+	for (Vector<float, 3>&vertex : m_Vertices)
+	{
+		vertex[2] += base_origin_depth;
+	}
+	FindIndices();
+
+	if (build_buffers)
+	{
+		FindNormals();
+		Indices::Hierachy hierachy(Indices::Type::TriangleList);
+		hierachy.PushNodeToHierachy(m_Faces, 0u);
+		m_Indexing = Indices(hierachy);
+		FindInterleaved();
+	}
+}
 
 Circle::~Circle()
 {
@@ -22,18 +49,19 @@ Circle::~Circle()
 
 bool Circle::FindIndices()
 {	
-	unsigned int faces = 3u;
-	Vector<unsigned int, 3> tmp(0u, 1u, 2u);
-	m_Indices.PushToEnd({ tmp });
-	for (unsigned int index = 1; index < faces; index++)
+	if (m_Indices.Size() == 0)
 	{
-		if (index < faces - 1)
+		m_Indices.Resize(1u);
+	}
+	for (unsigned int index = 0; index < m_Faces; index++)
+	{
+		if (index < m_Faces - 1)
 		{
-			m_Indices[0].PushToEnd({ 0u, index + 1, index + 2 });
+			m_Indices[0].PushToEnd(Vector<unsigned int, 3>(0u, index + 1, index + 2));
 		}
 		else
 		{
-			m_Indices[0].PushToEnd({ 0u, index + 1, 1u });
+			m_Indices[0].PushToEnd(Vector<unsigned int, 3>(0u, index + 1, 1u));
 		}
 	}
 	return true;
@@ -42,11 +70,10 @@ bool Circle::FindIndices()
 bool Circle::FindVertices()
 {
 	float radius = 1.0f;
-	unsigned int faces = 3u;
 	m_Vertices.PushToEnd({ 0.0f, 0.0f, 0.0f }); // Central point
-	for (unsigned int index = 0; index < faces; index++)
+	for (unsigned int index = 0; index < m_Faces; index++)
 	{
-		float ratio = (float)index / (float)faces;
+		float ratio = (float)index / (float)m_Faces;
 		float r = (float)ratio * (2.0f * 3.141592f);
 		float x = std::cos(r) * radius;
 		float y = std::sin(r) * radius;

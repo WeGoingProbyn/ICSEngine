@@ -2,10 +2,10 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Dev\ICSEngine\Binaries\Build\ICSengine.dll</FullPath>
+      <FullPath>D:\Dev\ICSengine\Binaries\Build\ICSengine.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Dev\ICSEngine\Binaries\Build\ICSapplication.dll</FullPath>
+      <FullPath>D:\Dev\ICSengine\Binaries\Build\ICSapplication.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

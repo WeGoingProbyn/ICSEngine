@@ -20,8 +20,20 @@ public:
 	ICS_API Matrix<float, 4> TranslateVector();
 	ICS_API Matrix<float, 4> Transform();
 	ICS_API Matrix<float, 4> TransformNoTranslation();
+
+	Transformation operator +(const Transformation& rhs);
+	Transformation operator -(const Transformation& rhs);
+	Transformation operator /(const Transformation& rhs);
+	Transformation operator *(const Transformation& rhs);
+
+	Transformation& operator +=(const Transformation& rhs);
+	Transformation& operator -=(const Transformation& rhs);
+	Transformation& operator /=(const Transformation& rhs);
+	Transformation& operator *=(const Transformation& rhs);
 private:
 	Vector<float, 3> m_Scale;
 	Vector<float, 3> m_Rotation;
 	Vector<float, 3> m_Translation;
+
+	Matrix<float, 4> m_Transform;
 };

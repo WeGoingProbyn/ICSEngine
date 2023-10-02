@@ -61,6 +61,8 @@ public:
 	inline unsigned int Last() { return m_Size - 1; }
 	inline unsigned int Allocated() { return m_AllocatedSize; }
 
+	void Reverse();
+
 protected:
 	T* m_Ptr;
 	MemoryType m_Tag;

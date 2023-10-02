@@ -166,6 +166,17 @@ Vector<T, dim> Vector<T, dim>::operator -()
 	return tmp;
 }
 
+template<typename T, unsigned int dim>
+Vector<T, dim> Vector<T, dim>::Reverse()
+{
+	Vector<T, dim> tmp;
+	for (unsigned int row = 0; row < dim; row++)
+	{
+		tmp[dim - 1 - row] = m_Data[row];
+	}
+	return tmp;
+}
+
 /* ----------------------------- Scalar operating on a Vector ----------------------------- */
 
 template<typename T, unsigned int dim>

@@ -6,14 +6,15 @@ class Geometry : public Mesh
 {
 public:
 	Geometry();
-	virtual ~Geometry() = 0;
+	virtual ~Geometry() {}
 
 protected:
-	bool FindNormals();
 	bool FindInterleaved();
 	bool FindTextureCoords();
 	virtual bool FindIndices() = 0;
 	virtual bool FindVertices() = 0;
+	
+	ICS_API virtual bool FindNormals();
 
 protected:
 	darray<Vector<float, 3>> m_Normals;

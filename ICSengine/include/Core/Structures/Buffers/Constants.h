@@ -27,9 +27,10 @@ public:
 				m_Offset(offset)
 			{
 			}
-			
+
 			inline unsigned int GetType() { return m_Type; }
 			inline unsigned int GetOffset() { return m_Offset; }
+			inline unsigned int GetEndOfElement() { return m_Offset + m_Type; }
 		private:
 			unsigned int m_Offset;
 			Constants::Types m_Type;
@@ -59,76 +60,143 @@ public:
 		}
 
 		inline darray<Element>& GetLayout() { return m_Layout; }
-
+		inline unsigned int Size()
+		{
+			return m_Layout.Size() > 0 ? m_Layout[m_Layout.Last()].GetEndOfElement() : 0u;
+		}
 	private:
 		darray<Element> m_Layout;
 	};
 
 public:
+	class Set
+	{
+		friend class ConstantBuffer;
+	public:
+		Set(char* ptr, Constants::Layout& layout);
+
+		template<typename T>
+		void PushConstants(unsigned int index, T&& value);
+		template<typename First, typename... Rest>
+		void PushConstants(unsigned int index, First&& first, Rest&&... rest);
+
+		inline Constants::Layout& GetLayout() { return m_Layout; }
+		inline char* GetRawPointer() { return m_Ptr; }
+
+	private:
+		template<typename Dest, typename Src>
+		void SetInBuffer(char* ptr, Src&& value);
+	private:
+		char* m_Ptr;
+		Constants::Layout& m_Layout;
+	};
+
+public:
+	class ConstantBuffer
+	{
+	public:
+		ICS_API ConstantBuffer();
+		ICS_API ConstantBuffer(Constants::Layout layout);
+
+		inline Constants::Layout& GetLayout() { return m_Layout; }
+		inline char* GetBufferPointer() { return &m_ByteBlob[0]; }
+		inline unsigned int GetNumberOfSets() { return m_ByteBlob.Size() / m_Layout.Size(); }
+		inline void Flush() { m_ByteBlob.Flush(); }
+
+		template<typename... objs>
+		void PushSet(objs&&... args);
+
+		ICS_API Set End();
+		ICS_API Set Begin();
+		ICS_API Set operator[](unsigned int index);
+	private:
+		darray<char> m_ByteBlob;
+		Constants::Layout m_Layout;
+	};
+
+public:
 	Constants()
 		:
-		m_Layout(),
-		m_BufferedConstants()
+		m_Buffer()
 	{
 	}
-	Constants(Constants::Layout& layout)
+	Constants(Constants::Layout layout)
 		:
-		m_Layout(layout),
-		m_BufferedConstants(0u)
+		m_Buffer(layout)
 	{
 	}
 
-	template<typename T>
-	void PushConstant(T constant);
-	inline darray<char>& GetBuffer() { return m_ByteBlob; }
+	ICS_API Constants(const Constants& rhs);
+	ICS_API const Constants& operator=(const Constants& rhs);
 
-private:
-	template<typename Dest, typename Src>
-	void SetConstantInBuffer(char* ptr, Src constant)
-	{
-		if constexpr (std::is_same<Dest, float>::value)
-		{
-			*reinterpret_cast<Dest*>(ptr) = constant;
-		}
-		else if constexpr (std::is_assignable<Dest, Src>::value)
-		{
-			for (unsigned int index = 0; index < sizeof(constant) / sizeof(float); index++)
-			{
-				*reinterpret_cast<float*>(ptr + (index * sizeof(float))) = constant[index];
-			}
-		}
-		else
-		{
-			ICS_ERROR("Constants: Type mismatch during attribute assignment");
-		}
+	inline unsigned int GetNumberOfSets() { return m_Buffer.GetNumberOfSets(); }
+	inline ConstantBuffer& GetBuffer() { return m_Buffer; }
+	inline Layout& GetLayout() { return m_Buffer.GetLayout(); }
+
+	template<typename... Types>
+	void PushConstantSet(Types&&... args) 
+	{ 
+		m_Buffer.PushSet(args...);
 	}
-
 private:
-	darray<char> m_ByteBlob;
-	Constants::Layout m_Layout;
-	unsigned int m_BufferedConstants;
+	ConstantBuffer m_Buffer;
 };
 
-template<typename T>
-void Constants::PushConstant(T constant)
+template<typename... objs>
+void Constants::ConstantBuffer::PushSet(objs&&... args)
 {
-	m_ByteBlob.Resize(m_ByteBlob.Size() + m_Layout[m_BufferedConstants].GetType());
+	m_ByteBlob.Resize(m_ByteBlob.Size() + m_Layout.Size());
+	End().PushConstants(0u, std::forward<objs>(args)...);
+}
 
-	if constexpr (std::is_same<T, float>::value)
+template<typename First, typename... Rest>
+void Constants::Set::PushConstants(unsigned int index, First&& first, Rest&&... rest)
+{
+	PushConstants(index, std::forward<First>(first));
+	PushConstants(index + 1, std::forward<Rest>(rest)...);
+}
+
+template<typename T>
+void Constants::Set::PushConstants(unsigned int index, T&& value)
+{
+	Constants::Layout::Element element = m_Layout[index];
+	char* attribute = m_Ptr + element.GetOffset();
+
+	if constexpr (std::is_same<std::remove_reference_t<decltype(value)>, float>::value)
 	{
-		SetConstantInBuffer<float>(&m_ByteBlob[m_Layout[m_BufferedConstants].GetOffset()], constant);
+		SetInBuffer<float>(attribute, std::forward<T>(value));
 	}
-	else if constexpr (std::is_same<T, Vector<float, 4>>::value)
+	else if constexpr (std::is_same<std::remove_reference_t<decltype(value)>, Vector<float, 4>>::value)
 	{
-		SetConstantInBuffer<Vector<float, 4>>(&m_ByteBlob[m_Layout[m_BufferedConstants].GetOffset()], constant);
+		SetInBuffer<Vector<float, 4>>(attribute, std::forward<T>(value));
 	}
-	else if constexpr (std::is_same<T, Matrix<float, 4>>::value)
+	else if constexpr (std::is_same<std::remove_reference_t<decltype(value)>, Matrix<float, 4>>::value)
 	{
-		SetConstantInBuffer<Matrix<float, 4>>(&m_ByteBlob[m_Layout[m_BufferedConstants].GetOffset()], constant);
+		SetInBuffer<Matrix<float, 4>>(attribute, std::forward<T>(value));
 	}
 	else
 	{
 		ICS_ERROR("Constants: type miss match on push constant");
 	}
 };
+
+template<typename Dest, typename Src>
+void Constants::Set::SetInBuffer(char* ptr, Src&& constant)
+{
+	if constexpr (std::is_same<Dest, float>::value)
+	{
+		*reinterpret_cast<Dest*>(ptr) = constant;
+	}
+	else if constexpr (std::is_assignable<Dest, Src>::value)
+	{
+		for (unsigned int index = 0; index < sizeof(constant) / sizeof(float); index++)
+		{
+			*reinterpret_cast<float*>(ptr + (index * sizeof(float))) = constant[index];
+		}
+	}
+	else
+	{
+		ICS_ERROR("Constants: Type mismatch during attribute assignment");
+	}
+}
 

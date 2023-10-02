@@ -59,9 +59,9 @@ private:
 	//		these might also benefit from being darray's..........
 	VertexBuffer m_Vertices;
 	PixelShader m_PixelShader;
-	ConstantBuffer m_Constants;
 	VertexShader m_VertexShader;
 	darray<IndexBuffer> m_Indices;
+	darray<ConstantBuffer> m_Constants;
 
 	DirectX11Logger m_RenderLog;
 

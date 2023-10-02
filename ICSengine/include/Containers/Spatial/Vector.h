@@ -44,53 +44,34 @@ public:
 	bool operator == (const Vector<T, dim>& rhs) const;
 
 	T Magnitude();
-	//T DotProduct(Vector<T, dim> rhs);
+	Vector<T, dim> Reverse();
 	T DotProduct(const Vector<T, dim>& rhs);
 
 	Vector<T, dim> Normalise();
-	//Vector<T, dim> CrossProduct(Vector<T, dim> rhs);
 	Vector<T, dim> CrossProduct(const Vector<T, dim>& rhs);
 
 	Vector<T, dim> operator +(T rhs);
 	Vector<T, dim> operator -(T rhs);
 	Vector<T, dim> operator *(T rhs);
 	Vector<T, dim> operator /(T rhs);
-	//Vector<T, dim> operator +(const T& rhs);
-	//Vector<T, dim> operator -(const T& rhs);
-	//Vector<T, dim> operator *(const T& rhs);
-	//Vector<T, dim> operator /(const T& rhs);
 
 	Vector<T, dim>& operator +=(T rhs);
 	Vector<T, dim>& operator -=(T rhs);
 	Vector<T, dim>& operator *=(T rhs);
 	Vector<T, dim>& operator /=(T rhs);
-	//Vector<T, dim>& operator +=(const T& rhs);
-	//Vector<T, dim>& operator -=(const T& rhs);
-	//Vector<T, dim>& operator *=(const T& rhs);
-	//Vector<T, dim>& operator /=(const T& rhs);
 
 	Vector<T, dim> operator +(Vector<T, dim> rhs);
 	Vector<T, dim> operator -(Vector<T, dim> rhs);
 	Vector<T, dim> operator *(Vector<T, dim> rhs);
 	Vector<T, dim> operator /(Vector<T, dim> rhs);
-	//Vector<T, dim> operator +(const Vector<T, dim>& rhs);
-	//Vector<T, dim> operator -(const Vector<T, dim>& rhs);
-	//Vector<T, dim> operator *(const Vector<T, dim>& rhs);
-	//Vector<T, dim> operator /(const Vector<T, dim>& rhs);
 
 	Vector<T, dim>& operator += (Vector<T, dim> rhs);
 	Vector<T, dim>& operator -= (Vector<T, dim> rhs);
 	Vector<T, dim>& operator *= (Vector<T, dim> rhs);
 	Vector<T, dim>& operator /= (Vector<T, dim> rhs);
-	//Vector<T, dim>& operator += (const Vector<T, dim>& rhs);
-	//Vector<T, dim>& operator -= (const Vector<T, dim>& rhs);
-	//Vector<T, dim>& operator *= (const Vector<T, dim>& rhs);
-	//Vector<T, dim>& operator /= (const Vector<T, dim>& rhs);
 
 	Vector<T, dim>& operator =(T rhs);
-	//Vector<T, dim>& operator =(const T& rhs);
 	Vector<T, dim>& operator =(Vector<T, dim> rhs);
-	//Vector<T, dim>& operator =(const Vector<T, dim>& rhs);
 private:
 	T m_Data[dim];
 

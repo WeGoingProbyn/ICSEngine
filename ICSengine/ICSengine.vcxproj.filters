@@ -93,6 +93,18 @@
     <ClCompile Include="source\Core\Structures\Geometry\Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Core\Structures\Geometry\Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Structures\Geometry\Cylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Structures\Geometry\Arrow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Structures\Buffers\Constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Debugger\Logger.h">
@@ -207,6 +219,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\Structures\Geometry\Circle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Structures\Geometry\Cone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Structures\Geometry\Cylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Structures\Geometry\Arrow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
