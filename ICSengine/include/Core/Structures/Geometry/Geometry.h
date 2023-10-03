@@ -6,7 +6,9 @@ class Geometry : public Mesh
 {
 public:
 	Geometry();
-	virtual ~Geometry() {}
+	virtual ~Geometry() 
+	{
+	}
 
 protected:
 	bool FindInterleaved();

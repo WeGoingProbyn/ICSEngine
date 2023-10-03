@@ -14,7 +14,6 @@ Geometry::Geometry()
 bool Geometry::FindInterleaved()
 {
 
-	darray<Vector<unsigned int, 3>> tmp;
 	for (unsigned int root_index = 0; root_index < m_Indices.Size(); root_index++)
 	{
 		unsigned int accumulated_size = 0u;
@@ -26,6 +25,7 @@ bool Geometry::FindInterleaved()
 			}
 		}
 
+		darray<Vector<unsigned int, 3>> tmp;
 		for (unsigned int face_index = 0; face_index < m_Indices[root_index].Size(); face_index++)
 		{
 			Vector<unsigned int, 3> inter_indices;
@@ -44,7 +44,6 @@ bool Geometry::FindInterleaved()
 			tmp.PushToEnd(inter_indices);
 		}
 		m_Indexing.PushNode(tmp);
-		tmp.Flush();
 	}
 	return true;
 }

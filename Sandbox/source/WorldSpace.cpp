@@ -22,7 +22,7 @@ WorldSpace::WorldSpace()
 	//Assets::PushToStack<Mesh>("Cone", Cone(3u));
 	//Assets::PushToStack<Mesh>("Circle", Circle(5u));
 	
-	Assets::PushToStack<Mesh>("Cone", Cone(3u));
+	Assets::PushToStack<Mesh>("Cone", Cylinder(3u));
 	Constants::Layout const_layout(Constants::Types::MATRIX);
 	Shaders::Layout simple_layout(Shaders::Platform::DIRECTX, Shaders::Types::VERTEX, Shaders::Types::PIXEL);
 	Assets::PushToStack<Shaders>("Simple", simple_layout, const_layout);

@@ -12,19 +12,24 @@ Circle::Circle(unsigned int faces)
 	:
 	m_Faces(faces)
 {
-	*this = Circle(faces, true);
+	Build(0.0f, false);
 }
 
 Circle::Circle(unsigned int faces, bool build_buffers)
 	:
 	m_Faces(faces)
 {
-	*this = Circle(faces, 0.0f, false);
+	Build(0.0f, false);
 }
 
 Circle::Circle(unsigned int faces, float base_origin_depth, bool build_buffers)
 	:
 	m_Faces(faces)
+{
+	Build(base_origin_depth, build_buffers);
+}
+
+void Circle::Build(float base_origin_depth, bool build_buffers)
 {
 	FindVertices();
 	for (Vector<float, 3>&vertex : m_Vertices)
@@ -49,10 +54,7 @@ Circle::~Circle()
 
 bool Circle::FindIndices()
 {	
-	if (m_Indices.Size() == 0)
-	{
-		m_Indices.Resize(1u);
-	}
+	m_Indices.PushToEnd({ });
 	for (unsigned int index = 0; index < m_Faces; index++)
 	{
 		if (index < m_Faces - 1)

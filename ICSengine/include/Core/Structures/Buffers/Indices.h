@@ -67,9 +67,6 @@ public:
 		ICS_API Hierachy();
 		ICS_API Hierachy(Indices::Type type);
 
-		//template<typename... Types>
-		//Hierachy(Types&&... args);
-
 		ICS_API inline darray<Element>& GetHierachy() { return m_IndexHierachy; }
 		ICS_API inline unsigned int GetTotalDescribedNodes() { return m_IndexHierachy.Size(); }
 		ICS_API inline Element& operator[](unsigned int index) { return m_IndexHierachy[index]; }
@@ -93,7 +90,7 @@ public:
 		Node(unsigned int* ptr, Indices::Hierachy& structure, unsigned int id);
 		
 		template<typename T>
-		void PushNode(unsigned int id, darray<T>& indices);
+		void PushNode(unsigned int id, darray<T>&& indices);
 
 		inline unsigned int GetID() { return m_ID; }
 		inline Indices::Hierachy& GetNodeHierachy() { return m_Hierachy; }
@@ -103,7 +100,7 @@ public:
 		//inline unsigned int GetSize() { return m_Hierachy[m_ID].GetSize(); }
 	private:
 		template<typename Dest, typename Src>
-		bool SetNodeValue(unsigned int* ptr, darray<Src>& value);
+		bool SetNodeValue(unsigned int* ptr, darray<Src>&& value);
 	private:
 		unsigned int m_ID;
 		unsigned int* m_Ptr;
@@ -162,6 +159,7 @@ public:
 	ICS_API Indices(const Indices& rhs);
 	ICS_API Indices(Hierachy hierachy);
 	ICS_API const Indices& operator=(const Indices& rhs);
+	ICS_API ~Indices() {}
 
 	template<typename T>
 	inline void PushNode(darray<T>& indices) { m_Buffer.PushNodeToBuffer(indices); }
@@ -178,7 +176,7 @@ private:
 };
 
 template<typename T>
-void Indices::Node::PushNode(unsigned int id, darray<T>& indices)
+void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 {
 	ICS_ASSERT_MSG(id < m_Hierachy.GetTotalDescribedNodes(), "Indices: Trying to push more nodes than layout has described");
 
@@ -191,7 +189,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>& indices)
 		{
 		case Indices::Type::LineList:
 		case Indices::Type::PointList:
-			SetNodeValue<unsigned int>(attribute, indices);
+			SetNodeValue<unsigned int>(attribute, std::move(indices));
 			break;
 		default:
 			ICS_ERROR("Indices: Node being pushed does not match layout description");
@@ -203,7 +201,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>& indices)
 		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::LineStrip:
-			SetNodeValue<Vector<unsigned int, 2>>(attribute, indices);
+			SetNodeValue<Vector<unsigned int, 2>>(attribute, std::move(indices));
 			break;
 		default:
 			ICS_ERROR("Indices: Node being pushed does not match layout description");
@@ -215,7 +213,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>& indices)
 		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::TriangleList:
-			SetNodeValue<Vector<unsigned int, 3>>(attribute, indices);
+			SetNodeValue<Vector<unsigned int, 3>>(attribute, std::move(indices));
 			break;
 		default:
 			ICS_ERROR("Indices: Node being pushed does not match layout description");
@@ -229,7 +227,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>& indices)
 }
 
 template<typename Dest, typename Src>
-bool Indices::Node::SetNodeValue(unsigned int* ptr, darray<Src>& value)
+bool Indices::Node::SetNodeValue(unsigned int* ptr, darray<Src>&& value)
 {
 	if constexpr (std::is_assignable<Dest, Src>::value)
 	{
@@ -251,7 +249,7 @@ void Indices::IndexBuffer::PushNodeToBuffer(darray<T>&& indices)
 {
 	m_Nodes.PushToEnd({ });
 	m_Nodes[m_Nodes.Last()].Resize(indices.Size() * (sizeof(T) / sizeof(unsigned int)));
-	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), indices);
+	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::move(indices));
 	m_TotalBufferedNodes++;
 
 }
@@ -261,7 +259,7 @@ void Indices::IndexBuffer::PushNodeToBuffer(darray<T>& indices)
 {
 	m_Nodes.PushToEnd({ });
 	m_Nodes[m_Nodes.Last()].Resize(indices.Size() * (sizeof(T) / sizeof(unsigned int)));
-	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), indices);
+	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::move(indices));
 	m_TotalBufferedNodes++;
 
 }

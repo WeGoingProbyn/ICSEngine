@@ -32,6 +32,7 @@ void Cone::Build(bool build_buffers)
 		Indices::Hierachy hierachy(Indices::Type::TriangleList);
 		hierachy.PushNodeToHierachy(m_Indices[0].Size(), 0u);
 		m_Indexing = Indices(hierachy);
+
 		FindInterleaved();
 	}
 }
