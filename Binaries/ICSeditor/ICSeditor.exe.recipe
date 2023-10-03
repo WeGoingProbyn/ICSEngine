@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Dev\ICSengine\Binaries\Build\ICSeditor.exe</FullPath>
+      <FullPath>D:\Dev\ICSEngine\Binaries\Build\ICSeditor.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -151,24 +151,12 @@ void RenderDirectX11::BindVertices(Vertices& vertices)
 
 void RenderDirectX11::BindIndices(Indices& indices)
 {
-	for (Indices::Node node : indices)
+	for (unsigned int index = 0; index < indices.GetHierachy().GetTotalDescribedNodes(); index++)
 	{
+		Indices::Node node = indices[index];
 		m_Indices.PushToEnd({ node });
-		
 	}
 }
-
-//void RenderDirectX11::BindPixelShader(String& src)
-//{
-//	m_PixelShader = PixelShader(src);
-//	m_PixelShader.BindShaderToPipeline();
-//}
-//
-//void RenderDirectX11::BindVertexShader(String& src)
-//{
-//	m_VertexShader = VertexShader(src);
-//	m_VertexShader.BindShaderToPipeline();
-//}
 
 void RenderDirectX11::BindShaders(Shaders& shaders)
 {

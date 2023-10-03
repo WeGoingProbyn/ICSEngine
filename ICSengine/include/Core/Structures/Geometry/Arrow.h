@@ -10,9 +10,10 @@ class Arrow : public Geometry
 public:
 	ICS_API Arrow();
 	ICS_API ~Arrow();
-	//ICS_API Arrow(unsigned int faces);
+	ICS_API Arrow(unsigned int faces);
 
 private:
+	ICS_API void Build(bool build_buffers);
 	ICS_API bool FindIndices() override;
 	ICS_API bool FindVertices() override;
 	ICS_API bool FindNormals() override;

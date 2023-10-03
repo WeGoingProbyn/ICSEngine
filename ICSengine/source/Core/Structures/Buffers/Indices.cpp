@@ -18,7 +18,7 @@ void Indices::Hierachy::PushNodeToHierachy(unsigned int size, unsigned int root_
 	}
 }
 
-Indices::Node::Node(char* ptr, Indices::Hierachy& hierachy, unsigned int id)
+Indices::Node::Node(unsigned int* ptr, Indices::Hierachy& hierachy, unsigned int id)
 	:
 	m_ID(id),
 	m_Ptr(ptr),
@@ -28,20 +28,20 @@ Indices::Node::Node(char* ptr, Indices::Hierachy& hierachy, unsigned int id)
 
 Indices::Node Indices::IndexBuffer::End()
 {
-	ICS_ASSERT_MSG(m_ByteBlob.Size() > 0, "Vertices: Buffer is nullptr, cannot return on End");
-	return Node{ &m_ByteBlob[0] + m_ByteBlob.Size() - m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetSize(), m_Hierachy, m_TotalBufferedNodes };
+	ICS_ASSERT_MSG(m_Nodes.Size() > 0, "Indices: Buffer is nullptr, cannot return on End");
+	return Node{ m_Nodes[m_Nodes.Last()].GetRawPointer(), m_Hierachy, m_TotalBufferedNodes};
 }
 
 Indices::Node Indices::IndexBuffer::Begin()
 {
-	ICS_ASSERT_MSG(m_ByteBlob.Size() > 0, "Vertices: Buffer is nullptr, cannot return on Begin");
-	return Node{ &m_ByteBlob[0], m_Hierachy, 0u };
+	ICS_ASSERT_MSG(m_Nodes.Size() > 0, "Indices: Buffer is nullptr, cannot return on Begin");
+	return Node{ m_Nodes[0].GetRawPointer(), m_Hierachy, 0u };
 }
 
 Indices::Node Indices::IndexBuffer::operator[](unsigned int index)
 {
-	ICS_ASSERT_MSG(m_ByteBlob.Size() > 0, "Vertices: Buffer is nullptr, cannot return on operator[]");
-	return Node{ &m_ByteBlob[0] + m_Hierachy.GetHierachy()[index].GetOffset(), m_Hierachy, index };
+	ICS_ASSERT_MSG(m_Nodes.Size() > 0, "Indices: Buffer is nullptr, cannot return on operator[]");
+	return Node{ m_Nodes[index].GetRawPointer(), m_Hierachy, index};
 }
 
 ICS_API Indices::Indices(Indices::Hierachy hierachy)
@@ -66,7 +66,7 @@ Indices::IndexBuffer::IndexBuffer(Hierachy& hierachy)
 	:
 	m_Hierachy(hierachy),
 	m_TotalBufferedNodes(0u),
-	m_ByteBlob(MemoryType::ICS_MODEL)
+	m_Nodes(MemoryType::ICS_MODEL)
 {
 }
 

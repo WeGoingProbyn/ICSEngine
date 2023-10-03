@@ -2,17 +2,35 @@
 
 Arrow::Arrow()
 	:
-	m_Tip(Cone(3u, false)),
-	m_Base(Cylinder(3u, false)),
+	m_Tip(Cone(10u, false)),
+	m_Base(Cylinder(10u, false)),
 	m_Hierachy(Indices::Type::TriangleList)
+{
+	Build(true);
+}
+
+Arrow::Arrow(unsigned int faces)
+	:
+	m_Tip(Cone(faces, false)),
+	m_Base(Cylinder(faces, false)),
+	m_Hierachy(Indices::Type::TriangleList)
+{
+	Build(true);
+}
+
+void Arrow::Build(bool build_buffers)
 {
 	FindVertices();
 	FindIndices();
 	FindNormals();
-	
-	m_Indexing = Indices(m_Hierachy);
-	FindInterleaved();
+
+	if (build_buffers)
+	{
+		m_Indexing = Indices(m_Hierachy);
+		FindInterleaved();
+	}
 }
+
 
 Arrow::~Arrow()
 {

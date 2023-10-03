@@ -13,9 +13,19 @@ Geometry::Geometry()
 
 bool Geometry::FindInterleaved()
 {
+
+	darray<Vector<unsigned int, 3>> tmp;
 	for (unsigned int root_index = 0; root_index < m_Indices.Size(); root_index++)
 	{
-		darray<Vector<unsigned int, 3>> tmp;
+		unsigned int accumulated_size = 0u;
+		if (m_Indices.Size() > 0)
+		{
+			for (unsigned int i = 0; i < root_index; i++)
+			{
+				accumulated_size += m_Indices[i].Size() * 3; // 3 For 3 unsigned ints used by geometry for triangle list
+			}
+		}
+
 		for (unsigned int face_index = 0; face_index < m_Indices[root_index].Size(); face_index++)
 		{
 			Vector<unsigned int, 3> inter_indices;
@@ -24,16 +34,17 @@ bool Geometry::FindInterleaved()
 				m_Interleaved.PushVertex(m_Vertices[m_Indices[root_index][face_index][vertex_index]], m_Normals[face_index]);
 				if (face_index > 0)
 				{
-					inter_indices[vertex_index] = (tmp.Size() * 3u) + vertex_index;
+					inter_indices[vertex_index] = accumulated_size + ((tmp.Size() * 3u) + vertex_index);
 				}
 				else
 				{
-					inter_indices[vertex_index] = vertex_index;
+					inter_indices[vertex_index] = accumulated_size + vertex_index;
 				}
 			}
 			tmp.PushToEnd(inter_indices);
 		}
 		m_Indexing.PushNode(tmp);
+		tmp.Flush();
 	}
 	return true;
 }

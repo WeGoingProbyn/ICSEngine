@@ -14,7 +14,7 @@ Node::Node(Indices::Node indices)
 
 void Node::PropogateTransform(Transformation& accumulated)
 {
-	m_RelativeTransform = m_BaseTransform.Transform() * accumulated.Transform();
+	m_RelativeTransform = accumulated.Transform() * m_BaseTransform.Transform();
 	if (m_Nodes.Size() > 0)
 	{
 		for (Node& node : m_Nodes)
@@ -26,7 +26,7 @@ void Node::PropogateTransform(Transformation& accumulated)
 
 void Node::PropogateTransform(Matrix<float, 4> accumulated)
 {
-	m_RelativeTransform = m_BaseTransform.Transform() * accumulated;
+	m_RelativeTransform = accumulated * m_BaseTransform.Transform();
 	if (m_Nodes.Size() > 0)
 	{
 		for (Node& node : m_Nodes)

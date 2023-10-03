@@ -2,21 +2,21 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Dev\ICSengine\Binaries\Build\ICSengine.dll</FullPath>
+      <FullPath>D:\Dev\ICSEngine\Binaries\Build\ICSengine.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>D:\Dev\ICSengine\Binaries\Build\ICSapplication.dll</FullPath>
+      <FullPath>D:\Dev\ICSEngine\Binaries\Build\ICSapplication.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>D:\Dev\ICSengine\Binaries\Build\Sandbox.exe</FullPath>
+      <FullPath>D:\Dev\ICSEngine\Binaries\Build\Sandbox.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>D:\Dev\ICSengine\Binaries\Build\PixelShader.cso</FullPath>
+      <FullPath>D:\Dev\ICSEngine\Binaries\Build\PixelShader.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>D:\Dev\ICSengine\Binaries\Build\VertexShader.cso</FullPath>
+      <FullPath>D:\Dev\ICSEngine\Binaries\Build\VertexShader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

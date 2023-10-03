@@ -26,6 +26,7 @@ void IndexBuffer::CleanUp() { }
 
 IndexBuffer::~IndexBuffer() { }
 
-void IndexBuffer::BindBufferToPipeline(){
+void IndexBuffer::BindBufferToPipeline()
+{
 	RenderDirectX11::StateAccess::GetInstance().m_DeviceContext->IASetIndexBuffer(m_Buffer.Get(), DXGI_FORMAT_R32_UINT, 0u);
 }

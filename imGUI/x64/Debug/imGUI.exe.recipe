@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Dev\ICSengine\x64\Debug\imGUI.exe</FullPath>
+      <FullPath>D:\Dev\ICSEngine\x64\Debug\imGUI.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -55,8 +55,9 @@ void darray<T>::Resize(unsigned int size)
 	{
 		ICS_WARN("narray: Resizing to %i, original size is %i, Contents will be clipped to refit", size, narray<T>::m_Size);
 	}
+
 	T* ptr = static_cast<T*>(Memory::AllocateMemory<T>(size, narray<T>::m_Tag));
-	if (Memory::CopyMemoryBlock(ptr, narray<T>::m_Ptr, size))
+	if (Memory::CopyMemoryBlock(ptr, narray<T>::m_Ptr, narray<T>::m_Size))
 	{
 		if (!Memory::FreeMemory(narray<T>::m_Ptr, narray<T>::m_AllocatedSize, narray<T>::m_Tag))
 		{

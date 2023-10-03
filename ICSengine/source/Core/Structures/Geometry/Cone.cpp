@@ -4,19 +4,24 @@ Cone::Cone()
 	:
 	Circle(10u, false)
 {
-	*this = Cone(10u);
+	Build(true);
 }
 
 Cone::Cone(unsigned int faces)
 	:
 	Circle(faces, false)
 {
-	*this = Cone(faces, true);
+	Build(true);
 }
 
 Cone::Cone(unsigned int faces, bool build_buffers)
 	:
 	Circle(faces, false)
+{
+	Build(build_buffers);
+}
+
+void Cone::Build(bool build_buffers)
 {
 	FindVertices();
 	FindIndices();
@@ -26,7 +31,7 @@ Cone::Cone(unsigned int faces, bool build_buffers)
 	{
 		Indices::Hierachy hierachy(Indices::Type::TriangleList);
 		hierachy.PushNodeToHierachy(m_Indices[0].Size(), 0u);
-		m_Indexing = Indices(hierachy	);
+		m_Indexing = Indices(hierachy);
 		FindInterleaved();
 	}
 }

@@ -1,8 +1,9 @@
 #include "Core/Structures/Scene/Root.h"
 
 Root::Root()
+	:
+	m_Mesh(nullptr)
 {
-	m_Mesh = nullptr;
 }
 
 Root::Root(Mesh* mesh)
