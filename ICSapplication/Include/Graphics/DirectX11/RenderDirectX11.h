@@ -34,6 +34,7 @@ public:
 	ICS_API void BindShaders(Shaders& shaders) override;
 	ICS_API void BindIndices(Indices& indices) override;
 	ICS_API void BindVertices(Vertices& vertices) override;
+	ICS_API void BindConstants(Constants& constants) override;
 
 
 private:

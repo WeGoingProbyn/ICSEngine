@@ -142,6 +142,7 @@
     <ClCompile Include="source\Core\Structures\Geometry\Circle.cpp" />
     <ClCompile Include="source\Core\Structures\Geometry\Cone.cpp" />
     <ClCompile Include="source\Core\Structures\Geometry\Cylinder.cpp" />
+    <ClCompile Include="source\Core\Structures\Scene\Entity.cpp" />
     <ClCompile Include="source\Utilities\FileIO\FileAsString.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Indices.cpp" />
     <ClCompile Include="source\Core\Structures\Buffers\Shaders.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="include\Core\Structures\Buffers\Indices.h" />
     <ClInclude Include="include\Core\Structures\Buffers\Vertices.h" />
     <ClInclude Include="include\Core\Structures\Geometry\Arrow.h" />
+    <ClInclude Include="include\Core\Structures\Scene\Entity.h" />
     <ClInclude Include="include\Core\Structures\Scene\Mesh.h" />
     <ClInclude Include="include\Core\Structures\Scene\Node.h" />
     <ClInclude Include="include\Core\Structures\Scene\Root.h" />

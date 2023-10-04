@@ -6,6 +6,13 @@ Root::Root()
 {
 }
 
+Root::~Root()
+{
+	// Root doesn't need to own this pointer, it is held globally
+	// Need to make sure it is properly dereferenced when done with it
+	m_Mesh = nullptr;
+}
+
 Root::Root(Mesh* mesh)
 	:
 	m_Mesh(mesh)

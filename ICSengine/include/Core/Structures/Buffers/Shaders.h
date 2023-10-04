@@ -122,7 +122,7 @@ public:
 		inline Shader operator[](unsigned int index) { return Shader(m_ByteBlob[index], m_Layout); }
 
 		//ICS_API void PushShaderToBuffer(String str);
-		ICS_API void PushShaderToBuffer(String& str);
+		ICS_API void PushShaderToBuffer(String&& str);
 	private:
 		Layout m_Layout;
 		darray<String> m_ByteBlob;
@@ -133,21 +133,17 @@ public:
 	Shaders(Layout& layout, Constants::Layout& const_layout)
 		:
 		m_Buffer(layout),
-		m_Constants(const_layout)
+		m_ConstantLayout(const_layout)
 	{
 	}
 
-	template<typename... Args>
-	inline void PushConstants(Args... args);
-
-	inline void PushSource(String str) { return m_Buffer.PushShaderToBuffer(str); }
 	inline ShaderBuffer& GetBuffer() { return m_Buffer; }
-	inline Constants& GetConstants() { return m_Constants; }
 	inline Layout& GetLayout() { return m_Buffer.GetShaderLayout(); }
-	inline void FlushConstants() { m_Constants.GetBuffer().Flush(); }
+	inline Constants::Layout& GetConstLayout() { return m_ConstantLayout; }
+	inline void PushSource(String&& str) { return m_Buffer.PushShaderToBuffer(std::move(str)); }
 private:
-	Constants m_Constants;
 	ShaderBuffer m_Buffer;
+	Constants::Layout m_ConstantLayout;
 };
 
 template<typename... Args>
@@ -156,11 +152,5 @@ Shaders::Layout::Layout(Shaders::Platform platform_type, Args... shader_types)
 	m_Platform(platform_type)
 {
 	(PushShaderType(shader_types), ...);
-};
-
-template<typename... Args>
-void Shaders::PushConstants(Args... args)
-{
-	m_Constants.PushConstantSet(args...);
 };
 

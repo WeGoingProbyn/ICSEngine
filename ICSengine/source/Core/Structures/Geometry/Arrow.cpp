@@ -22,12 +22,24 @@ void Arrow::Build(bool build_buffers)
 {
 	FindVertices();
 	FindIndices();
-	FindNormals();
 
 	if (build_buffers)
 	{
+		FindNormals();
 		m_Indexing = Indices(m_Hierachy);
 		FindInterleaved();
+
+		Transformation base;
+		base.SetScale({ 0.05f, 0.05f, 0.5f });
+		base.SetRotation({ 0.0f, 0.0f, 0.0f });
+		base.SetTranslation({ 0.0f, 0.0f, 0.0f });
+		m_BaseTransforms.PushToEnd(base);
+
+		Transformation tip;
+		tip.SetScale({ 1.5f, 1.5f, 1.5f });
+		tip.SetRotation({ 0.0f, 0.0f, 0.0f });
+		tip.SetTranslation({ 0.0f, 0.0f, 0.0f });
+		m_BaseTransforms.PushToEnd(tip);
 	}
 }
 
@@ -46,10 +58,9 @@ bool Arrow::FindIndices()
 	m_Indices.PushToEnd(tmp);
 	m_Hierachy.PushNodeToHierachy(m_Indices[m_Indices.Last()].Size(), 0u);
 	tmp.Flush();
-	darray<Vector<unsigned int, 3>> tmp2;
 	for (Vector<unsigned int, 3>& indices : m_Tip.m_Indices[0])
 	{
-		tmp.PushToEnd(indices.Reverse());
+		tmp.PushToEnd(indices);
 	}
 	m_Indices.PushToEnd(tmp);
 	m_Hierachy.PushNodeToHierachy(m_Indices[m_Indices.Last()].Size(), 0u);
@@ -77,7 +88,7 @@ bool Arrow::FindNormals()
 	}
 	for (Vector<float, 3>&normal : m_Tip.m_Normals)
 	{
-		m_Normals.PushToEnd(normal.Reverse());
+		m_Normals.PushToEnd(normal);
 	}
 	return true;
 }

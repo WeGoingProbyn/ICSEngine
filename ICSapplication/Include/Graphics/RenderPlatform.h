@@ -18,4 +18,5 @@ public:
 	virtual void BindShaders(Shaders& shaders) = 0;
 	virtual void BindIndices(Indices& indices) = 0;
 	virtual void BindVertices(Vertices& vertices) = 0;
+	virtual void BindConstants(Constants& constants) = 0;
 };

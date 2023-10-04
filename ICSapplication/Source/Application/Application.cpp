@@ -29,19 +29,6 @@ Application::~Application()
 	ICS_INFO("Application destroyed");
 }
 
-void Application::LoadSimpleAssets()
-{
-	// Add some basic geometry to the mesh stack
-	Assets::PushToStack<Mesh>("Cube", Cube());
-	Assets::PushToStack<Mesh>("Square", Square());
-
-	Constants::Layout const_layout(Constants::Types::MATRIX);
-	Shaders::Layout simple_layout(Shaders::Platform::DIRECTX, Shaders::Types::VERTEX, Shaders::Types::PIXEL);
-	Assets::PushToStack<Shaders>("Simple", simple_layout, const_layout);
-	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl"));
-	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/PixelShader.hlsl"));
-}
-
 bool Application::RunApplication()
 {
 	// NOTE: This is the main application loop the user will be able to hook into

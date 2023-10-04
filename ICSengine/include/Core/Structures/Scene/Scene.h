@@ -2,15 +2,15 @@
 
 #include "Defines.h"
 
-#include "Core/Structures/Scene/Root.h"
+#include "Core/Structures/Scene/Entity.h"
 
 class Scene
 {
 public:
 	ICS_API Scene();
 
-	inline darray<Root>& GetRoots() { return m_Roots; }
-	inline void PushRoot(Mesh* mesh) { m_Roots.PushToEnd(mesh); }
+	inline darray<Entity>& GetEntities() { return m_Entities; }
+	inline void PushEntity(Mesh* mesh, Shaders* shaders) { m_Entities.PushToEnd({ mesh, shaders }); }
 private:
-	darray<Root> m_Roots;
+	darray<Entity> m_Entities;
 };

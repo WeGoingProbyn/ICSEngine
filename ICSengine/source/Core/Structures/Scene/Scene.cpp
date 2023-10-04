@@ -2,6 +2,6 @@
 
 Scene::Scene()
 	:
-	m_Roots(MemoryType::ICS_SCENE)
+	m_Entities(MemoryType::ICS_SCENE)
 {
 }

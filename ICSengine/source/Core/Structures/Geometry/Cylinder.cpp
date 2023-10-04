@@ -33,6 +33,12 @@ void Cylinder::Build(unsigned int faces, bool build_buffers)
 		hierachy.PushNodeToHierachy(m_Indices[0].Size(), 0u);
 		m_Indexing = Indices(hierachy);
 		FindInterleaved();
+
+		Transformation transform;
+		transform.SetScale({ 1.0f, 1.0f, 1.0f });
+		transform.SetRotation({ 0.0f, 0.0f, 0.0f });
+		transform.SetTranslation({ 0.0f, 0.0f, 0.0f });
+		m_BaseTransforms.PushToEnd(transform);
 	}
 }
 

@@ -3,8 +3,13 @@
 
 ViewProjection::ViewProjection()
 	:
-	m_Projection(Config::platform.width, Config::platform.height)
+	m_Projection(0, 0)
 {
+}
+
+void ViewProjection::OnStartUp()
+{
+	m_Projection = Projection(Config::platform.width, Config::platform.height);
 	m_Projection.PerspectiveProject();
 }
 

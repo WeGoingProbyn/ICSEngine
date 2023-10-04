@@ -5,7 +5,7 @@
 //	m_ByteBlob.PushToEnd(str);
 //}
 
-void Shaders::ShaderBuffer::PushShaderToBuffer(String& str)
+void Shaders::ShaderBuffer::PushShaderToBuffer(String&& str)
 {
-	m_ByteBlob.PushToEnd(str);
+	m_ByteBlob.PushToEnd(std::move(str));
 }

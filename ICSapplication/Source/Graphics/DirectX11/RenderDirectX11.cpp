@@ -174,10 +174,13 @@ void RenderDirectX11::BindShaders(Shaders& shaders)
 			break;
 		}
 	}
+}
 
-	for (unsigned int index = 0; index < shaders.GetConstants().GetNumberOfSets(); index++)
+void RenderDirectX11::BindConstants(Constants& constants)
+{
+	for (unsigned int index = 0; index < constants.GetNumberOfSets(); index++)
 	{
-		m_Constants.PushToEnd(ConstantBuffer(shaders.GetConstants().GetBuffer()[index]));
+		m_Constants.PushToEnd(ConstantBuffer(constants.GetBuffer()[index]));
 	}
 }
 

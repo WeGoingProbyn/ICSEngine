@@ -15,6 +15,7 @@ public:
 	inline darray<Node>& GetNodes() { return m_Nodes; }
 	inline Transformation& GetBaseTransform() { return m_BaseTransform; }
 	inline Matrix<float, 4>& GetPropogatedTransform() { return m_RelativeTransform; }
+	inline void SetBaseTransform(Transformation& transform) { m_BaseTransform = transform; }
 protected:
 	darray<Node> m_Nodes;
 	Transformation m_BaseTransform;

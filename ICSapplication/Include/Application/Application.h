@@ -19,7 +19,6 @@ public:
 	ICS_API virtual ~Application();
 
 	ICS_API bool RunApplication();
-	ICS_API void LoadSimpleAssets();
 	inline LayerManager& GetLayers() { return m_Layers; }
 	//inline AssetManager& GetAssets() { return m_Assets; }
 	inline void RegisterListener(EventListener& listener) { m_Platform.GetEventHandler().RegisterListener(listener); }
