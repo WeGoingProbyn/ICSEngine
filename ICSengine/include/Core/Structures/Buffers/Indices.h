@@ -120,8 +120,8 @@ public:
 
 		inline Indices::Hierachy& GetHierachy() { return m_Hierachy; }
 
-		template<typename T>
-		void PushNodeToBuffer(darray<T>& indices);
+		//template<typename T>
+		//void PushNodeToBuffer(darray<T>& indices);
 		template<typename T>
 		void PushNodeToBuffer(darray<T>&& indices);
 	private:
@@ -162,7 +162,7 @@ public:
 	ICS_API ~Indices() {}
 
 	template<typename T>
-	inline void PushNode(darray<T>& indices) { m_Buffer.PushNodeToBuffer(indices); }
+	inline void PushNode(darray<T>&& indices) { m_Buffer.PushNodeToBuffer(std::forward<darray<T>>(indices)); }
 	inline IndexBuffer& GetBuffer() { return m_Buffer; }
 	inline Hierachy& GetHierachy() { return m_Buffer.GetHierachy(); }
 
@@ -189,7 +189,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 		{
 		case Indices::Type::LineList:
 		case Indices::Type::PointList:
-			SetNodeValue<unsigned int>(attribute, std::move(indices));
+			SetNodeValue<unsigned int>(attribute, std::forward<darray<T>>(indices));
 			break;
 		default:
 			ICS_ERROR("Indices: Node being pushed does not match layout description");
@@ -201,7 +201,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::LineStrip:
-			SetNodeValue<Vector<unsigned int, 2>>(attribute, std::move(indices));
+			SetNodeValue<Vector<unsigned int, 2>>(attribute, std::forward<darray<T>>(indices));
 			break;
 		default:
 			ICS_ERROR("Indices: Node being pushed does not match layout description");
@@ -213,7 +213,7 @@ void Indices::Node::PushNode(unsigned int id, darray<T>&& indices)
 		switch (m_Hierachy.GetType())
 		{
 		case Indices::Type::TriangleList:
-			SetNodeValue<Vector<unsigned int, 3>>(attribute, std::move(indices));
+			SetNodeValue<Vector<unsigned int, 3>>(attribute, std::forward<darray<T>>(indices));
 			break;
 		default:
 			ICS_ERROR("Indices: Node being pushed does not match layout description");
@@ -249,20 +249,20 @@ void Indices::IndexBuffer::PushNodeToBuffer(darray<T>&& indices)
 {
 	m_Nodes.PushToEnd({ });
 	m_Nodes[m_Nodes.Last()].Resize(indices.Size() * (sizeof(T) / sizeof(unsigned int)));
-	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::move(indices));
+	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::forward<darray<T>>(indices));
 	m_TotalBufferedNodes++;
 
 }
 
-template<typename T>
-void Indices::IndexBuffer::PushNodeToBuffer(darray<T>& indices)
-{
-	m_Nodes.PushToEnd({ });
-	m_Nodes[m_Nodes.Last()].Resize(indices.Size() * (sizeof(T) / sizeof(unsigned int)));
-	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::move(indices));
-	m_TotalBufferedNodes++;
-
-}
+//template<typename T>
+//void Indices::IndexBuffer::PushNodeToBuffer(darray<T>& indices)
+//{
+//	m_Nodes.PushToEnd({ });
+//	m_Nodes[m_Nodes.Last()].Resize(indices.Size() * (sizeof(T) / sizeof(unsigned int)));
+//	End().PushNode(m_Hierachy.GetHierachy()[m_TotalBufferedNodes].GetID(), std::move(indices));
+//	m_TotalBufferedNodes++;
+//
+//}
 
 constexpr unsigned int Indices::Hierachy::SizeOfPrimitive(Indices::Type type)
 {

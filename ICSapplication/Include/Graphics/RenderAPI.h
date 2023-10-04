@@ -14,6 +14,7 @@ public:
 	RenderAPI() {}
 	ICS_API RenderAPI(unsigned int width, unsigned int height, void* window);
 
+	ICS_API static void FinishDraw();
 	ICS_API static void SetUpToDraw();
 	ICS_API static void PresentDraw();
 	ICS_API static void BindMesh(Mesh& mesh);

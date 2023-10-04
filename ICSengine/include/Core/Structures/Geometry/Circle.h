@@ -6,7 +6,7 @@ class Circle : public Geometry
 {
 public:
 	ICS_API Circle();
-	virtual ICS_API ~Circle();
+	ICS_API ~Circle();
 	ICS_API Circle(unsigned int faces);
 
 protected:

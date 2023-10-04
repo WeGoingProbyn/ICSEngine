@@ -31,5 +31,9 @@ void RenderAPI::SetUpToDraw()
 void RenderAPI::PresentDraw()
 {
 	m_Render.DrawBoundElements();
+}
+
+void RenderAPI::FinishDraw()
+{
 	m_Render.FlipFrameBuffers();
 }

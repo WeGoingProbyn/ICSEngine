@@ -43,7 +43,7 @@ bool Geometry::FindInterleaved()
 			}
 			tmp.PushToEnd(inter_indices);
 		}
-		m_Indexing.PushNode(tmp);
+		m_Indexing.PushNode(std::move(tmp));
 	}
 	return true;
 }

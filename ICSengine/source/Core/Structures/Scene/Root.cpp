@@ -12,10 +12,13 @@ Root::Root(Mesh* mesh)
 {
 	for (unsigned int index = 0; index < m_Mesh->GetIndices().GetHierachy().GetTotalDescribedNodes(); index++)
 	{
-		m_Nodes.PushToEnd({ m_Mesh->GetIndices().GetBuffer()[index] });
-		for (unsigned int node = 0; node < m_Mesh->GetIndices().GetHierachy()[index].GetNodeIDs().Size(); node++)
+		if (m_Mesh->GetIndices().GetHierachy()[index].GetRootID() != index)
 		{
-			m_Nodes[m_Nodes.Last()].GetNodes().PushToEnd({ m_Mesh->GetIndices().GetBuffer()[node] });
+			m_Nodes.PushToEnd({ m_Mesh->GetIndices().GetBuffer()[index] });
+			for (unsigned int node = 0; node < m_Mesh->GetIndices().GetHierachy()[index].GetNodeIDs().Size(); node++)
+			{
+				m_Nodes[m_Nodes.Last()].GetNodes().PushToEnd({ m_Mesh->GetIndices().GetBuffer()[node] });
+			}
 		}
 	}
 }

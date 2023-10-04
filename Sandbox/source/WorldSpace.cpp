@@ -22,13 +22,26 @@ WorldSpace::WorldSpace()
 	//Assets::PushToStack<Mesh>("Cone", Cone(3u));
 	//Assets::PushToStack<Mesh>("Circle", Circle(5u));
 	
-	Assets::PushToStack<Mesh>("Cone", Cylinder(3u));
+	Assets::PushToStack<Mesh>("Arrow", Arrow(7u));
 	Constants::Layout const_layout(Constants::Types::MATRIX);
 	Shaders::Layout simple_layout(Shaders::Platform::DIRECTX, Shaders::Types::VERTEX, Shaders::Types::PIXEL);
 	Assets::PushToStack<Shaders>("Simple", simple_layout, const_layout);
 	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/VertexShader.hlsl"));
 	Assets::Get<Shaders>("Simple").PushSource(FileAsString::GetStringFromFile("Resource/Shader/PixelShader.hlsl"));	
-	//m_Scene.PushRoot(&Assets::Get<Mesh>("Arrow"));
+	m_Scene.PushRoot(&Assets::Get<Mesh>("Arrow"));
+
+	// TODO: There needs to be another layer between geometry and those derived with many geometries
+	m_Scene.GetRoots()[0].GetBaseTransform().SetScale({ 0.05f, 0.05f, 1.5f });
+	m_Scene.GetRoots()[0].GetBaseTransform().SetRotation({ 0.0f, 0.0f, 0.0f });
+	m_Scene.GetRoots()[0].GetBaseTransform().SetTranslation({ 0.0f, 0.0f, 0.0f });
+
+	m_Scene.GetRoots()[0].GetNodes()[0].GetBaseTransform().SetScale({ 1.5f, 1.5f, 0.5f });
+	m_Scene.GetRoots()[0].GetNodes()[0].GetBaseTransform().SetRotation({ 180.0f, 0.0f, 0.0f });
+	m_Scene.GetRoots()[0].GetNodes()[0].GetBaseTransform().SetTranslation({ 0.0f, 0.0f, 1.5f });
+
+	//m_Scene.GetRoots()[1].GetBaseTransform().SetScale({ 1.0f, 1.0f, 1.0f });
+	//m_Scene.GetRoots()[1].GetBaseTransform().SetRotation({ 0.0f, 0.0f, 0.0f });
+	//m_Scene.GetRoots()[1].GetBaseTransform().SetTranslation({ 0.0f, 0.0f, 0.0f });
 }
 
 WorldSpace::~WorldSpace()
@@ -37,41 +50,26 @@ WorldSpace::~WorldSpace()
 
 void WorldSpace::OnRenderUpdate(Clock::Time& delta_time)
 {
-	// TODO: There needs to be another layer between geometry and those derived with many geometries
-	//m_Scene.GetRoots()[0].GetBaseTransform().SetScale({ 1.0f, 1.0f, 1.0f });
-	//m_Scene.GetRoots()[0].GetBaseTransform().SetRotation({ 0.0f, 0.0f, 0.0f });
-	//m_Scene.GetRoots()[0].GetBaseTransform().SetTranslation({ -2.0f, 0.0f, 2.0f });
-	//
-	//m_Scene.GetRoots()[0].GetNodes()[1].GetBaseTransform().SetScale({ 1.0f, 1.0f, 1.0f });
-	//m_Scene.GetRoots()[0].GetNodes()[1].GetBaseTransform().SetRotation({ 0.0f, 0.0f, 0.0f });
-	//m_Scene.GetRoots()[0].GetNodes()[1].GetBaseTransform().SetTranslation({ 2.0f, 1.0f, 3.0f });
-
 	Transformation transform;
-	Transformation transform2;
-
 	transform.SetScale({ 1.0f, 1.0f, 1.0f });
-	//transform.SetRotation({ delta_time.Elapsed * 5.0f, delta_time.Elapsed * 20.0f, 0.0f});
-	transform.SetRotation({ 0.0f, 0.0f, 0.0f });
-	transform.SetTranslation({ 0.0f, 0.0f, 2.0f });
-
-	transform2.SetScale({ 1.0f, 1.0f, 1.0f });
-	transform2.SetRotation({ 270.0f, 0.0f, 0.0f });
-	transform2.SetTranslation({ 0.0f, 0.0f, 5.0f });
+	transform.SetRotation({ delta_time.Elapsed * 5.0f, delta_time.Elapsed * 20.0f, 0.0f});
+	//transform.SetRotation({ 0.0f, 0.0f, 0.0f });
+	transform.SetTranslation({ 0.0f, 0.0f, 4.0f });
 
 	RenderAPI::SetUpToDraw();
 	for (Root& root : m_Scene.GetRoots())
 	{
 		root.PropogateTransform(transform);
 		Assets::Get<Shaders>("Simple").FlushConstants();
-		//for (Node& node : root.GetNodes())
-		//{
-		//	Assets::Get<Shaders>("Simple").PushConstants(m_ViewProjection.Project(node.GetPropogatedTransform())); // TODO: Move view projection into Render API
-		//}
-		Assets::Get<Shaders>("Simple").PushConstants(m_ViewProjection.Project(transform)); // TODO: Move view projection into Render API
-		Assets::Get<Shaders>("Simple").PushConstants(m_ViewProjection.Project(transform2)); // TODO: Move view projection into Render API
+		Assets::Get<Shaders>("Simple").PushConstants(m_ViewProjection.Project(root.GetPropogatedTransform())); // TODO: Move view projection into Render API
+		for (Node& node : root.GetNodes())
+		{
+			Assets::Get<Shaders>("Simple").PushConstants(m_ViewProjection.Project(node.GetPropogatedTransform())); // TODO: Move view projection into Render API
+		}
 		RenderAPI::BindMesh(root.GetMesh());
 		RenderAPI::BindShaders(Assets::Get<Shaders>("Simple"));
 		RenderAPI::PresentDraw();
 	}
+	RenderAPI::FinishDraw();
 }
 

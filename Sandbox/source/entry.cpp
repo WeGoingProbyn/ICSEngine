@@ -6,6 +6,8 @@
 #include <Managers/Assets.h>
 #include <Application/Config.h>
 
+#include <Core/Structures/Geometry/Arrow.h>
+
 Application* ICS::CreateApplication()
 { 
 	Config::platform.x = 0u;
@@ -13,6 +15,9 @@ Application* ICS::CreateApplication()
 	Config::platform.width = 1200u;
 	Config::platform.height = 720u;
 	Config::platform.name = L"ICS engine";
+
+	//Assets::OnStartUp();
+	//Assets::PushToStack<Mesh>("Arrow", Arrow(6u));
 
 	Game* app = Memory::AllocateMemory<Game>(1u, MemoryType::ICS_APPLICATION);
 

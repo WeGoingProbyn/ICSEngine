@@ -46,9 +46,10 @@ bool Arrow::FindIndices()
 	m_Indices.PushToEnd(tmp);
 	m_Hierachy.PushNodeToHierachy(m_Indices[m_Indices.Last()].Size(), 0u);
 	tmp.Flush();
+	darray<Vector<unsigned int, 3>> tmp2;
 	for (Vector<unsigned int, 3>& indices : m_Tip.m_Indices[0])
 	{
-		tmp.PushToEnd(indices);
+		tmp.PushToEnd(indices.Reverse());
 	}
 	m_Indices.PushToEnd(tmp);
 	m_Hierachy.PushNodeToHierachy(m_Indices[m_Indices.Last()].Size(), 0u);
@@ -76,7 +77,7 @@ bool Arrow::FindNormals()
 	}
 	for (Vector<float, 3>&normal : m_Tip.m_Normals)
 	{
-		m_Normals.PushToEnd(normal);
+		m_Normals.PushToEnd(normal.Reverse());
 	}
 	return true;
 }
